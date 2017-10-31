@@ -14,7 +14,7 @@
           "architecture": "samd",
           "version": "1.0.0",
           "category": "Contributed",
-          "url": "https://mitchellpontague.github.com/arduino-boards/boards/mitchellp-samd-1.0.0.tar.zip",
+          "url": "https://mitchellpontague.github.io/arduino-boards/boards/mitchellp-samd-1.0.0.tar.zip",
           "archiveFileName": "mitchellp-samd-1.0.0.tar.zip",
           "checksum": "SHA-256:4F5B0ACA82839E4ADC7B99A7416BD4FA13F3C93C4AB5DB4BC9400CE3922104AC",
           "size": "34233",
