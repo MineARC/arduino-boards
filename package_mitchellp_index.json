@@ -12,7 +12,7 @@
         {
           "name": "Mitchellp SAMD Boards",
           "architecture": "samd",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "category": "Contributed",
           "url": "https://mitchellpontague.github.io/arduino-boards/boards/mitchellp-samd-1.0.0.tar.zip",
           "archiveFileName": "mitchellp-samd-1.0.0.tar.zip",
