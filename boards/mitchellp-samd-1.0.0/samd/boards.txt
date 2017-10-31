@@ -14,7 +14,7 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-samd21g.name=Mitchellp SAMD21G
+samd21g.name=Generic SAMD21G
 samd21g.vid.0=0x1B4F
 samd21g.pid.0=0x8D21
 samd21g.vid.1=0x1B4F
@@ -42,7 +42,7 @@ samd21g.build.pid=0x8D21
 samd21g.bootloader.tool=openocd
 samd21g.bootloader.file=zero/SparkFun_SAMD21_Dev.bin
 
-samd21e.name=Mitchellp SAMD21E
+samd21e.name=Generic SAMD21E
 samd21e.vid.0=0x1B4F
 samd21e.pid.0=0x8D21
 samd21e.vid.1=0x1B4F
