@@ -12,12 +12,12 @@
         {
           "name": "Mitchellp SAMD Boards",
           "architecture": "samd",
-          "version": "1.0.1",
+          "version": "1.0.2",
           "category": "Contributed",
           "url": "https://mitchellpontague.github.io/arduino-boards/boards/mitchellp-samd-1.0.0.zip",
           "archiveFileName": "mitchellp-samd-1.0.0.zip",
-          "checksum": "SHA-256:58EE43656B5990A020D499B983D52105CFA16D56B8C6556806DE74A2BB761B7E",
-          "size": "32995",
+          "checksum": "SHA-256:DD5695CA78EBC92D74310061455FE3B9569FE4D4F736B090EAA799078D73721E",
+          "size": "155709",
           "help": {
             "online": ""
           },
