@@ -14,19 +14,19 @@
           "architecture": "samd",
           "version": "1.0.0",
           "category": "Contributed",
-          "url": "https://mitchellpontague.github.com/arduino-boards/boards/mitchellp-samd-1.0.0.tar.bz2",
-          "archiveFileName": "mitchellp-samd-1.0.0.tar.bz2",
-          "checksum": "SHA-256:968918117E6EA9C7F3982F83E07B6459663AB844779855B5E175E19461C16691",
-          "size": "289555",
+          "url": "https://mitchellpontague.github.com/arduino-boards/boards/mitchellp-samd-1.0.0.tar.zip",
+          "archiveFileName": "mitchellp-samd-1.0.0.tar.zip",
+          "checksum": "SHA-256:4F5B0ACA82839E4ADC7B99A7416BD4FA13F3C93C4AB5DB4BC9400CE3922104AC",
+          "size": "34233",
           "help": {
             "online": ""
           },
           "boards": [
             {
-              "name": "SparkFun SAMD21 Mini Breakout"
+              "name": "Generic SAMD21G"
             },
             {
-              "name": "SparkFun SAMD21 Dev Breakout"
+              "name": "Generic SAMD21E"
             }
           ],
           "toolsDependencies": [
