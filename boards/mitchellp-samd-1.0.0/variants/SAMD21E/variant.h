@@ -84,14 +84,14 @@ extern "C" {
 #define PIN_A2 (16ul)
 #define PIN_A3 (17ul)
 #define PIN_A4 (18ul)
-#define PIN_DAC (22ul)
+#define PIN_DAC0 (22ul)
 
 static const uint8_t A0 = PIN_A0;
 static const uint8_t A1 = PIN_A1;
 static const uint8_t A2 = PIN_A2;
 static const uint8_t A3 = PIN_A3;
 static const uint8_t A4 = PIN_A4;
-static const uint8_t DAC = PIN_DAC;
+static const uint8_t DAC0 = PIN_DAC0;
 #define ADC_RESOLUTION 12
 
 /*
@@ -194,5 +194,8 @@ extern Uart Serial;
 //                            pins are NOT connected to anything by default.
 
 #define SERIAL_PORT_USBVIRTUAL SerialUSB
+#define SERIAL_PORT_MONITOR SerialUSB
+#define SERIAL_PORT_HARDWARE Serial
+
 
 #endif /* _VARIANT_MITHCELLP_SAMD21E_ */
