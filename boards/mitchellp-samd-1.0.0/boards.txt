@@ -15,9 +15,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 samd21g.name=Generic SAMD21G
-samd21g.vid.0=0x1B4F
+samd21g.vid.0=0x1B50
 samd21g.pid.0=0x8D21
-samd21g.vid.1=0x1B4F
+samd21g.vid.1=0x1B50
 samd21g.pid.1=0x0D21
 samd21g.upload.tool=bossac
 samd21g.upload.protocol=sam-ba
@@ -37,15 +37,15 @@ samd21g.build.openocdscript=openocd_scripts/arduino_zero.cfg
 samd21g.build.variant=SAMD21G
 samd21g.build.variant_system_lib=
 samd21g.build.extra_combine_flags=
-samd21g.build.vid=0x1B4F
+samd21g.build.vid=0x1B50
 samd21g.build.pid=0x8D21
 samd21g.bootloader.tool=openocd
 samd21g.bootloader.file=zero/SparkFun_SAMD21_Dev.bin
 
 samd21e.name=Generic SAMD21E
-samd21e.vid.0=0x1B4F
+samd21e.vid.0=0x1B50
 samd21e.pid.0=0x8D21
-samd21e.vid.1=0x1B4F
+samd21e.vid.1=0x1B50
 samd21e.pid.1=0x0D21
 samd21e.upload.tool=bossac
 samd21e.upload.protocol=sam-ba
@@ -65,7 +65,7 @@ samd21e.build.openocdscript=openocd_scripts/arduino_zero.cfg
 samd21e.build.variant=SAMD21E
 samd21e.build.variant_system_lib=
 samd21e.build.extra_combine_flags=
-samd21e.build.vid=0x1B4F
+samd21e.build.vid=0x1B50
 samd21e.build.pid=0x8D21
 samd21e.bootloader.tool=openocd
 samd21e.bootloader.file=zero/SparkFun_SAMD21_Dev.bin
