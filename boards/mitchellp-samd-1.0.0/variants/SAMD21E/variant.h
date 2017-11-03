@@ -52,9 +52,9 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 // Number of pins defined in PinDescription array
-#define PINS_COUNT (16u)
-#define NUM_DIGITAL_PINS (16u)
-#define NUM_ANALOG_INPUTS (9u)
+#define PINS_COUNT (19u)
+#define NUM_DIGITAL_PINS (14u)
+#define NUM_ANALOG_INPUTS (5u)
 #define NUM_ANALOG_OUTPUTS (1u)
 #define analogInputToDigitalPin(p) ((p < PIN_A0) ? (p) + PIN_A0 : -1)
 
@@ -79,69 +79,99 @@ extern "C" {
 /*
  * Analog pins
  */
-#define PIN_A0 (7ul)
-#define PIN_A1 (8ul)
-#define PIN_A2 (9ul)
-#define PIN_A3 (10ul)
-#define PIN_A4 (11ul)
-#define PIN_A5 (12ul)
-#define PIN_A6 (13ul)
-#define PIN_A7 (14ul)
-#define PIN_A8 (15ul)
-#define PIN_DAC0 (7ul)
+#define PIN_A0 (14ul)
+#define PIN_A1 (15ul)
+#define PIN_A2 (16ul)
+#define PIN_A3 (17ul)
+#define PIN_A4 (18ul)
+#define PIN_DAC0 (22ul)
 
 static const uint8_t A0 = PIN_A0;
 static const uint8_t A1 = PIN_A1;
 static const uint8_t A2 = PIN_A2;
 static const uint8_t A3 = PIN_A3;
 static const uint8_t A4 = PIN_A4;
-static const uint8_t A5 = PIN_A5;
-static const uint8_t A6 = PIN_A6;
-static const uint8_t A7 = PIN_A7;
-static const uint8_t A8 = PIN_A8;
 static const uint8_t DAC0 = PIN_DAC0;
 #define ADC_RESOLUTION 12
+
+/*
+ * Serial interfaces
+ */
+#define WIRE_INTERFACES_COUNT 2
+
+// Serial
+#define PIN_SERIAL_TX (23ul)
+#define PIN_SERIAL_RX (24ul)
+#define PAD_SERIAL_TX (UART_TX_PAD_2)
+#define PAD_SERIAL_RX (SERCOM_RX_PAD_3)
+
+static const uint8_t TX = PIN_SERIAL_TX;
+static const uint8_t RX = PIN_SERIAL_RX;
+
+// Serial1
+#define PIN_SERIAL1_TX (25ul)
+#define PIN_SERIAL1_RX (26ul)
+#define PAD_SERIAL1_TX (UART_TX_PAD_2)
+#define PAD_SERIAL1_RX (SERCOM_RX_PAD_3)
+
+static const uint8_t TX1 = PIN_SERIAL1_TX;
+static const uint8_t RX1 = PIN_SERIAL1_RX;
+
+/*
+ * Wire Interfaces
+ */
+#define WIRE_INTERFACES_COUNT 3
+
+// Wire
+#define PIN_WIRE_SDA (27u)
+#define PIN_WIRE_SCL (28u)
+#define PERIPH_WIRE sercom5
+#define WIRE_IT_HANDLER SERCOM5_Handler
+
+static const uint8_t SDA = PIN_WIRE_SDA;
+static const uint8_t SCL = PIN_WIRE_SCL;
+
+// Wire1
+#define PIN_WIRE1_SDA (29u)
+#define PIN_WIRE1_SCL (30u)
+#define PERIPH_WIRE1 sercom1
+#define WIRE1_IT_HANDLER SERCOM1_Handler
+
+static const uint8_t SDA1 = PIN_WIRE1_SDA;
+static const uint8_t SCL1 = PIN_WIRE1_SCL;
+
+// Wire2
+#define PIN_WIRE2_SDA (31u)
+#define PIN_WIRE2_SCL (32u)
+#define PERIPH_WIRE2 sercom2
+#define WIRE2_IT_HANDLER SERCOM2_Handler
+
+static const uint8_t SDA2 = PIN_WIRE2_SDA;
+static const uint8_t SCL2 = PIN_WIRE2_SCL;
 
 /*
  * SPI Interfaces
  */
 #define SPI_INTERFACES_COUNT 1
-// Instead of using SERCOM4, and the SPI-header pins, the Mini Breakout
-// uses pins 10-13 for SPI, on the unused sercom1
-#define PIN_SPI_MISO (2u)
-#define PIN_SPI_MOSI (5u)
-#define PIN_SPI_SCK (3u)
-#define PIN_SPI_SS (4u)
-#define PERIPH_SPI sercom1
-// Pad Map:     0       1   2     3
-//          MOSI (TX)  SCK  SS  MOSI (RX)
-#define PAD_SPI_TX SPI_PAD_0_SCK_1
-#define PAD_SPI_RX SERCOM_RX_PAD_3
 
-static const uint8_t SS = PIN_SPI_SS;
+#define PIN_SPI_MISO (33u)
+#define PIN_SPI_MOSI (34u)
+#define PIN_SPI_SCK (35u)
+#define PERIPH_SPI sercom0
+
+#define PAD_SPI_TX SPI_PAD_3_SCK_1
+#define PAD_SPI_RX SERCOM_RX_PAD_2
+
 static const uint8_t MOSI = PIN_SPI_MOSI;
 static const uint8_t MISO = PIN_SPI_MISO;
 static const uint8_t SCK = PIN_SPI_SCK;
 
-/*
- * Wire Interfaces
- */
-#define WIRE_INTERFACES_COUNT 1
-
-#define PIN_WIRE_SDA (16u)
-#define PIN_WIRE_SCL (17u)
-#define PERIPH_WIRE sercom3
-#define WIRE_IT_HANDLER SERCOM3_Handler
-
-static const uint8_t SDA = PIN_WIRE_SDA;
-static const uint8_t SCL = PIN_WIRE_SCL;
 
 /*
  * USB
  */
-#define PIN_USB_HOST_ENABLE (18ul)
-#define PIN_USB_DM (19ul)
-#define PIN_USB_DP (20ul)
+#define PIN_USB_DM (20ul)
+#define PIN_USB_DP (21ul)
 
 #ifdef __cplusplus
 }
@@ -164,6 +194,9 @@ extern SERCOM sercom3;
 extern SERCOM sercom4;
 extern SERCOM sercom5;
 
+extern Uart Serial;
+extern Uart Serial1;
+
 #endif
 
 // These serial port names are intended to allow libraries and architecture-neutral
@@ -181,5 +214,7 @@ extern SERCOM sercom5;
 //
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
+
+#define SERIAL_PORT_USBVIRTUAL SerialUSB
 
 #endif /* _VARIANT_MITHCELLP_SAMD21E_ */
