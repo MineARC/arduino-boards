@@ -31,20 +31,19 @@
  * | 7   | ~13        | PA17    | ~D7/SCK      | EIC/EXTINT[1]  |                 |         |        | SERCOM1/PAD[1] | SERCOM3/PAD[1] | TCC2/WO[1]   | TCC0/WO[7]     |                |
  * | 8   | ~10        | PA18    | ~D8/MISO     | EIC/EXTINT[2]  |                 |         |        | SERCOM1/PAD[2] | SERCOM3/PAD[2] | TC3/WO[0]    | TCC0/WO[2]     |                |
  * | 9   | ~12        | PA19    | ~D9/MOSI     | EIC/EXTINT[3]  |                 |         |        | SERCOM1/PAD[3] | SERCOM3/PAD[3] | TC3/WO[1]    | TCC0/WO[3]     | I2S/SD[0]      |
- * | 10  | SDA        | PA22    | ~D11/SDA     | EIC/EXTINT[6]  |                 |         |        | SERCOM3/PAD[0] |                | TC4/WO[0]    | TCC0/WO[4]     |                |
- * | 11  | SCL        | PA23    | ~D12/SCL     | EIC/EXTINT[7]  |                 |         |        | SERCOM3/PAD[1] |                | TC4/WO[1]    | TCC0/WO[5]     | USB/SOF 1kHz   |
- * | 12  |            | PA27    | D13          | EIC/EXTINT[15] |                 |         |        |                |                |              |                |                |
- * | 13  |            | PA28    | D14          | EIC/EXTINT[8]  |                 |         |        |                |                |              |                |                |
+ * | 10  | SDA        | PA22    | ~D10/SDA     | EIC/EXTINT[6]  |                 |         |        | SERCOM3/PAD[0] |                | TC4/WO[0]    | TCC0/WO[4]     |                |
+ * | 11  | SCL        | PA23    | ~D11/SCL     | EIC/EXTINT[7]  |                 |         |        | SERCOM3/PAD[1] |                | TC4/WO[1]    | TCC0/WO[5]     | USB/SOF 1kHz   |
+ * | 12  |            | PA27    | D12          | EIC/EXTINT[15] |                 |         |        |                |                |              |                |                |
+ * | 13  |            | PA28    | D13          | EIC/EXTINT[8]  |                 |         |        |                |                |              |                |                |
  * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
  * |     | Analog     |         |              |                |                 |         |        |                |                |              |                |                |
  * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
  * | 14  | A0         | PA02    | A0/DAC       | EIC/EXTINT[2]  |                 | AIN[0]  |        |                |                |              |                |                |
- * | 15  | A3         | PA04    | ~A1          | EIC/EXTINT[4]  | ADC/VREFB       | AIN[4]  | AIN[0] |                | SERCOM0/PAD[0] | TCC0/WO[0]   |                |                |
- * | 16  | A4         | PA05    | ~A2          | EIC/EXTINT[5]  |                 | AIN[5]  | AIN[1] |                | SERCOM0/PAD[1] | TCC0/WO[1]   |                |                |
- * | 17  | ~8         | PA06    | ~A3          | EIC/EXTINT[6]  |                 | AIN[6]  | AIN[2] |                | SERCOM0/PAD[2] | TCC1/WO[0]   |                |                |
- * | 18  | ~9         | PA07    | ~A4          | EIC/EXTINT[7]  |                 | AIN[7]  | AIN[3] |                | SERCOM0/PAD[3] | TCC1/WO[1]   |                | I2S/SD[0]      |
- * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
- * | 19  | AREF       | PA03    | AREF         | EIC/EXTINT[3]  | [ADC|DAC]/VREFA | AIN[1]  |        |                |                |              |                |                |
+ * | 15  | AREF       | PA03    | A1/AREF      | EIC/EXTINT[3]  | [ADC|DAC]/VREFA | AIN[1]  |        |                |                |              |                |                |
+ * | 16  | A3         | PA04    | ~A2/AREF     | EIC/EXTINT[4]  | ADC/VREFB       | AIN[4]  | AIN[0] |                | SERCOM0/PAD[0] | TCC0/WO[0]   |                |                |
+ * | 17  | A4         | PA05    | ~A3          | EIC/EXTINT[5]  |                 | AIN[5]  | AIN[1] |                | SERCOM0/PAD[1] | TCC0/WO[1]   |                |                |
+ * | 18  | ~8         | PA06    | ~A4          | EIC/EXTINT[6]  |                 | AIN[6]  | AIN[2] |                | SERCOM0/PAD[2] | TCC1/WO[0]   |                |                |
+ * | 19  | ~9         | PA07    | ~A5          | EIC/EXTINT[7]  |                 | AIN[7]  | AIN[3] |                | SERCOM0/PAD[3] | TCC1/WO[1]   |                | I2S/SD[0]      |
  * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
  * |     | USB        |         |              |                |                 |         |        |                |                |              |                |                |
  * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
@@ -88,16 +87,14 @@ const PinDescription g_APinDescription[]=
   { PORTA, 27, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_EXTINT), No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_15 },
   { PORTA, 28, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_EXTINT), No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_8 },
   
-  // 14..18 - Analog
+  // 14..19 - Analog
   // --------------------
   { PORTA,  2, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_EXTINT), ADC_Channel0, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_2 },
+  { PORTA,  3, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_EXTINT), ADC_Channel1, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_3 },     
   { PORTA,  4, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER|PIN_ATTR_EXTINT), ADC_Channel4, PWM0_CH0, TCC0_CH0, EXTERNAL_INT_4 },
   { PORTA,  5, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER|PIN_ATTR_EXTINT), ADC_Channel5, PWM0_CH1, TCC0_CH1, EXTERNAL_INT_5 },
   { PORTA,  6, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER|PIN_ATTR_EXTINT), ADC_Channel6, PWM1_CH0, TCC1_CH0, EXTERNAL_INT_6 },
   { PORTA,  7, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER|PIN_ATTR_EXTINT), ADC_Channel7, PWM1_CH1, TCC1_CH1, EXTERNAL_INT_7 },
-
-  // 19 - AREF
-  { PORTA, 3, PIO_ANALOG, (PIN_ATTR_DIGITAL|PIN_ATTR_EXTINT), No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_13 },   
 
   // 20..21 - USB
   // --------------------

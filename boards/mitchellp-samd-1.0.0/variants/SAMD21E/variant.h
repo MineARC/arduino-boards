@@ -54,7 +54,7 @@ extern "C" {
 // Number of pins defined in PinDescription array
 #define PINS_COUNT (19u)
 #define NUM_DIGITAL_PINS (14u)
-#define NUM_ANALOG_INPUTS (5u)
+#define NUM_ANALOG_INPUTS (6u)
 #define NUM_ANALOG_OUTPUTS (1u)
 #define analogInputToDigitalPin(p) ((p < PIN_A0) ? (p) + PIN_A0 : -1)
 
@@ -84,6 +84,7 @@ extern "C" {
 #define PIN_A2 (16ul)
 #define PIN_A3 (17ul)
 #define PIN_A4 (18ul)
+#define PIN_A5 (19ul)
 #define PIN_DAC0 (22ul)
 
 static const uint8_t A0 = PIN_A0;
