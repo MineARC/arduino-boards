@@ -28,8 +28,12 @@
             {
               "name": "Generic SAMD21E"
             }
-          ]
+          ],
+          "toolsDependencies": []
         }
+      ],
+      "tools": [
+        {}
       ]
     }
   ]
