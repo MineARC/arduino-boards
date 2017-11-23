@@ -1,0 +1,37 @@
+{
+  "packages": [
+    {
+      "name": "MineARC",
+      "maintainer": "Mitchell Pontague",
+      "websiteURL": "minearc.com.au",
+      "email": "mitchell.pontague@minearc.com.au",
+      "help": {
+        "online": ""
+      },
+      "platforms": [
+        {
+          "name": "MineARC SAMD Boards",
+          "architecture": "samd",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd.zip",
+          "archiveFileName": "minearc-samd.zip",
+          "checksum": "SHA-256:3A60C088B511B72C28FB8A326F50B663182BD8BCDDC26E7DED8CA9D515262FA8",
+          "size": "400939",
+          "help": {
+            "online": ""
+          },
+          "boards": [
+            {
+              "name": "Pathfinder"
+            }
+          ],
+          "toolsDependencies": []
+        }
+      ],
+      "tools": [
+        {}
+      ]
+    }
+  ]
+}
