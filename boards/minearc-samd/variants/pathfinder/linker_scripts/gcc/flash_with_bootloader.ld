@@ -58,6 +58,7 @@ MEMORY
  *   __StackLimit
  *   __StackTop
  *   __stack
+ *   __ram_end__
  */
 ENTRY(Reset_Handler)
 
@@ -204,7 +205,7 @@ SECTIONS
 	__StackLimit = __StackTop - SIZEOF(.stack_dummy);
 	PROVIDE(__stack = __StackTop);
 
-	__ram_end__ = ORIGIN(RAM) + LENGTH(RAM) -1 ;
+	__ram_end__ = ORIGIN(RAM) + LENGTH(RAM) -1;
 
 	/* Check if data + heap + stack exceeds RAM limit */
 	ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")
