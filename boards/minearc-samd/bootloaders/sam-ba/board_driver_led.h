@@ -23,6 +23,13 @@
 #include <sam.h>
 #include "board_definitions.h"
 
+#define PINOP(pin, OP) (PORT->Group[(pin) / 32].OP.reg = (1 << ((pin) % 32)))
+
+#define COLOR_START 0x00000A
+#define COLOR_USB 0x000A00
+#define COLOR_UART 0x0A0A00
+#define COLOR_LEAVE 0x0A000A
+
 #if defined(BOARD_LED_PORT)
 inline void LED_init(void) { PORT->Group[BOARD_LED_PORT].DIRSET.reg = (1<<BOARD_LED_PIN); }
 inline void LED_on(void) { PORT->Group[BOARD_LED_PORT].OUTSET.reg = (1<<BOARD_LED_PIN); }
@@ -59,5 +66,8 @@ inline void LEDTX_on(void) { }
 inline void LEDTX_off(void) { }
 inline void LEDTX_toggle(void) { }
 #endif
+
+void rgb_init(void);
+void rgb_set_color(uint32_t color);
 
 #endif // _BOARD_DRIVER_LED_

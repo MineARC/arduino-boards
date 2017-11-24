@@ -23,13 +23,12 @@ volatile uint8_t ledKeepValue = 0;
 volatile uint8_t ledTargetValue = 20;
 volatile int8_t ledDirection = 1;
 
-inline void LED_pulse()
-{
+inline void LED_pulse() {
   if (ledKeepValue == 0) {
     ledTargetValue += ledDirection;
     LED_toggle();
   }
-  ledKeepValue ++;
+  ledKeepValue++;
 
   if (ledTargetValue > 240 || ledTargetValue < 10) {
     ledDirection = -ledDirection;
@@ -39,4 +38,51 @@ inline void LED_pulse()
   if (ledKeepValue == ledTargetValue) {
     LED_toggle();
   }
+}
+
+void rgb_init() {
+#if defined(BOARD_RGBLED_CLOCK_PIN)
+  // using APA102, set pins to outputs
+  PINOP(BOARD_RGBLED_CLOCK_PIN, DIRSET);
+  PINOP(BOARD_RGBLED_DATA_PIN, DIRSET);
+#endif
+
+  rgb_set_color(COLOR_LEAVE);
+}
+
+#if defined(BOARD_RGBLED_CLOCK_PIN)
+void write_apa_byte(uint8_t x) {
+  for (uint8_t i = 0x80; i != 0; i >>= 1) {
+    if (x & i)
+      PINOP(BOARD_RGBLED_DATA_PIN, OUTSET);
+    else
+      PINOP(BOARD_RGBLED_DATA_PIN, OUTCLR);
+
+    PINOP(BOARD_RGBLED_CLOCK_PIN, OUTSET);
+
+    PINOP(BOARD_RGBLED_CLOCK_PIN, OUTCLR);
+  }
+}
+#endif
+
+void rgb_set_color(uint32_t color) {
+#if defined(BOARD_RGBLED_CLOCK_PIN)
+  write_apa_byte(0x0);
+  write_apa_byte(0x0);
+  write_apa_byte(0x0);
+  write_apa_byte(0x0);
+
+  write_apa_byte(0xFF);
+  write_apa_byte(color >> 16);
+  write_apa_byte(color >> 8);
+  write_apa_byte(color);
+
+  write_apa_byte(0xFF);
+  write_apa_byte(0xFF);
+  write_apa_byte(0xFF);
+  write_apa_byte(0xFF);
+
+  // set clock port low for ~10ms
+  delay(50);
+#endif // BOARD_RGBLED_CLOCK_PIN
 }

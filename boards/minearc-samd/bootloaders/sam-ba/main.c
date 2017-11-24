@@ -181,6 +181,7 @@ int main(void)
 
   /* Initialize LEDs */
   LED_init();
+  rgb_init();
   LEDRX_init();
   LEDRX_off();
   LEDTX_init();
