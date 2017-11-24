@@ -84,7 +84,7 @@ dirs:
 
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC) -L$(BUILD_PATH) $(LDFLAGS) \
-		 -T./asf/sam0/utils/linker_scripts/samd21/gcc/samd21j18a_flash.ld \
+		 -T./asf/sam0/utils/linker_scripts/samd21/gcc/samd21e16a_flash.ld \
 		 -Wl,-Map,$(BUILD_PATH)/$(NAME).map -o $(BUILD_PATH)/$(NAME).elf $(OBJECTS)
 	arm-none-eabi-objcopy -O binary $(BUILD_PATH)/$(NAME).elf $@
 	@echo

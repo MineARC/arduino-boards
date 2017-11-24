@@ -159,7 +159,7 @@ Memory Configuration
 
 Name             Origin             Length             Attributes
 FLASH            0x00000000         0x00002000         xr
-RAM              0x20000000         0x00007ffc         xrw
+RAM              0x20000000         0x00001ffc         xrw
 *default*        0x00000000         0xffffffff
 
 Linker script and memory map
@@ -572,10 +572,10 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
 
 .stack_dummy    0x200003a4        0x0
  *(.stack*)
-                0x20007ffc                __StackTop = (ORIGIN (RAM) + 0x7ffc)
-                0x20007ffc                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
-                0x20007ffc                PROVIDE (__stack, __StackTop)
-                0x20007ffb                __ram_end__ = ((ORIGIN (RAM) + 0x7ffc) - 0x1)
+                0x20001ffc                __StackTop = (ORIGIN (RAM) + 0x1ffc)
+                0x20001ffc                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                0x20001ffc                PROVIDE (__stack, __StackTop)
+                0x20001ffb                __ram_end__ = ((ORIGIN (RAM) + 0x1ffc) - 0x1)
                 0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
 OUTPUT(build/pathfinder.elf elf32-littlearm)
 

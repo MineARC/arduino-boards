@@ -21,15 +21,15 @@
          U __libc_fini_array
 20000050 d __preinit_array_end
 20000050 d __preinit_array_start
-20007ffb a __ram_end__
+20001ffb a __ram_end__
          w __register_frame_info
          U __sf_fake_stderr
          U __sf_fake_stdin
          U __sf_fake_stdout
 00002000 A __sketch_vectors_ptr
-20007ffc a __stack
-20007ffc a __StackLimit
-20007ffc A __StackTop
+20001ffc a __stack
+20001ffc a __StackLimit
+20001ffc A __StackTop
 00001650 T _fini
 00001644 T _init
          w _Jv_RegisterClasses
