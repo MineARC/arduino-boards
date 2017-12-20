@@ -16,9 +16,9 @@
 
 pathfinder.name=Pathfinder
 pathfinder.vid.0=0xFFFF
-pathfinder.pid.0=0x0000
+pathfinder.pid.0=0x8000
 pathfinder.vid.1=0xFFFF
-pathfinder.pid.1=0x8000
+pathfinder.pid.1=0x0000
 pathfinder.upload.tool=bossac
 pathfinder.upload.protocol=sam-ba
 pathfinder.upload.maximum_size=57344

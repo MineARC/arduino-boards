@@ -12,10 +12,35 @@
         {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
+          "version": "1.1.0",
+          "category": "Contributed",
+          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.1.0.zip",
+          "archiveFileName": "minearc-samd-v1.1.0.zip",
+          "checksum": "SHA-256:911674E544AE5E69D26D2B376A27F21B4C2E7750",
+          "size": "3024403",
+          "help": {
+            "online": ""
+          },
+          "boards": [
+            {
+              "name": "Pathfinder"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.7.0"
+            }
+          ]
+        },
+        {
+          "name": "MineARC SAMD Boards",
+          "architecture": "samd",
           "version": "1.0.0",
           "category": "Contributed",
           "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.0.0.zip",
-          "archiveFileName": "minearc-samd.zip",
+          "archiveFileName": "minearc-samd-v1.0.0.zip",
           "checksum": "SHA-256:40E05C730E55621B82A2BB1C0232AF9FF15EA8EBCF6C155992B1AE812FCB1A60",
           "size": "2968226",
           "help": {

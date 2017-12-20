@@ -84,7 +84,7 @@ dirs:
 
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC) -L$(BUILD_PATH) $(LDFLAGS) \
-		 -T./asf/sam0/utils/linker_scripts/samd21/gcc/samd21e16a_flash.ld \
+		 -T./asf/sam0/utils/linker_scripts/samd21/gcc/samd21e18a_flash.ld \
 		 -Wl,-Map,$(BUILD_PATH)/$(NAME).map -o $(BUILD_PATH)/$(NAME).elf $(OBJECTS)
 	arm-none-eabi-objcopy -O binary $(BUILD_PATH)/$(NAME).elf $@
 	@echo
@@ -94,7 +94,7 @@ $(EXECUTABLE): $(OBJECTS)
 
 $(SELF_EXECUTABLE): $(SELF_OBJECTS)
 	$(CC) -L$(BUILD_PATH) $(LDFLAGS) \
-		 -T./scripts/samd21j18a_self.ld \
+		 -T./scripts/samd21e18a_self.ld \
 		 -Wl,-Map,$(BUILD_PATH)/update-$(NAME).map -o $(BUILD_PATH)/update-$(NAME).elf $(SELF_OBJECTS)
 	arm-none-eabi-objcopy -O binary $(BUILD_PATH)/update-$(NAME).elf $(BUILD_PATH)/update-$(NAME).bin
 	node scripts/bin2uf2.js $(BUILD_PATH)/update-$(NAME).bin $@

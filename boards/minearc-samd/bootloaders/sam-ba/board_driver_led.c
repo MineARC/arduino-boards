@@ -86,3 +86,10 @@ void rgb_set_color(uint32_t color) {
   delay(50);
 #endif // BOARD_RGBLED_CLOCK_PIN
 }
+
+void delay(uint32_t ms) {
+  ms <<= 8;
+  for (int i = 1; i < ms; ++i) {
+      asm("nop");
+  }
+}

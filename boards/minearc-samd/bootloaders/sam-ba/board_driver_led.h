@@ -25,10 +25,10 @@
 
 #define PINOP(pin, OP) (PORT->Group[(pin) / 32].OP.reg = (1 << ((pin) % 32)))
 
-#define COLOR_START 0x00000A
-#define COLOR_USB 0x000A00
-#define COLOR_UART 0x0A0A00
-#define COLOR_LEAVE 0x0A000A
+#define COLOR_START 0xFF00FF
+#define COLOR_USB 0xFF00FF
+#define COLOR_UART 0xFF00FF
+#define COLOR_LEAVE 0xFF00FF
 
 #if defined(BOARD_LED_PORT)
 inline void LED_init(void) { PORT->Group[BOARD_LED_PORT].DIRSET.reg = (1<<BOARD_LED_PIN); }
@@ -68,6 +68,7 @@ inline void LEDTX_toggle(void) { }
 #endif
 
 void rgb_init(void);
-void rgb_set_color(uint32_t color);
+void rgb_set_color(uint32_t);
+void delay(uint32_t);
 
 #endif // _BOARD_DRIVER_LED_

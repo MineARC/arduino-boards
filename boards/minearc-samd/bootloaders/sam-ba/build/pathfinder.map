@@ -159,7 +159,7 @@ Memory Configuration
 
 Name             Origin             Length             Attributes
 FLASH            0x00000000         0x00002000         xr
-RAM              0x20000000         0x00001ffc         xrw
+RAM              0x20000000         0x00007ffc         xrw
 *default*        0x00000000         0xffffffff
 
 Linker script and memory map
@@ -203,7 +203,7 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
  .isr_vector    0x00000000       0x40 build/board_startup.o
                 0x00000000                exception_table
 
-.text           0x00000040     0x18e8
+.text           0x00000040     0x18f4
  *(.text*)
  .text          0x00000040       0x60 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtbegin.o
  .text.LED_pulse
@@ -212,165 +212,167 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
  .text.write_apa_byte
                 0x000000f0       0x2c build/board_driver_led.o
                 0x000000f0                write_apa_byte
+ .text.delay    0x0000011c       0x10 build/board_driver_led.o
+                0x0000011c                delay
  .text.rgb_set_color
-                0x0000011c       0x58 build/board_driver_led.o
-                0x0000011c                rgb_set_color
+                0x0000012c       0x58 build/board_driver_led.o
+                0x0000012c                rgb_set_color
  .text.rgb_init
-                0x00000174       0x20 build/board_driver_led.o
-                0x00000174                rgb_init
+                0x00000184       0x20 build/board_driver_led.o
+                0x00000184                rgb_init
  .text.uart_basic_init
-                0x00000194       0x5c build/board_driver_serial.o
-                0x00000194                uart_basic_init
+                0x000001a4       0x5c build/board_driver_serial.o
+                0x000001a4                uart_basic_init
  .text.uart_write_byte
-                0x000001f0        0xa build/board_driver_serial.o
-                0x000001f0                uart_write_byte
- *fill*         0x000001fa        0x2 
+                0x00000200        0xa build/board_driver_serial.o
+                0x00000200                uart_write_byte
+ *fill*         0x0000020a        0x2 
  .text.uart_read_byte
-                0x000001fc       0x30 build/board_driver_serial.o
-                0x000001fc                uart_read_byte
+                0x0000020c       0x30 build/board_driver_serial.o
+                0x0000020c                uart_read_byte
  .text.USB_IsConfigured
-                0x0000022c       0x84 build/board_driver_usb.o
-                0x0000022c                USB_IsConfigured
+                0x0000023c       0x84 build/board_driver_usb.o
+                0x0000023c                USB_IsConfigured
  .text.USB_Open
-                0x000002b0       0x1c build/board_driver_usb.o
-                0x000002b0                USB_Open
+                0x000002c0       0x1c build/board_driver_usb.o
+                0x000002c0                USB_Open
  .text.USB_Init
-                0x000002cc      0x108 build/board_driver_usb.o
-                0x000002cc                USB_Init
+                0x000002dc      0x108 build/board_driver_usb.o
+                0x000002dc                USB_Init
  .text.USB_Write
-                0x000003d4       0x90 build/board_driver_usb.o
-                0x000003d4                USB_Write
+                0x000003e4       0x90 build/board_driver_usb.o
+                0x000003e4                USB_Write
  .text.USB_Read
-                0x00000464       0x7c build/board_driver_usb.o
-                0x00000464                USB_Read
+                0x00000474       0x7c build/board_driver_usb.o
+                0x00000474                USB_Read
  .text.USB_SendStall
-                0x000004e0       0x12 build/board_driver_usb.o
-                0x000004e0                USB_SendStall
- *fill*         0x000004f2        0x2 
+                0x000004f0       0x12 build/board_driver_usb.o
+                0x000004f0                USB_SendStall
+ *fill*         0x00000502        0x2 
  .text.USB_SendZlp
-                0x000004f4       0x28 build/board_driver_usb.o
-                0x000004f4                USB_SendZlp
+                0x00000504       0x28 build/board_driver_usb.o
+                0x00000504                USB_SendZlp
  .text.USB_SetAddress
-                0x0000051c        0xc build/board_driver_usb.o
-                0x0000051c                USB_SetAddress
+                0x0000052c        0xc build/board_driver_usb.o
+                0x0000052c                USB_SetAddress
  .text.USB_Configure
-                0x00000528       0x68 build/board_driver_usb.o
-                0x00000528                USB_Configure
+                0x00000538       0x68 build/board_driver_usb.o
+                0x00000538                USB_Configure
  .text.board_init
-                0x00000590      0x100 build/board_init.o
-                0x00000590                board_init
+                0x000005a0      0x100 build/board_init.o
+                0x000005a0                board_init
  .text.NMI_Handler
-                0x00000690        0x4 build/board_startup.o
-                0x00000690                NMI_Handler
+                0x000006a0        0x4 build/board_startup.o
+                0x000006a0                NMI_Handler
  .text.HardFault_Handler
-                0x00000694        0x4 build/board_startup.o
-                0x00000694                HardFault_Handler
+                0x000006a4        0x4 build/board_startup.o
+                0x000006a4                HardFault_Handler
  .text.SVC_Handler
-                0x00000698        0x4 build/board_startup.o
-                0x00000698                SVC_Handler
+                0x000006a8        0x4 build/board_startup.o
+                0x000006a8                SVC_Handler
  .text.PendSV_Handler
-                0x0000069c        0x4 build/board_startup.o
-                0x0000069c                PendSV_Handler
+                0x000006ac        0x4 build/board_startup.o
+                0x000006ac                PendSV_Handler
  .text.Reset_Handler
-                0x000006a0       0x50 build/board_startup.o
-                0x000006a0                Reset_Handler
+                0x000006b0       0x50 build/board_startup.o
+                0x000006b0                Reset_Handler
  .text.startup.main
-                0x000006f0       0xdc build/main.o
-                0x000006f0                main
+                0x00000700       0xdc build/main.o
+                0x00000700                main
  .text.SysTick_Handler
-                0x000007cc        0xc build/main.o
-                0x000007cc                SysTick_Handler
+                0x000007dc        0xc build/main.o
+                0x000007dc                SysTick_Handler
  .text.usb_init
-                0x000007d8       0x20 build/sam_ba_usb.o
-                0x000007d8                usb_init
+                0x000007e8       0x20 build/sam_ba_usb.o
+                0x000007e8                usb_init
  .text.USB_SendString
-                0x000007f8       0x46 build/sam_ba_usb.o
-                0x000007f8                USB_SendString
- *fill*         0x0000083e        0x2 
+                0x00000808       0x46 build/sam_ba_usb.o
+                0x00000808                USB_SendString
+ *fill*         0x0000084e        0x2 
  .text.sam_ba_usb_CDC_Enumerate
-                0x00000840      0x364 build/sam_ba_usb.o
-                0x00000840                sam_ba_usb_CDC_Enumerate
+                0x00000850      0x364 build/sam_ba_usb.o
+                0x00000850                sam_ba_usb_CDC_Enumerate
  .text.cdc_putc
-                0x00000ba4       0x1c build/sam_ba_cdc.o
-                0x00000ba4                cdc_putc
+                0x00000bb4       0x1c build/sam_ba_cdc.o
+                0x00000bb4                cdc_putc
  .text.cdc_getc
-                0x00000bc0       0x1c build/sam_ba_cdc.o
-                0x00000bc0                cdc_getc
+                0x00000bd0       0x1c build/sam_ba_cdc.o
+                0x00000bd0                cdc_getc
  .text.cdc_is_rx_ready
-                0x00000bdc       0x24 build/sam_ba_cdc.o
-                0x00000bdc                cdc_is_rx_ready
+                0x00000bec       0x24 build/sam_ba_cdc.o
+                0x00000bec                cdc_is_rx_ready
  .text.cdc_write_buf
-                0x00000c00       0x1c build/sam_ba_cdc.o
-                0x00000c00                cdc_write_buf
+                0x00000c10       0x1c build/sam_ba_cdc.o
+                0x00000c10                cdc_write_buf
  .text.cdc_read_buf
-                0x00000c1c       0x28 build/sam_ba_cdc.o
-                0x00000c1c                cdc_read_buf
+                0x00000c2c       0x28 build/sam_ba_cdc.o
+                0x00000c2c                cdc_read_buf
  .text.cdc_read_buf_xmd
-                0x00000c44       0x38 build/sam_ba_cdc.o
-                0x00000c44                cdc_read_buf_xmd
+                0x00000c54       0x38 build/sam_ba_cdc.o
+                0x00000c54                cdc_read_buf_xmd
  .text.sam_ba_putdata.isra.0
-                0x00000c7c       0x18 build/sam_ba_monitor.o
+                0x00000c8c       0x18 build/sam_ba_monitor.o
  .text.sam_ba_monitor_init
-                0x00000c94       0x2c build/sam_ba_monitor.o
-                0x00000c94                sam_ba_monitor_init
+                0x00000ca4       0x2c build/sam_ba_monitor.o
+                0x00000ca4                sam_ba_monitor_init
  .text.sam_ba_putdata_term
-                0x00000cc0       0x80 build/sam_ba_monitor.o
-                0x00000cc0                sam_ba_putdata_term
+                0x00000cd0       0x80 build/sam_ba_monitor.o
+                0x00000cd0                sam_ba_putdata_term
  .text.call_applet
-                0x00000d40       0x1c build/sam_ba_monitor.o
-                0x00000d40                call_applet
+                0x00000d50       0x1c build/sam_ba_monitor.o
+                0x00000d50                call_applet
  .text.sam_ba_monitor_sys_tick
-                0x00000d5c       0x2c build/sam_ba_monitor.o
-                0x00000d5c                sam_ba_monitor_sys_tick
+                0x00000d6c       0x2c build/sam_ba_monitor.o
+                0x00000d6c                sam_ba_monitor_sys_tick
  .text.sam_ba_monitor_run
-                0x00000d88      0x4e8 build/sam_ba_monitor.o
-                0x00000d88                sam_ba_monitor_run
+                0x00000d98      0x4e8 build/sam_ba_monitor.o
+                0x00000d98                sam_ba_monitor_run
  .text.serial_open
-                0x00001270       0xac build/sam_ba_serial.o
-                0x00001270                serial_open
+                0x00001280       0xac build/sam_ba_serial.o
+                0x00001280                serial_open
  .text.serial_putc
-                0x0000131c       0x14 build/sam_ba_serial.o
-                0x0000131c                serial_putc
+                0x0000132c       0x14 build/sam_ba_serial.o
+                0x0000132c                serial_putc
  .text.serial_is_rx_ready
-                0x00001330       0x10 build/sam_ba_serial.o
-                0x00001330                serial_is_rx_ready
+                0x00001340       0x10 build/sam_ba_serial.o
+                0x00001340                serial_is_rx_ready
  .text.serial_getc
-                0x00001340       0x18 build/sam_ba_serial.o
-                0x00001340                serial_getc
+                0x00001350       0x18 build/sam_ba_serial.o
+                0x00001350                serial_getc
  .text.serial_sharp_received
-                0x00001358       0x1c build/sam_ba_serial.o
-                0x00001358                serial_sharp_received
+                0x00001368       0x1c build/sam_ba_serial.o
+                0x00001368                serial_sharp_received
  .text.serial_putdata
-                0x00001374       0x1a build/sam_ba_serial.o
-                0x00001374                serial_putdata
+                0x00001384       0x1a build/sam_ba_serial.o
+                0x00001384                serial_putdata
  .text.serial_getdata
-                0x0000138e        0xe build/sam_ba_serial.o
-                0x0000138e                serial_getdata
+                0x0000139e        0xe build/sam_ba_serial.o
+                0x0000139e                serial_getdata
  .text.serial_add_crc
-                0x0000139c       0x18 build/sam_ba_serial.o
-                0x0000139c                serial_add_crc
+                0x000013ac       0x18 build/sam_ba_serial.o
+                0x000013ac                serial_add_crc
  .text.getbytes
-                0x000013b4       0x64 build/sam_ba_serial.o
+                0x000013c4       0x64 build/sam_ba_serial.o
  .text.serial_putdata_xmd
-                0x00001418      0x108 build/sam_ba_serial.o
-                0x00001418                serial_putdata_xmd
+                0x00001428      0x108 build/sam_ba_serial.o
+                0x00001428                serial_putdata_xmd
  .text.serial_getdata_xmd
-                0x00001520       0xf4 build/sam_ba_serial.o
-                0x00001520                serial_getdata_xmd
- .text.memcpy   0x00001614       0x12 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv6-m\libc_s.a(lib_a-memcpy-stub.o)
-                0x00001614                memcpy
- .text.memset   0x00001626       0x10 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv6-m\libc_s.a(lib_a-memset.o)
-                0x00001626                memset
- .text.strlen   0x00001636        0xe c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv6-m\libc_s.a(lib_a-strlen.o)
-                0x00001636                strlen
+                0x00001530       0xf4 build/sam_ba_serial.o
+                0x00001530                serial_getdata_xmd
+ .text.memcpy   0x00001624       0x12 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv6-m\libc_s.a(lib_a-memcpy-stub.o)
+                0x00001624                memcpy
+ .text.memset   0x00001636       0x10 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv6-m\libc_s.a(lib_a-memset.o)
+                0x00001636                memset
+ .text.strlen   0x00001646        0xe c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv6-m\libc_s.a(lib_a-strlen.o)
+                0x00001646                strlen
  *(.init)
- .init          0x00001644        0x4 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crti.o
-                0x00001644                _init
- .init          0x00001648        0x8 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtn.o
+ .init          0x00001654        0x4 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crti.o
+                0x00001654                _init
+ .init          0x00001658        0x8 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtn.o
  *(.fini)
- .fini          0x00001650        0x4 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crti.o
-                0x00001650                _fini
- .fini          0x00001654        0x8 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtn.o
+ .fini          0x00001660        0x4 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crti.o
+                0x00001660                _fini
+ .fini          0x00001664        0x8 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtn.o
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -382,65 +384,65 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
  *(SORT(.dtors.*))
  *(.dtors)
  *(.rodata*)
- .rodata        0x0000165c        0x4 build/sam_ba_usb.o
+ .rodata        0x0000166c        0x4 build/sam_ba_usb.o
  .rodata.str1.1
-                0x00001660       0x17 build/sam_ba_usb.o
- *fill*         0x00001677        0x1 
+                0x00001670       0x13 build/sam_ba_usb.o
+ *fill*         0x00001683        0x1 
  .rodata.devDescriptor
-                0x00001678       0x14 build/sam_ba_usb.o
- .rodata        0x0000168c       0x20 build/sam_ba_monitor.o
+                0x00001684       0x14 build/sam_ba_usb.o
+ .rodata        0x00001698       0x20 build/sam_ba_monitor.o
  .rodata.uart_if
-                0x000016ac       0x1c build/sam_ba_monitor.o
-                0x000016ac                uart_if
+                0x000016b8       0x1c build/sam_ba_monitor.o
+                0x000016b8                uart_if
  .rodata.str1.1
-                0x000016c8       0x29 build/sam_ba_monitor.o
+                0x000016d4       0x29 build/sam_ba_monitor.o
                                  0x2c (size before relaxing)
  .rodata.RomBOOT_Version
-                0x000016f1        0x4 build/sam_ba_monitor.o
-                0x000016f1                RomBOOT_Version
- *fill*         0x000016f5        0x3 
+                0x000016fd        0x4 build/sam_ba_monitor.o
+                0x000016fd                RomBOOT_Version
+ *fill*         0x00001701        0x3 
  .rodata.usbcdc_if
-                0x000016f8       0x1c build/sam_ba_monitor.o
-                0x000016f8                usbcdc_if
+                0x00001704       0x1c build/sam_ba_monitor.o
+                0x00001704                usbcdc_if
  .rodata.RomBOOT_ExtendedCapabilities
-                0x00001714        0xe build/sam_ba_monitor.o
-                0x00001714                RomBOOT_ExtendedCapabilities
+                0x00001720        0xe build/sam_ba_monitor.o
+                0x00001720                RomBOOT_ExtendedCapabilities
  .rodata.crc16Table
-                0x00001722      0x200 build/sam_ba_serial.o
+                0x0000172e      0x200 build/sam_ba_serial.o
  *(.eh_frame*)
- *fill*         0x00001922        0x2 
- .eh_frame      0x00001924        0x0 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtbegin.o
- .eh_frame      0x00001924        0x4 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtend.o
+ *fill*         0x0000192e        0x2 
+ .eh_frame      0x00001930        0x0 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtbegin.o
+ .eh_frame      0x00001930        0x4 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtend.o
 
-.glue_7         0x00001928        0x0
+.glue_7         0x00001934        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x00001928        0x0
+.glue_7t        0x00001934        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x00001928        0x0
+.vfp11_veneer   0x00001934        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x00001928        0x0
+.v4_bx          0x00001934        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x00001928        0x0
+.iplt           0x00001934        0x0
  .iplt          0x00000000        0x0 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtbegin.o
 
-.rel.dyn        0x00001928        0x0
+.rel.dyn        0x00001934        0x0
  .rel.iplt      0x00000000        0x0 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x00001928                __exidx_start = .
+                0x00001934                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x00001928                __exidx_end = .
-                0x00001928                __etext = .
+                0x00001934                __exidx_end = .
+                0x00001934                __etext = .
                 0x00002000                PROVIDE (__sketch_vectors_ptr, (ORIGIN (FLASH) + 0x2000))
 
-.data           0x20000000       0x5c load address 0x00001928
+.data           0x20000000       0x5c load address 0x00001934
                 0x20000000                __data_start__ = .
  *(vtable)
  *(.data*)
@@ -478,10 +480,10 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
                 0x2000005c                . = ALIGN (0x4)
                 0x2000005c                __data_end__ = .
 
-.igot.plt       0x2000005c        0x0 load address 0x00001984
+.igot.plt       0x2000005c        0x0 load address 0x00001990
  .igot.plt      0x00000000        0x0 c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv6-m/crtbegin.o
 
-.bss            0x2000005c      0x348 load address 0x00001984
+.bss            0x2000005c      0x348 load address 0x00001990
                 0x2000005c                . = ALIGN (0x4)
                 0x2000005c                __bss_start__ = .
  *(.bss*)
@@ -495,20 +497,20 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
  .bss.read_job  0x2000007a        0x1 build/board_driver_usb.o
  .bss.main_b_cdc_enable
                 0x2000007b        0x1 build/main.o
- .bss.dir.10339
-                0x2000007c        0x1 build/sam_ba_usb.o
- .bss.bmRequestType.10337
-                0x2000007d        0x1 build/sam_ba_usb.o
- .bss.wStatus.10343
-                0x2000007e        0x2 build/sam_ba_usb.o
- .bss.wLength.10342
+ .bss.wLength.10336
+                0x2000007c        0x2 build/sam_ba_usb.o
+ .bss.bmRequestType.10331
+                0x2000007e        0x1 build/sam_ba_usb.o
+ .bss.bRequest.10332
+                0x2000007f        0x1 build/sam_ba_usb.o
+ .bss.wValue.10334
                 0x20000080        0x2 build/sam_ba_usb.o
- .bss.bRequest.10338
-                0x20000082        0x1 build/sam_ba_usb.o
- *fill*         0x20000083        0x1 
- .bss.wValue.10340
-                0x20000084        0x2 build/sam_ba_usb.o
- .bss.wIndex.10341
+ .bss.wStatus.10337
+                0x20000082        0x2 build/sam_ba_usb.o
+ .bss.dir.10333
+                0x20000084        0x1 build/sam_ba_usb.o
+ *fill*         0x20000085        0x1 
+ .bss.wIndex.10335
                 0x20000086        0x2 build/sam_ba_usb.o
  .bss.b_terminal_mode
                 0x20000088        0x1 build/sam_ba_monitor.o
@@ -521,7 +523,7 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
                 0x2000008c        0x2 build/sam_ba_monitor.o
                 0x2000008c                txLEDPulse
  *fill*         0x2000008e        0x2 
- .bss.src_buff_addr.11272
+ .bss.src_buff_addr.11268
                 0x20000090        0x4 build/sam_ba_monitor.o
  .bss.b_sam_ba_interface_usart
                 0x20000094        0x1 build/sam_ba_monitor.o
@@ -572,10 +574,10 @@ LOAD c:/users/mitchell.pontague/appdata/local/arduino15/packages/arduino/tools/a
 
 .stack_dummy    0x200003a4        0x0
  *(.stack*)
-                0x20001ffc                __StackTop = (ORIGIN (RAM) + 0x1ffc)
-                0x20001ffc                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
-                0x20001ffc                PROVIDE (__stack, __StackTop)
-                0x20001ffb                __ram_end__ = ((ORIGIN (RAM) + 0x1ffc) - 0x1)
+                0x20007ffc                __StackTop = (ORIGIN (RAM) + 0x7ffc)
+                0x20007ffc                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                0x20007ffc                PROVIDE (__stack, __StackTop)
+                0x20007ffb                __ram_end__ = ((ORIGIN (RAM) + 0x7ffc) - 0x1)
                 0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
 OUTPUT(build/pathfinder.elf elf32-littlearm)
 
