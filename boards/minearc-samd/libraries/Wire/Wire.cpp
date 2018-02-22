@@ -87,7 +87,7 @@ uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
     }
     sercom->prepareNackBitWIRE();                           // Prepare NACK to stop slave transmission
     //sercom->readDataWIRE();                               // Clear data register to send NACK
-
+  
     if (stopBit)
     {
       sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);   // Send Stop
@@ -273,15 +273,6 @@ void TwoWire::onService(void)
 }
 
 #if WIRE_INTERFACES_COUNT > 0
-  /* In case new variant doesn't define these macros,
-   * we put here the ones for Arduino Zero.
-   *
-   * These values should be different on some variants!
-   */
-  #ifndef PERIPH_WIRE
-    #define PERIPH_WIRE          sercom3
-    #define WIRE_IT_HANDLER      SERCOM3_Handler
-  #endif // PERIPH_WIRE
   TwoWire Wire(&PERIPH_WIRE, PIN_WIRE_SDA, PIN_WIRE_SCL);
 
   void WIRE_IT_HANDLER(void) {
