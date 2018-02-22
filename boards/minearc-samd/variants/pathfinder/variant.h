@@ -131,7 +131,7 @@ static const uint8_t RX1 = PIN_SERIAL_RX;
 #define PIN_WIRE_SDA (31u)
 #define PIN_WIRE_SCL (32u)
 #define PERIPH_WIRE sercom3
-#define WIRE_IT_HANDLER SERCOM3_Handler
+#define WIRE_IT_HANDLER SERCOM3_Alt_Handler
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
@@ -140,7 +140,7 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 #define PIN_WIRE1_SDA (33u)
 #define PIN_WIRE1_SCL (34u)
 #define PERIPH_WIRE1 sercom2
-#define WIRE1_IT_HANDLER SERCOM2_Handler
+#define WIRE1_IT_HANDLER SERCOM2_Alt_Handler
 
 static const uint8_t SDA1 = PIN_WIRE1_SDA;
 static const uint8_t SCL1 = PIN_WIRE1_SCL;
