@@ -47,7 +47,7 @@ using the command line:
     arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -c -Os -W -ffunction-sections -fdata-sections \
                       -nostdlib --param max-inline-insns-single=500 -fno-exceptions -MMD \
                       -DF_CPU=48000000L -DARDUINO=10602 -DARDUINO_SAMD_ZERO -DARDUINO_ARCH_SAMD \
-                      -D__SAMD21G18A__ -DUSB_VID=0x2341 -DUSB_PID=0x004d -DUSBCON \
+                      -D__SAMD21E18A__ -DCRYSTALLESS -DUSB_VID=0x2341 -DUSB_PID=0x004d -DUSBCON \
                       -DUSB_MANUFACTURER="Arduino LLC" -DUSB_PRODUCT="Arduino Zero" \
                       -I/Code/arduino/build/linux/work/hardware/tools/CMSIS/CMSIS/Include/ \
                       -I/Code/arduino/build/linux/work/hardware/tools/CMSIS/Device/ATMEL/ \
@@ -83,7 +83,7 @@ The result has been slightly edited to increase readability.
 @ -iprefix /Code/arduino/build/linux/work/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/
 @ -isysroot /Code/arduino/build/linux/work/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../arm-none-eabi
 @ -MMD count.d -D__USES_INITFINI__ -D F_CPU=48000000L -D ARDUINO=10602
-@ -D ARDUINO_SAMD_ZERO -D ARDUINO_ARCH_SAMD -D __SAMD21G18A__
+@ -D ARDUINO_SAMD_ZERO -D ARDUINO_ARCH_SAMD -D __SAMD21E18A__ -D CRYSTALLESS
 @ -D USB_VID=0x2341 -D USB_PID=0x004d -D USBCON
 @ -D USB_MANUFACTURER=Arduino LLC -D USB_PRODUCT=Arduino Zero count.c
 @ -mcpu=cortex-m0plus -mthumb -Os -Wextra -ffunction-sections

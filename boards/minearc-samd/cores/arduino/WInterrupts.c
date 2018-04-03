@@ -40,7 +40,7 @@ static void __initialize()
 
   // Enable GCLK for IEC (External Interrupt Controller)
   GCLK->CLKCTRL.reg = (uint16_t) (GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_ID_EIC);
-  while (GCLK->STATUS.bit.SYNCBUSY) { }
+
 /* Shall we do that?
   // Do a software reset on EIC
   EIC->CTRL.SWRST.bit = 1 ;
