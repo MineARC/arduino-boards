@@ -34,13 +34,18 @@
 #define SPI_MODE2 0x03
 #define SPI_MODE3 0x01
 
-// Even if not specified on the datasheet, the SAMD21E18A MCU
-// doesn't operate correctly with clock dividers lower than 4.
-// This allows a theoretical maximum SPI clock speed of 12Mhz
-#define SPI_MIN_CLOCK_DIVIDER 4
+#if defined(__SAMD21G18A__)
+  // Even if not specified on the datasheet, the SAMD21G18A MCU
+  // doesn't operate correctly with clock dividers lower than 4.
+  // This allows a theoretical maximum SPI clock speed of 12Mhz
+  #define SPI_MIN_CLOCK_DIVIDER 4
+  // Other SAMD21xxxxx MCU may be affected as well
+#else
+  #define SPI_MIN_CLOCK_DIVIDER 2
+#endif
 
 class SPISettings {
-public:
+  public:
   SPISettings(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) {
     if (__builtin_constant_p(clock)) {
       init_AlwaysInline(clock, bitOrder, dataMode);
@@ -52,7 +57,7 @@ public:
   // Default speed set to 4MHz, SPI mode set to MODE 0 and Bit order set to MSB first.
   SPISettings() { init_AlwaysInline(4000000, MSBFIRST, SPI_MODE0); }
 
-private:
+  private:
   void init_MightInline(uint32_t clock, BitOrder bitOrder, uint8_t dataMode) {
     init_AlwaysInline(clock, bitOrder, dataMode);
   }
@@ -62,22 +67,18 @@ private:
 
     this->bitOrder = (bitOrder == MSBFIRST ? MSB_FIRST : LSB_FIRST);
 
-    switch (dataMode) {
-    case SPI_MODE0:
-      this->dataMode = SERCOM_SPI_MODE_0;
-      break;
-    case SPI_MODE1:
-      this->dataMode = SERCOM_SPI_MODE_1;
-      break;
-    case SPI_MODE2:
-      this->dataMode = SERCOM_SPI_MODE_2;
-      break;
-    case SPI_MODE3:
-      this->dataMode = SERCOM_SPI_MODE_3;
-      break;
-    default:
-      this->dataMode = SERCOM_SPI_MODE_0;
-      break;
+    switch (dataMode)
+    {
+      case SPI_MODE0:
+        this->dataMode = SERCOM_SPI_MODE_0; break;
+      case SPI_MODE1:
+        this->dataMode = SERCOM_SPI_MODE_1; break;
+      case SPI_MODE2:
+        this->dataMode = SERCOM_SPI_MODE_2; break;
+      case SPI_MODE3:
+        this->dataMode = SERCOM_SPI_MODE_3; break;
+      default:
+        this->dataMode = SERCOM_SPI_MODE_0; break;
     }
   }
 
@@ -89,8 +90,9 @@ private:
 };
 
 class SPIClass {
-public:
+  public:
   SPIClass(SERCOM *p_sercom, uint8_t uc_pinMISO, uint8_t uc_pinSCK, uint8_t uc_pinMOSI, SercomSpiTXPad, SercomRXPad);
+
 
   byte transfer(uint8_t data);
   uint16_t transfer16(uint16_t data);
@@ -112,7 +114,7 @@ public:
   void setDataMode(uint8_t uc_mode);
   void setClockDivider(uint8_t uc_div);
 
-private:
+  private:
   void init();
   void config(SPISettings settings);
 
@@ -131,34 +133,34 @@ private:
 };
 
 #if SPI_INTERFACES_COUNT > 0
-extern SPIClass SPI;
+  extern SPIClass SPI;
 #endif
 #if SPI_INTERFACES_COUNT > 1
-extern SPIClass SPI1;
+  extern SPIClass SPI1;
 #endif
 #if SPI_INTERFACES_COUNT > 2
-extern SPIClass SPI2;
+  extern SPIClass SPI2;
 #endif
 #if SPI_INTERFACES_COUNT > 3
-extern SPIClass SPI3;
+  extern SPIClass SPI3;
 #endif
 #if SPI_INTERFACES_COUNT > 4
-extern SPIClass SPI4;
+  extern SPIClass SPI4;
 #endif
 #if SPI_INTERFACES_COUNT > 5
-extern SPIClass SPI5;
+  extern SPIClass SPI5;
 #endif
 
 // For compatibility with sketches designed for AVR @ 16 MHz
 // New programs should use SPI.beginTransaction to set the SPI clock
 #if F_CPU == 48000000
-#define SPI_CLOCK_DIV2 6
-#define SPI_CLOCK_DIV4 12
-#define SPI_CLOCK_DIV8 24
-#define SPI_CLOCK_DIV16 48
-#define SPI_CLOCK_DIV32 96
-#define SPI_CLOCK_DIV64 192
-#define SPI_CLOCK_DIV128 255
+  #define SPI_CLOCK_DIV2   6
+  #define SPI_CLOCK_DIV4   12
+  #define SPI_CLOCK_DIV8   24
+  #define SPI_CLOCK_DIV16  48
+  #define SPI_CLOCK_DIV32  96
+  #define SPI_CLOCK_DIV64  192
+  #define SPI_CLOCK_DIV128 255
 #endif
 
 #endif

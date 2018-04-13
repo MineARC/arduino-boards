@@ -20,7 +20,7 @@
 #define _VARIANT_PATHFINDER_
 
 // The definitions here needs a SAMD core >=1.6.6
-#define ARDUINO_SAMD_VARIANT_COMPLIANCE 10606
+#define ARDUINO_SAMD_VARIANT_COMPLIANCE 10610
 
 /*----------------------------------------------------------------------------
  *        Definitions
@@ -140,7 +140,7 @@ static const uint8_t RX2 = PIN_SERIAL2_RX;
 #define PIN_WIRE_SDA (31u)
 #define PIN_WIRE_SCL (32u)
 #define PERIPH_WIRE sercom3
-#define WIRE_IT_HANDLER SERCOM3_Alt_Handler
+#define WIRE_IT_HANDLER SERCOM3_Handler
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
@@ -157,7 +157,7 @@ static const uint8_t SCL1 = PIN_WIRE1_SCL;
 /*
  * SPI Interfaces
  */
-#define SPI_INTERFACES_COUNT 1
+#define SPI_INTERFACES_COUNT 0
 
 // SPI
 #define PIN_SPI_SCK (35u)
@@ -199,7 +199,7 @@ extern SERCOM sercom3;
 
 extern Uart Serial;
 extern Uart Serial1;
-extern Uart Serial1;
+extern Uart Serial2;
 
 #endif
 

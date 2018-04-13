@@ -46,7 +46,6 @@ class Uart : public HardwareSerial
   private:
     SERCOM *sercom;
     RingBuffer rxBuffer;
-    RingBuffer txBuffer;
 
     uint8_t uc_pinRX;
     uint8_t uc_pinTX;

@@ -26,7 +26,7 @@ extern "C" {
 /** Tick Counter united by ms */
 static volatile uint32_t _ulTickCount=0 ;
 
-unsigned long millis( void )
+uint32_t millis( void )
 {
 // todo: ensure no interrupts
   return _ulTickCount ;
@@ -36,7 +36,7 @@ unsigned long millis( void )
 // Theory: repeatedly take readings of SysTick counter, millis counter and SysTick interrupt pending flag.
 // When it appears that millis counter and pending is stable and SysTick hasn't rolled over, use these
 // values to calculate micros. If there is a pending SysTick, add one to the millis counter in the calculation.
-unsigned long micros( void )
+uint32_t micros( void )
 {
   uint32_t ticks, ticks2;
   uint32_t pend, pend2;
@@ -61,7 +61,7 @@ unsigned long micros( void )
   // a runtime multiplication and shift, saving a few cycles
 }
 
-void delay( unsigned long ms )
+void delay( uint32_t ms )
 {
   if ( ms == 0 )
   {

@@ -72,13 +72,22 @@ void init( void )
 //  PM->APBAMASK.reg |= PM_APBAMASK_EIC ;
 
   // Clock SERCOM for Serial
-  PM->APBCMASK.reg |= PM_APBCMASK_SERCOM0 | PM_APBCMASK_SERCOM1 | PM_APBCMASK_SERCOM2 | PM_APBCMASK_SERCOM3 ;
+  PM->APBCMASK.reg |= PM_APBCMASK_SERCOM0 | PM_APBCMASK_SERCOM1 | PM_APBCMASK_SERCOM2 | PM_APBCMASK_SERCOM3 | PM_APBCMASK_SERCOM4 | PM_APBCMASK_SERCOM5 ;
 
   // Clock TC/TCC for Pulse and Analog
   PM->APBCMASK.reg |= PM_APBCMASK_TCC0 | PM_APBCMASK_TCC1 | PM_APBCMASK_TCC2 | PM_APBCMASK_TC3 | PM_APBCMASK_TC4 | PM_APBCMASK_TC5 ;
 
+  // ATSAMR, for example, doesn't have a DAC
+#ifdef PM_APBCMASK_DAC
   // Clock ADC/DAC for Analog
   PM->APBCMASK.reg |= PM_APBCMASK_ADC | PM_APBCMASK_DAC ;
+#endif
+
+  // Setup all pins (digital and analog) in INPUT mode (default is nothing)
+  for (uint32_t ul = 0 ; ul < NUM_DIGITAL_PINS ; ul++ )
+  {
+    pinMode( ul, INPUT ) ;
+  }
 
   // Initialize Analog Controller
   // Setting clock
@@ -106,8 +115,8 @@ void init( void )
   analogReference( AR_DEFAULT ) ; // Analog Reference is AREF pin (3.3v)
 
   SYSCTRL->VREF.reg |= SYSCTRL_VREF_TSEN; // Enable the temperature sensor  
-  
-  while( ADC->STATUS.bit.SYNCBUSY == 1 ); // Wait for synchronization of registers between the clock domains  
+
+  while( ADC->STATUS.bit.SYNCBUSY == 1 ); // Wait for synchronization of registers between the clock domains
 
   // Initialize DAC
   // Setting clock
@@ -116,9 +125,13 @@ void init( void )
                       GCLK_CLKCTRL_GEN_GCLK0     | // Generic Clock Generator 0 is source
                       GCLK_CLKCTRL_CLKEN ;
 
+ // ATSAMR, for example, doesn't have a DAC
+#ifdef DAC
   while ( DAC->STATUS.bit.SYNCBUSY == 1 ); // Wait for synchronization of registers between the clock domains
   DAC->CTRLB.reg = DAC_CTRLB_REFSEL_AVCC | // Using the 3.3V reference
                    DAC_CTRLB_EOEN ;        // External Output Enable (Vout)
+#endif
+
 }
 
 #ifdef __cplusplus

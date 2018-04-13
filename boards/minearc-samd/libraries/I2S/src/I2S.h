@@ -51,7 +51,7 @@ public:
   virtual size_t write(uint8_t);
   virtual size_t write(const uint8_t *buffer, size_t size);
 
-  virtual int availableForWrite();
+  virtual size_t availableForWrite();
 
   int read(void* buffer, size_t size);
 
@@ -107,8 +107,6 @@ private:
 
 #if I2S_INTERFACES_COUNT > 0
 extern I2SClass I2S;
-#else
-#error "I2S is not supported on your board!"
 #endif
 
 #endif

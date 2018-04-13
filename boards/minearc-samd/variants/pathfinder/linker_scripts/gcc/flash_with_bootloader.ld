@@ -25,7 +25,7 @@
  */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000+0x2000, LENGTH = 0x00010000-0x2000 /* First 8KB used by bootloader */
+  FLASH (rx) : ORIGIN = 0x00000000+0x2000, LENGTH = 0x00040000-0x2000 /* First 8KB used by bootloader */
   RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00008000
 }
 
@@ -66,6 +66,8 @@ SECTIONS
 {
 	.text :
 	{
+		__text_start__ = .;
+
 		KEEP(*(.isr_vector))
 		*(.text*)
 

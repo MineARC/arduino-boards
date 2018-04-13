@@ -173,16 +173,6 @@ int SERCOM::writeDataUART(uint8_t data)
   return 1;
 }
 
-void SERCOM::enableDataRegisterEmptyInterruptUART()
-{
-  sercom->USART.INTENSET.reg |= SERCOM_USART_INTENSET_DRE;
-}
-
-void SERCOM::disableDataRegisterEmptyInterruptUART()
-{
-  sercom->USART.INTENCLR.reg = SERCOM_USART_INTENCLR_DRE;
-}
-
 /*	=========================
  *	===== Sercom SPI
  *	=========================
@@ -370,7 +360,7 @@ void SERCOM::enableWIRE()
 {
   // I2C Master and Slave modes share the ENABLE bit function.
 
-  // Enable the Iï¿½C master mode
+  // Enable the I²C master mode
   sercom->I2CM.CTRLA.bit.ENABLE = 1 ;
 
   while ( sercom->I2CM.SYNCBUSY.bit.ENABLE != 0 )
@@ -391,7 +381,7 @@ void SERCOM::disableWIRE()
 {
   // I2C Master and Slave modes share the ENABLE bit function.
 
-  // Enable the Iï¿½C master mode
+  // Enable the I²C master mode
   sercom->I2CM.CTRLA.bit.ENABLE = 0 ;
 
   while ( sercom->I2CM.SYNCBUSY.bit.ENABLE != 0 )
@@ -662,6 +652,20 @@ void SERCOM::initClockNVIC( void )
     clockId = GCM_SERCOM3_CORE;
     IdNvic = SERCOM3_IRQn;
   }
+#if defined(SERCOM4)
+  else if(sercom == SERCOM4)
+  {
+    clockId = GCM_SERCOM4_CORE;
+    IdNvic = SERCOM4_IRQn;
+  }
+#endif
+#if defined(SERCOM5)
+  else if(sercom == SERCOM5)
+  {
+    clockId = GCM_SERCOM5_CORE;
+    IdNvic = SERCOM5_IRQn;
+  }
+#endif
 
   if ( IdNvic == PendSV_IRQn )
   {
