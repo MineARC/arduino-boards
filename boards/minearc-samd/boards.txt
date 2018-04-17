@@ -17,22 +17,18 @@
 pathfinder.name=Pathfinder
 pathfinder.vid.0=0xFFFF
 pathfinder.pid.0=0x0001
-pathfinder.upload.tool=bossac
-pathfinder.upload.protocol=sam-ba
 pathfinder.upload.maximum_size=262144
-pathfinder.upload.use_1200bps_touch=true
-pathfinder.upload.wait_for_upload_port=true
-pathfinder.upload.native_usb=true
 pathfinder.build.mcu=cortex-m0plus
 pathfinder.build.f_cpu=48000000L
 pathfinder.build.usb_product="Pathfinder"
 pathfinder.build.usb_manufacturer="MineARC"
 pathfinder.build.board=Pathfinder
 pathfinder.build.core=arduino
-pathfinder.build.extra_flags=-DCRYSTALLESS -D__SAMD21E18A__ {build.usb_flags}
+pathfinder.build.extra_flags=-DCRYSTALLESS -D__SAMD21E18A__ -DARM_MATH_CM0PLUS {build.usb_flags}
 pathfinder.build.ldscript=linker_scripts/gcc/flash_without_bootloader.ld
 pathfinder.build.openocdscript=openocd_scripts/pathfinder.cfg
 pathfinder.build.variant=pathfinder
 pathfinder.build.variant_system_lib=
 pathfinder.build.vid=0xFFFF
-pathfinder.build.pid=0x0000
+pathfinder.build.pid=0x0001
+

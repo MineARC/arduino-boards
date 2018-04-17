@@ -47,8 +47,8 @@ using the command line:
     arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -c -Os -W -ffunction-sections -fdata-sections \
                       -nostdlib --param max-inline-insns-single=500 -fno-exceptions -MMD \
                       -DF_CPU=48000000L -DARDUINO=10602 -DARDUINO_SAMD_ZERO -DARDUINO_ARCH_SAMD \
-                      -D__SAMD21E18A__ -DCRYSTALLESS -DUSB_VID=0x2341 -DUSB_PID=0x004d -DUSBCON \
-                      -DUSB_MANUFACTURER="Arduino LLC" -DUSB_PRODUCT="Arduino Zero" \
+                      -D__SAMD21E18A__ -DCRYSTALLESS -DUSB_VID=0xFFFF -DUSB_PID=0x0001 -DUSBCON \
+                      -DUSB_MANUFACTURER="MineARC" -DUSB_PRODUCT="Arduino Zero" \
                       -I/Code/arduino/build/linux/work/hardware/tools/CMSIS/CMSIS/Include/ \
                       -I/Code/arduino/build/linux/work/hardware/tools/CMSIS/Device/ATMEL/ \
                       -I/Code/arduino/build/linux/work/hardware/arduino/samd/cores/arduino \
