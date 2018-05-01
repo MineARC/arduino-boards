@@ -43,9 +43,9 @@ void TwoWire::begin(void) {
   pinPeripheral(_uc_pinSCL, g_APinDescription[_uc_pinSCL].ulPinType);
 }
 
-void TwoWire::begin(uint8_t address) {
+void TwoWire::begin(uint8_t address, bool enableGeneralCall) {
   //Slave mode
-  sercom->initSlaveWIRE(address);
+  sercom->initSlaveWIRE(address, enableGeneralCall);
   sercom->enableWIRE();
 
   pinPeripheral(_uc_pinSDA, g_APinDescription[_uc_pinSDA].ulPinType);
@@ -273,6 +273,15 @@ void TwoWire::onService(void)
 }
 
 #if WIRE_INTERFACES_COUNT > 0
+  /* In case new variant doesn't define these macros,
+   * we put here the ones for Arduino Zero.
+   *
+   * These values should be different on some variants!
+   */
+  #ifndef PERIPH_WIRE
+    #define PERIPH_WIRE          sercom3
+    #define WIRE_IT_HANDLER      SERCOM3_Handler
+  #endif // PERIPH_WIRE
   TwoWire Wire(&PERIPH_WIRE, PIN_WIRE_SDA, PIN_WIRE_SCL);
 
   void WIRE_IT_HANDLER(void) {

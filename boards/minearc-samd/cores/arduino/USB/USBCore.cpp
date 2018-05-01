@@ -16,14 +16,11 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#if defined(USBCON)
+
 #include <Arduino.h>
 
-// there are ~slight~ CMSIS differences :/
-#ifdef __SAMR21G18A__
-  #include "SAMR21_USBDevice.h"
-#else
-  #include "SAMD21_USBDevice.h"
-#endif
+#include "SAMD21_USBDevice.h"
 #include "PluggableUSB.h"
 
 #include <stdlib.h>
@@ -31,11 +28,7 @@
 #include <stdint.h>
 #include <limits.h>
 
-#ifdef __SAMR21G18A__
-USBDevice_SAMR21G18x usbd;
-#else
 USBDevice_SAMD21G18x usbd;
-#endif
 
 /** Pulse generation counters to keep track of the number of milliseconds remaining for each pulse type */
 #define TX_RX_LED_PULSE_MS 100
@@ -186,6 +179,15 @@ uint32_t USBDeviceClass::sendConfiguration(uint32_t maxlen)
 	return true;
 }
 
+static void utox8(uint32_t val, char* s) {
+	for (int i = 0; i < 8; i++) {
+		int d = val & 0XF;
+		val = (val >> 4);
+
+		s[7 - i] = d > 9 ? 'A' + d - 10 : '0' + d;
+	}
+}
+
 bool USBDeviceClass::sendDescriptor(USBSetup &setup)
 {
 	uint8_t t = setup.wValueH;
@@ -230,8 +232,19 @@ bool USBDeviceClass::sendDescriptor(USBSetup &setup)
 		}
 		else if (setup.wValueL == ISERIAL) {
 #ifdef PLUGGABLE_USB_ENABLED
+			// from section 9.3.3 of the datasheet
+			#define SERIAL_NUMBER_WORD_0	*(volatile uint32_t*)(0x0080A00C)
+			#define SERIAL_NUMBER_WORD_1	*(volatile uint32_t*)(0x0080A040)
+			#define SERIAL_NUMBER_WORD_2	*(volatile uint32_t*)(0x0080A044)
+			#define SERIAL_NUMBER_WORD_3	*(volatile uint32_t*)(0x0080A048)
+
 			char name[ISERIAL_MAX_LEN];
-			PluggableUSB().getShortName(name);
+			utox8(SERIAL_NUMBER_WORD_0, &name[0]);
+			utox8(SERIAL_NUMBER_WORD_1, &name[8]);
+			utox8(SERIAL_NUMBER_WORD_2, &name[16]);
+			utox8(SERIAL_NUMBER_WORD_3, &name[24]);
+
+			PluggableUSB().getShortName(&name[32]);
 			return sendStringDescriptor((uint8_t*)name, setup.wLength);
 #endif
 		}
@@ -441,7 +454,9 @@ void USBDeviceClass::initEP(uint32_t ep, uint32_t config)
 	}
 	else if (config == (USB_ENDPOINT_TYPE_BULK | USB_ENDPOINT_OUT(0)))
 	{
-		epHandlers[ep] = new DoubleBufferedEPOutHandler(usbd, ep, 256);
+		if (epHandlers[ep] == NULL) {
+			epHandlers[ep] = new DoubleBufferedEPOutHandler(usbd, ep, 256);
+		}
 	}
 	else if (config == (USB_ENDPOINT_TYPE_BULK | USB_ENDPOINT_IN(0)))
 	{
@@ -957,3 +972,4 @@ void USBDeviceClass::ISRHandler()
 // USBDevice class instance
 USBDeviceClass USBDevice;
 
+#endif
