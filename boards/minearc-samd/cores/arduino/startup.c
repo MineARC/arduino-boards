@@ -47,7 +47,7 @@
 void SystemInit( void )
 {
   /* Set 1 Flash Wait State for 48MHz, cf tables 20.9 and 35.27 in SAMD21 Datasheet */
-  NVMCTRL->CTRLB.bit.RWS = NVMCTRL_CTRLB_RWS_HALF_Val ;
+  NVMCTRL->CTRLB.bit.RWS = NVMCTRL_CTRLB_RWS_SINGLE_Val ;
 
   /* Turn on the digital interface clock */
   PM->APBAMASK.reg |= PM_APBAMASK_GCLK ;
@@ -227,7 +227,7 @@ void SystemInit( void )
   /* ----------------------------------------------------------------------------------------------
    * 5) Switch Generic Clock Generator 0 to DFLL48M. CPU will run at 48MHz.
    */
-  GCLK->GENDIV.reg = GCLK_GENDIV_ID( GENERIC_CLOCK_GENERATOR_MAIN ) ; // Generic Clock Generator 0
+  GCLK->GENDIV.reg = GCLK_GENDIV_ID( GENERIC_CLOCK_GENERATOR_MAIN ) | GCLK_GENDIV_DIV(2) ; // Generic Clock Generator 0
 
   while ( GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY )
   {

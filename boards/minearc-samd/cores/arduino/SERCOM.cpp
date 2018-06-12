@@ -88,6 +88,18 @@ void SERCOM::initPads(SercomUartTXPad txPad, SercomRXPad rxPad)
   sercom->USART.CTRLB.reg |= SERCOM_USART_CTRLB_TXEN | SERCOM_USART_CTRLB_RXEN ;
 }
 
+void SERCOM::setReceiverUART(bool enable)
+{
+  sercom->USART.CTRLB.bit.RXEN = enable;
+  while(sercom->USART.SYNCBUSY.bit.CTRLB);
+}
+
+void SERCOM::setTransmitterUART(bool enable)
+{
+  sercom->USART.CTRLB.bit.TXEN = enable;
+  while(sercom->USART.SYNCBUSY.bit.CTRLB);
+}
+
 void SERCOM::resetUART()
 {
   // Start the Software Reset
