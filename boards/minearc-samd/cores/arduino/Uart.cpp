@@ -88,10 +88,9 @@ void Uart::flush()
   sercom->flushUART();
 }
 
-void Uart::setTransmit(bool enable)
+void Uart::setTransmitter(bool enable)
 {
   sercom->setTransmitterUART(enable);
-  sercom->setReceiverUART(!enable);
 }
 
 void Uart::IrqHandler()

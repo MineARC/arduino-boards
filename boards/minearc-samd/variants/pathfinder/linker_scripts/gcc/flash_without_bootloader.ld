@@ -25,7 +25,7 @@
  */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x00040000
+  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x00020000
   RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00008000
 }
 
@@ -58,7 +58,6 @@ MEMORY
  *   __StackLimit
  *   __StackTop
  *   __stack
- *   __ram_end__
  */
 ENTRY(Reset_Handler)
 
@@ -68,6 +67,9 @@ SECTIONS
 	{
 		__text_start__ = .;
 
+		KEEP(*(.sketch_boot))
+
+		. = ALIGN(0x0000);
 		KEEP(*(.isr_vector))
 		*(.text*)
 
@@ -169,7 +171,7 @@ SECTIONS
 		PROVIDE_HIDDEN (__fini_array_end = .);
 
 		KEEP(*(.jcr*))
-		. = ALIGN(4);
+		. = ALIGN(16);
 		/* All data end */
 		__data_end__ = .;
 
@@ -207,7 +209,7 @@ SECTIONS
 	__StackLimit = __StackTop - SIZEOF(.stack_dummy);
 	PROVIDE(__stack = __StackTop);
 
-	__ram_end__ = ORIGIN(RAM) + LENGTH(RAM) -1;
+	__ram_end__ = ORIGIN(RAM) + LENGTH(RAM) -1 ;
 
 	/* Check if data + heap + stack exceeds RAM limit */
 	ASSERT(__StackLimit >= __HeapLimit, "region RAM overflowed with stack")

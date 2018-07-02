@@ -16,8 +16,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _VARIANT_PATHFINDER_
-#define _VARIANT_PATHFINDER_
+#ifndef _VARIANT_VOLTRON_
+#define _VARIANT_VOLTRON_
 
 // The definitions here needs a SAMD core >=1.6.6
 #define ARDUINO_SAMD_VARIANT_COMPLIANCE 10610
@@ -100,70 +100,33 @@ static const uint8_t DAC0 = PIN_DAC0;
  * Serial interfaces
  */
 
-// Serial
-#define PIN_SERIAL_TX (27ul)
-#define PIN_SERIAL_RX (28ul)
-#define PIN_SERIAL_RTS (29ul)
-#define PIN_SERIAL_CTS (30ul)
-#define PAD_SERIAL_TX (UART_TX_RTS_CTS_PAD_0_2_3)
-#define PAD_SERIAL_RX (SERCOM_RX_PAD_1)
+// Serial2
+#define PIN_SERIAL_TX (29ul)
+#define PIN_SERIAL_RX (29ul)
+#define PAD_SERIAL_TX (UART_TX_PAD_0)
+#define PAD_SERIAL_RX (SERCOM_RX_PAD_0)
 
 static const uint8_t TX = PIN_SERIAL_TX;
 static const uint8_t RX = PIN_SERIAL_RX;
-static const uint8_t RTS = PIN_SERIAL_RTS;
-static const uint8_t CTS = PIN_SERIAL_CTS;
-
-// Serial1
-#define PIN_SERIAL1_TX (38ul)
-#define PIN_SERIAL1_RX (38ul)
-#define PAD_SERIAL1_TX (UART_TX_PAD_0)
-#define PAD_SERIAL1_RX (SERCOM_RX_PAD_0)
-
-static const uint8_t TX1 = PIN_SERIAL1_TX;
-static const uint8_t RX1 = PIN_SERIAL1_RX;
 
 /*
  * Wire Interfaces
  */
-#define WIRE_INTERFACES_COUNT 2
+#define WIRE_INTERFACES_COUNT 1
 
 // Wire
-#define PIN_WIRE_SDA (31u)
-#define PIN_WIRE_SCL (32u)
+#define PIN_WIRE_SDA (27u)
+#define PIN_WIRE_SCL (28u)
 #define PERIPH_WIRE sercom3
 #define WIRE_IT_HANDLER SERCOM3_Handler
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
-// Wire1
-#define PIN_WIRE1_SDA (33u)
-#define PIN_WIRE1_SCL (34u)
-#define PERIPH_WIRE1 sercom2
-#define WIRE1_IT_HANDLER SERCOM2_Handler
-
-static const uint8_t SDA1 = PIN_WIRE1_SDA;
-static const uint8_t SCL1 = PIN_WIRE1_SCL;
-
 /*
  * SPI Interfaces
  */
-#define SPI_INTERFACES_COUNT 1
-
-// SPI
-#define PIN_SPI_SS (16u)
-#define PIN_SPI_SCK (35u)
-#define PIN_SPI_MISO (36u)
-#define PIN_SPI_MOSI (37u)
-#define PERIPH_SPI sercom1
-
-#define PAD_SPI_TX SPI_PAD_3_SCK_1
-#define PAD_SPI_RX SERCOM_RX_PAD_2
-
-static const uint8_t SS = PIN_SPI_SS;
-static const uint8_t SCK = PIN_SPI_SCK;
-static const uint8_t MISO = PIN_SPI_MISO;
-static const uint8_t MOSI = PIN_SPI_MOSI;
+#define SPI_INTERFACES_COUNT 0
 
 /*
  * USB
@@ -184,14 +147,13 @@ static const uint8_t MOSI = PIN_SPI_MOSI;
 /*	=========================
  *	===== SERCOM DEFINITION
  *	=========================
- */
+*/
 extern SERCOM sercom0;
 extern SERCOM sercom1;
 extern SERCOM sercom2;
 extern SERCOM sercom3;
 
 extern Uart Serial;
-extern Uart Serial1;
 
 #endif
 
@@ -215,4 +177,4 @@ extern Uart Serial1;
 #define SERIAL_PORT_MONITOR SerialUSB
 #define SERIAL_PORT_HARDWARE Serial
 
-#endif // _VARIANT_PATHFINDER_
+#endif // _VARIANT_VOLTRON_

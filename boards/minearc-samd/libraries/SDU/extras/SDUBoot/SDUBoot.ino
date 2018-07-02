@@ -16,19 +16,17 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <SD.h>
 #include <FlashStorage.h>
+#include <SD.h>
 
-#define SDU_START    0x2000
-#define SDU_SIZE     0x4000
-
-#define SKETCH_START (uint32_t*)(SDU_START + SDU_SIZE)
+const uint32_t SDU_START = 0x0000;
+const uint32_t SDU_SIZE = 0x4000;
+const uint32_t SKETCH_START = SDU_START + SDU_SIZE;
+const char *UPDATE_FILE = "UPDATE.BIN";
 
 #ifndef SDCARD_SS_PIN
-#define SDCARD_SS_PIN 4
+#define SDCARD_SS_PIN 16
 #endif
-
-#define UPDATE_FILE "UPDATE.BIN"
 
 FlashClass flash;
 
@@ -44,49 +42,34 @@ int main() {
 
   if (SD.begin(SDCARD_SS_PIN) && SD.exists(UPDATE_FILE)) {
     File updateFile = SD.open(UPDATE_FILE);
+
     uint32_t updateSize = updateFile.size();
-    bool updateFlashed = false;
 
-    if (updateSize > SDU_SIZE) {
-      // skip the SDU section
-      updateFile.seek(SDU_SIZE);
-      updateSize -= SDU_SIZE;
+    uint32_t flashAddress = SKETCH_START;
 
-      uint32_t flashAddress = (uint32_t)SKETCH_START;
+    // erase the pages
+    flash.erase((void *)flashAddress, updateSize);
 
-      // erase the pages
-      flash.erase((void*)flashAddress, updateSize);
-
-      uint8_t buffer[512];
-
-      // write the pages
-      for (uint32_t i = 0; i < updateSize; i += sizeof(buffer)) {
-        updateFile.read(buffer, sizeof(buffer));
-
-        flash.write((void*)flashAddress, buffer, sizeof(buffer));
-
-        flashAddress += sizeof(buffer);
-      }
-
-      updateFlashed = true;
+    uint8_t buffer[512];
+    // write the pages
+    for (uint32_t i = 0, bytes = 0; i < updateSize; i += bytes, flashAddress += bytes) {
+      bytes = updateFile.read(buffer, sizeof(buffer));
+      flash.write((void *)flashAddress, buffer, bytes);
     }
 
     updateFile.close();
 
-    if (updateFlashed) {
-      SD.remove(UPDATE_FILE);
-    }
+    SD.remove(UPDATE_FILE);
   }
 
   // jump to the sketch
-  __set_MSP(*SKETCH_START);
+  __set_MSP(SKETCH_START);
 
-  //Reset vector table address
-  SCB->VTOR = ((uint32_t)(SKETCH_START) & SCB_VTOR_TBLOFF_Msk);
+  // Reset vector table address
+  SCB->VTOR = SKETCH_START & SCB_VTOR_TBLOFF_Msk;
 
   // address of Reset_Handler is written by the linker at the beginning of the .text section (see linker script)
-  uint32_t resetHandlerAddress = (uint32_t) * (SKETCH_START + 1);
+  uint32_t resetHandlerAddress = SKETCH_START + 1;
   // jump to reset handler
-  asm("bx %0"::"r"(resetHandlerAddress));
+  asm("bx %0" ::"r"(resetHandlerAddress));
 }
-

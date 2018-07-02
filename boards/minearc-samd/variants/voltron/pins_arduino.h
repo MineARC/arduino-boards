@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2017 Arduino LLC.  All right reserved.
+  Copyright (c) 2014-2015 Arduino LLC.  All right reserved.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -16,15 +16,6 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <Arduino.h>
+// API compatibility
+#include "variant.h"
 
-#include "SDU.h"
-
-__attribute__ ((section(".sketch_boot")))
-unsigned char sduBoot[0x4000] = {
-#if defined(ARDUINO_Pathfinder)
-  #include "boot/pathfinder.h"
-#else
-  #error "Unsupported board!"
-#endif
-};
