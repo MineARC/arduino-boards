@@ -18,6 +18,8 @@
 
 #include <FlashStorage.h>
 #include <SD.h>
+#include <SPIMemory.h>
+#include <crc32.h>
 
 const uint32_t SDU_START = 0x0000;
 const uint32_t SDU_SIZE = 0x4000;
@@ -29,6 +31,7 @@ const char *UPDATE_FILE = "UPDATE.BIN";
 #endif
 
 FlashClass flash;
+SPIFlash spi_flash(SPIFLASH_SS_PIN);
 
 // Initialize C library
 extern "C" void __libc_init_array(void);
@@ -39,6 +42,8 @@ int main() {
   __libc_init_array();
 
   delay(1);
+
+  dsu_crc32_init();
 
   if (SD.begin(SDCARD_SS_PIN) && SD.exists(UPDATE_FILE)) {
     File updateFile = SD.open(UPDATE_FILE);
@@ -60,16 +65,43 @@ int main() {
     updateFile.close();
 
     SD.remove(UPDATE_FILE);
-  }
+  } /* else if (spi_flash.begin() && spiflash.exists(UPDATE_FILE)) {
+     File updateFile = spiflash.open(UPDATE_FILE);
 
-  // jump to the sketch
-  __set_MSP(SKETCH_START);
+     uint32_t updateSize = updateFile.size();
 
-  // Reset vector table address
-  SCB->VTOR = SKETCH_START & SCB_VTOR_TBLOFF_Msk;
+     uint8_t buffer[0x1000];
+     uint32_t crc = 0xFFFFFFFF;
+     // write the pages
+     for (uint32_t i = 0, bytes = 0; i < updateSize; i += bytes, flashAddress += bytes) {
+       bytes = updateFile.read(buffer, sizeof(buffer));
+       dsu_crc32_cal((uint32_t)buffer, sizeof(buffer), &crc);
+     }
 
-  // address of Reset_Handler is written by the linker at the beginning of the .text section (see linker script)
-  uint32_t resetHandlerAddress = SKETCH_START + 1;
-  // jump to reset handler
-  asm("bx %0" ::"r"(resetHandlerAddress));
+     uint32_t flashAddress = SKETCH_START;
+
+     // erase the pages
+     flash.erase((void *)flashAddress, updateSize);
+
+     // write the pages
+     for (uint32_t i = 0, bytes = 0; i < updateSize; i += bytes, flashAddress += bytes) {
+       bytes = updateFile.read(buffer, sizeof(buffer));
+       flash.write((void *)flashAddress, buffer, bytes);
+     }*/
+
+  updateFile.close();
+
+  spiflash.remove(UPDATE_FILE);
+}
+
+// jump to the sketch
+__set_MSP(SKETCH_START);
+
+// Reset vector table address
+SCB->VTOR = SKETCH_START & SCB_VTOR_TBLOFF_Msk;
+
+// address of Reset_Handler is written by the linker at the beginning of the .text section (see linker script)
+uint32_t resetHandlerAddress = SKETCH_START + 1;
+// jump to reset handler
+asm("bx %0" ::"r"(resetHandlerAddress));
 }
