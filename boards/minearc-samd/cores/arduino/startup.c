@@ -227,7 +227,9 @@ void SystemInit( void )
   /* ----------------------------------------------------------------------------------------------
    * 5) Switch Generic Clock Generator 0 to DFLL48M. CPU will run at 48MHz.
    */
-  GCLK->GENDIV.reg = GCLK_GENDIV_ID( GENERIC_CLOCK_GENERATOR_MAIN ) | GCLK_GENDIV_DIV(2) ; // Generic Clock Generator 0
+  #define MCK_DIV (GCLK_GENDIV_DIV_Msk & ((48000000ul / VARIANT_MCK) << GCLK_GENDIV_DIV_Pos))
+
+  GCLK->GENDIV.reg = GCLK_GENDIV_ID( GENERIC_CLOCK_GENERATOR_MAIN ) | MCK_DIV ; // Generic Clock Generator 0
 
   while ( GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY )
   {
