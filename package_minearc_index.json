@@ -14,8 +14,8 @@
           "architecture": "samd",
           "version": "1.2.0",
           "category": "Contributed",
-          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.1.4.zip",
-          "archiveFileName": "minearc-samd-v1.1.4.zip",
+          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.2.0.zip",
+          "archiveFileName": "minearc-samd-v1.2.0.zip",
           "checksum": "SHA-256:F0CCAD234E926B84A6C7BB498DC01F91AAF24C67DBED07AB4463121A8C728C7E",
           "size": "7315466",
           "help": {
