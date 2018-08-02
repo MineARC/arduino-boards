@@ -24,6 +24,12 @@
           "boards": [
             {
               "name": "Pathfinder"
+            },
+            {
+              "name": "Voltron"
+            },
+            {
+              "name": "Bloodhound"
             }
           ],
           "toolsDependencies": [
