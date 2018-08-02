@@ -62,3 +62,27 @@ voltron.build.variant_system_lib=
 voltron.build.vid=0xFFFF
 voltron.build.pid=0x0002
 
+bloodhound.name=Bloodhound
+bloodhound.vid.0=0xFFFF
+bloodhound.pid.0=0x0003
+bloodhound.upload.tool=bossac
+bloodhound.upload.protocol=sam-ba
+bloodhound.upload.maximum_size=130816
+bloodhound.upload.offset=0x0000
+bloodhound.upload.use_1200bps_touch=true
+bloodhound.upload.wait_for_upload_port=true
+bloodhound.upload.native_usb=true
+bloodhound.build.mcu=cortex-m0plus
+bloodhound.build.f_cpu=24000000L
+bloodhound.build.usb_product="Bloodhound"
+bloodhound.build.usb_manufacturer="MineARC"
+bloodhound.build.board=Bloodhound
+bloodhound.build.core=arduino
+bloodhound.build.extra_flags=-D__SAMD21G18A__ -DARM_MATH_CM0PLUS {build.usb_flags}
+bloodhound.build.ldscript=linker_scripts/gcc/flash_with_bootloader.ld
+bloodhound.build.openocdscript=openocd_scripts/bloodhound.cfg
+bloodhound.build.variant=bloodhound
+bloodhound.build.variant_system_lib=
+bloodhound.build.vid=0xFFFF
+bloodhound.build.pid=0x0003
+

@@ -37,11 +37,19 @@ void Watchdog::setupWDT(Clock_Speed div, Window_Size period) {
   GCLK->GENDIV.reg = GCLK_GENDIV_ID(5) | GCLK_GENDIV_DIV(div);
   while (GCLK->STATUS.bit.SYNCBUSY)
     ;
+
+#ifdef CRYSTALLESS
   // Now enable clock generator 5 using the low power 32khz oscillator and the
   // clock divisor set above.
   GCLK->GENCTRL.reg = GCLK_GENCTRL_ID(5) | GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_OSCULP32K | GCLK_GENCTRL_DIVSEL;
+#else
+  // Now enable clock generator 5 using the external 32khz oscillator and the
+  // clock divisor set above.
+  GCLK->GENCTRL.reg = GCLK_GENCTRL_ID(5) | GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_XOSC32K | GCLK_GENCTRL_DIVSEL;
+#endif
   while (GCLK->STATUS.bit.SYNCBUSY)
     ; // Syncronize write to GENCTRL reg.
+
   // Turn on the WDT clock using clock generator 5 as the source.
   GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID_WDT | GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN(5);
   while (GCLK->STATUS.bit.SYNCBUSY)

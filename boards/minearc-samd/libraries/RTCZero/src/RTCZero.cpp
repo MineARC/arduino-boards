@@ -382,6 +382,7 @@ void RTCZero::configureClock(Clock_Speed div) {
   GCLK->GENDIV.reg = GCLK_GENDIV_ID(4) | GCLK_GENDIV_DIV(div);
   while (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY)
     ;
+
 #ifdef CRYSTALLESS
   GCLK->GENCTRL.reg = (GCLK_GENCTRL_GENEN | GCLK_GENCTRL_SRC_OSCULP32K | GCLK_GENCTRL_RUNSTDBY | GCLK_GENCTRL_ID(4) |
                        GCLK_GENCTRL_DIVSEL);
@@ -391,6 +392,7 @@ void RTCZero::configureClock(Clock_Speed div) {
 #endif
   while (GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY)
     ;
+
   GCLK->CLKCTRL.reg = (uint32_t)((GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK2 | (RTC_GCLK_ID << GCLK_CLKCTRL_ID_Pos)));
   while (GCLK->STATUS.bit.SYNCBUSY)
     ;
