@@ -15,8 +15,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 pathfinder.name=Pathfinder
-pathfinder.vid.0=0xFFFF
-pathfinder.pid.0=0x0001
 pathfinder.upload.tool=bossac
 pathfinder.upload.protocol=sam-ba
 pathfinder.upload.maximum_size=130816
@@ -30,17 +28,13 @@ pathfinder.build.usb_product="Pathfinder"
 pathfinder.build.usb_manufacturer="MineARC"
 pathfinder.build.board=Pathfinder
 pathfinder.build.core=arduino
-pathfinder.build.extra_flags=-DCRYSTALLESS -D__SAMD21E18A__ -DARM_MATH_CM0PLUS {build.usb_flags}
+pathfinder.build.extra_flags=-DCRYSTALLESS -D__SAMD21E18A__ -DARM_MATH_CM0PLUS
 pathfinder.build.ldscript=linker_scripts/gcc/flash_without_bootloader.ld
 pathfinder.build.openocdscript=openocd_scripts/pathfinder.cfg
 pathfinder.build.variant=pathfinder
 pathfinder.build.variant_system_lib=
-pathfinder.build.vid=0xFFFF
-pathfinder.build.pid=0x0001
 
 voltron.name=Voltron
-voltron.vid.0=0xFFFF
-voltron.pid.0=0x0002
 voltron.upload.tool=bossac
 voltron.upload.protocol=sam-ba
 voltron.upload.maximum_size=130816
@@ -54,17 +48,13 @@ voltron.build.usb_product="Voltron"
 voltron.build.usb_manufacturer="MineARC"
 voltron.build.board=Voltron
 voltron.build.core=arduino
-voltron.build.extra_flags=-DCRYSTALLESS -D__SAMD21E18A__ -DARM_MATH_CM0PLUS {build.usb_flags}
+voltron.build.extra_flags=-DCRYSTALLESS -D__SAMD21E18A__ -DARM_MATH_CM0PLUS
 voltron.build.ldscript=linker_scripts/gcc/flash_without_bootloader.ld
 voltron.build.openocdscript=openocd_scripts/voltron.cfg
 voltron.build.variant=voltron
 voltron.build.variant_system_lib=
-voltron.build.vid=0xFFFF
-voltron.build.pid=0x0002
 
 bloodhound.name=Bloodhound
-bloodhound.vid.0=0xFFFF
-bloodhound.pid.0=0x0003
 bloodhound.upload.tool=bossac
 bloodhound.upload.protocol=sam-ba
 bloodhound.upload.maximum_size=130816
@@ -78,11 +68,9 @@ bloodhound.build.usb_product="Bloodhound"
 bloodhound.build.usb_manufacturer="MineARC"
 bloodhound.build.board=Bloodhound
 bloodhound.build.core=arduino
-bloodhound.build.extra_flags=-D__SAMD21G18A__ -DARM_MATH_CM0PLUS {build.usb_flags}
+bloodhound.build.extra_flags=-D__SAMD21G18A__ -DARM_MATH_CM0PLUS
 bloodhound.build.ldscript=linker_scripts/gcc/flash_with_bootloader.ld
 bloodhound.build.openocdscript=openocd_scripts/bloodhound.cfg
 bloodhound.build.variant=bloodhound
 bloodhound.build.variant_system_lib=
-bloodhound.build.vid=0xFFFF
-bloodhound.build.pid=0x0003
 

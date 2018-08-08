@@ -726,7 +726,7 @@ typedef struct
  *
  * \note More optimized if only used with values unknown at compile time.
  */
-#define min(a, b)   Min(a, b)
+// #define min(a, b)   Min(a, b)
 
 /** \brief Takes the maximal value of \a a and \a b.
  *
@@ -737,7 +737,7 @@ typedef struct
  *
  * \note More optimized if only used with values unknown at compile time.
  */
-#define max(a, b)   Max(a, b)
+// #define max(a, b)   Max(a, b)
 
 /** @} */
 
@@ -942,8 +942,8 @@ typedef struct
 #endif
 #define PASS      0
 #define FAIL      1
-#define LOW       0
-#define HIGH      1
+// #define LOW       0
+// #define HIGH      1
 
 typedef int8_t                  S8 ;  //!< 8-bit signed integer.
 typedef uint8_t                 U8 ;  //!< 8-bit unsigned integer.

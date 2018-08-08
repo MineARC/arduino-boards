@@ -48,7 +48,6 @@
 #define UTILS_INTERRUPT_INTERRUPT_H
 
 #include <compiler.h>
-#include <parts.h>
 
 #ifdef __cplusplus
 extern "C" {
