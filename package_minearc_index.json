@@ -12,6 +12,37 @@
         {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
+          "version": "1.2.2",
+          "category": "Contributed",
+          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.2.2.zip",
+          "archiveFileName": "minearc-samd-v1.2.2.zip",
+          "checksum": "SHA-256:040D0E6BEAB02FF39A784E7D3EA5B8CD3CB8ED53D89937E323AF316EBEE9DCAB",
+          "size": "7309447",
+          "help": {
+            "online": ""
+          },
+          "boards": [
+            {
+              "name": "Pathfinder"
+            },
+            {
+              "name": "Voltron"
+            },
+            {
+              "name": "Bloodhound"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.7.0"
+            }
+          ]
+        },
+        {
+          "name": "MineARC SAMD Boards",
+          "architecture": "samd",
           "version": "1.2.1",
           "category": "Contributed",
           "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.2.1.zip",
