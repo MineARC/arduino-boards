@@ -1,17 +1,14 @@
-# Arduino Core for SAMD21 CPU
+# Arduino Core for SAMD21 and SAMD51 CPU
 
 This repository contains the source code and configuration files of the Arduino Core
-for Atmel's SAMD21 processor (used on the Arduino/Genuino Zero, MKR1000 and MKRZero boards).
+for Atmel's SAMD21 and SAMD51 processor (used on the Arduino/Genuino Zero, MKR1000 and MKRZero boards).
 
 In particular, this adds support for the Adafruit SAMD Boards such as the Feather M0
 
-## Installation on Arduino IDE
-
-Install the Adafruit Board Support package json and then install the Adafruit SAMD board package
-
-https://learn.adafruit.com/adafruit-feather-m0-basic-proto/using-with-arduino-ide
-
 ## Bugs or Issues
+
+* AREF must be tied to 3.3V for dac to work. This is a bug in the SAMD51 silicon.
+* USB host mode doesn't work yet
 
 If you find a bug you can submit an issue here on github:
 
