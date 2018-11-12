@@ -55,22 +55,27 @@ voltron.build.variant=voltron
 voltron.build.variant_system_lib=
 
 bloodhound.name=Bloodhound
-bloodhound.upload.tool=bossac
+bloodhound.upload.tool=bossac18
 bloodhound.upload.protocol=sam-ba
-bloodhound.upload.maximum_size=130816
+bloodhound.upload.maximum_size=507904
 bloodhound.upload.offset=0x0000
 bloodhound.upload.use_1200bps_touch=true
 bloodhound.upload.wait_for_upload_port=true
 bloodhound.upload.native_usb=true
-bloodhound.build.mcu=cortex-m0plus
+bloodhound.build.mcu=cortex-m4
 bloodhound.build.f_cpu=24000000L
 bloodhound.build.usb_product="Bloodhound"
 bloodhound.build.usb_manufacturer="MineARC"
 bloodhound.build.board=Bloodhound
 bloodhound.build.core=arduino
-bloodhound.build.extra_flags=-D__SAMD21G18A__ -DARM_MATH_CM0PLUS
+bloodhound.build.extra_flags=-D__SAMD51G18A__ -D__SAMD51__ -D__FPU_PRESENT -DARM_MATH_CM4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 bloodhound.build.ldscript=linker_scripts/gcc/flash_with_bootloader.ld
 bloodhound.build.openocdscript=openocd_scripts/bloodhound.cfg
 bloodhound.build.variant=bloodhound
 bloodhound.build.variant_system_lib=
+bloodhound.compiler.arm.cmsis.ldflags="-L{build.variant.path}" -larm_cortexM4lf_math -mfloat-abi=hard -mfpu=fpv4-sp-d16
+bloodhound.menu.cache.on=Enabled
+bloodhound.menu.cache.on.build.cache_flags=-DENABLE_CACHE
+bloodhound.menu.cache.off=Disabled
+bloodhound.menu.cache.off.build.cache_flags=
 

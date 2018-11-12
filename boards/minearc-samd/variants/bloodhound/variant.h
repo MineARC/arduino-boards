@@ -19,7 +19,7 @@
 #ifndef _VARIANT_BLOODHOUND_
 #define _VARIANT_BLOODHOUND_
 
-// The definitions here needs a SAMD core >=1.6.6
+// The definitions here needs a SAMD core >=1.6.10
 #define ARDUINO_SAMD_VARIANT_COMPLIANCE 10610
 
 /*----------------------------------------------------------------------------
@@ -31,6 +31,10 @@
 
 /** Master clock frequency */
 #define VARIANT_MCK (24000000ul)
+
+#define VARIANT_GCLK0_FREQ (24000000UL)
+#define VARIANT_GCLK1_FREQ (9600000UL)
+#define VARIANT_GCLK2_FREQ (20000000UL)
 
 /*----------------------------------------------------------------------------
  *        Headers
@@ -52,20 +56,21 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 // Number of pins defined in PinDescription array
-#define PINS_COUNT (34ul)
-#define NUM_DIGITAL_PINS (24ul)
-#define NUM_ANALOG_INPUTS (10ul)
+#define PINS_COUNT (33ul)
+#define NUM_DIGITAL_PINS (25ul)
+#define NUM_ANALOG_INPUTS (8ul)
 #define NUM_ANALOG_OUTPUTS (1ul)
 #define analogInputToDigitalPin(p) ((p < NUM_ANALOG_INPUTS) ? (p) + PIN_A0 : -1)
 
 #define digitalPinToPort(P) (&(PORT->Group[g_APinDescription[P].ulPort]))
 #define digitalPinToBitMask(P) (1 << g_APinDescription[P].ulPin)
-//#define analogInPinToBit(P)        ( )
+// #define analogInPinToBit(P) ()
 #define portOutputRegister(port) (&(port->OUT.reg))
 #define portInputRegister(port) (&(port->IN.reg))
 #define portModeRegister(port) (&(port->DIR.reg))
-#define digitalPinHasPWM(P)                                                                                            \
-  (g_APinDescription[P].ulPWMChannel != NOT_ON_PWM || g_APinDescription[P].ulTCChannel != NOT_ON_TIMER)
+#define digitalPinHasPWM(P)                                                    \
+  (g_APinDescription[P].ulPWMChannel != NOT_ON_PWM ||                          \
+   g_APinDescription[P].ulTCChannel != NOT_ON_TIMER)
 
 /*
  * digitalPinToTimer(..) is AVR-specific and is not defined for SAMD
@@ -79,17 +84,16 @@ extern "C" {
 /*
  * Analog pins
  */
-#define PIN_A0 (24ul)
-#define PIN_A1 (25ul)
-#define PIN_A2 (26ul)
-#define PIN_A3 (27ul)
-#define PIN_A4 (28ul)
-#define PIN_A5 (29ul)
-#define PIN_A6 (30ul)
-#define PIN_A7 (31ul)
-#define PIN_A8 (32ul)
-#define PIN_A9 (33ul)
-#define PIN_DAC0 (36ul)
+#define PIN_A0 (25ul)
+#define PIN_A1 (26ul)
+#define PIN_A2 (27ul)
+#define PIN_A3 (28ul)
+#define PIN_A4 (29ul)
+#define PIN_A5 (30ul)
+#define PIN_A6 (31ul)
+#define PIN_A7 (32ul)
+#define PIN_DAC0 (35ul)
+#define PIN_DAC1 (36ul)
 
 static const uint8_t A0 = PIN_A0;
 static const uint8_t A1 = PIN_A1;
@@ -99,9 +103,8 @@ static const uint8_t A4 = PIN_A4;
 static const uint8_t A5 = PIN_A5;
 static const uint8_t A6 = PIN_A6;
 static const uint8_t A7 = PIN_A7;
-static const uint8_t A8 = PIN_A8;
-static const uint8_t A9 = PIN_A9;
 static const uint8_t DAC0 = PIN_DAC0;
+static const uint8_t DAC1 = PIN_DAC1;
 #define ADC_RESOLUTION 12
 
 /*
@@ -109,13 +112,22 @@ static const uint8_t DAC0 = PIN_DAC0;
  */
 
 // Serial
-#define PIN_SERIAL_TX (44ul)
-#define PIN_SERIAL_RX (45ul)
+#define PIN_SERIAL_TX (45ul)
+#define PIN_SERIAL_RX (46ul)
 #define PAD_SERIAL_TX (UART_TX_PAD_0)
 #define PAD_SERIAL_RX (SERCOM_RX_PAD_1)
 
 static const uint8_t TX = PIN_SERIAL_TX;
 static const uint8_t RX = PIN_SERIAL_RX;
+
+// Serial1
+#define PIN_SERIAL1_TX (47ul)
+#define PIN_SERIAL1_RX (48ul)
+#define PAD_SERIAL1_TX (UART_TX_PAD_0)
+#define PAD_SERIAL1_RX (SERCOM_RX_PAD_1)
+
+static const uint8_t TX1 = PIN_SERIAL1_TX;
+static const uint8_t RX1 = PIN_SERIAL1_RX;
 
 /*
  * Wire Interfaces
@@ -125,8 +137,8 @@ static const uint8_t RX = PIN_SERIAL_RX;
 // Wire
 #define PIN_WIRE_SDA (37ul)
 #define PIN_WIRE_SCL (38ul)
-#define PERIPH_WIRE sercom3
-#define WIRE_IT_HANDLER SERCOM3_Handler
+#define PERIPH_WIRE sercom1
+#define WIRE_IT_HANDLER SERCOM1_Handler
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
@@ -134,8 +146,8 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 // Wire1
 #define PIN_WIRE1_SDA (39ul)
 #define PIN_WIRE1_SCL (40ul)
-#define PERIPH_WIRE1 sercom2
-#define WIRE1_IT_HANDLER SERCOM2_Handler
+#define PERIPH_WIRE1 sercom3
+#define WIRE1_IT_HANDLER SERCOM3_Handler
 
 static const uint8_t SDA1 = PIN_WIRE1_SDA;
 static const uint8_t SCL1 = PIN_WIRE1_SCL;
@@ -146,11 +158,11 @@ static const uint8_t SCL1 = PIN_WIRE1_SCL;
 #define SPI_INTERFACES_COUNT 1
 
 // SPI
-#define PIN_SPI_SS (4ul)
+#define PIN_SPI_SS (40ul)
 #define PIN_SPI_SCK (41ul)
 #define PIN_SPI_MISO (42ul)
 #define PIN_SPI_MOSI (43ul)
-#define PERIPH_SPI sercom1
+#define PERIPH_SPI sercom2
 
 #define PAD_SPI_TX SPI_PAD_3_SCK_1
 #define PAD_SPI_RX SERCOM_RX_PAD_2
@@ -163,8 +175,49 @@ static const uint8_t MOSI = PIN_SPI_MOSI;
 /*
  * USB
  */
-#define PIN_USB_DM (34ul)
-#define PIN_USB_DP (35ul)
+// #define PIN_USB_HOST_ENABLE (-1ul)
+#define PIN_USB_DM (33ul)
+#define PIN_USB_DP (34ul)
+
+/*
+ * I2S Interfaces
+ */
+// #define I2S_INTERFACES_COUNT 1
+
+// #define I2S_DEVICE 0
+// #define I2S_CLOCK_GENERATOR 3
+
+// #define PIN_I2S_SDO (-1u)
+// #define PIN_I2S_SDI (-1u)
+// #define PIN_I2S_SCK (-1u)
+// #define PIN_I2S_FS (-1u)
+// #define PIN_I2S_MCK (-1u)
+
+// QSPI Pins
+// #define PIN_QSPI_SCK (-1u)
+// #define PIN_QSPI_CS (-1u)
+// #define PIN_QSPI_IO0 (-1u)
+// #define PIN_QSPI_IO1 (-1u)
+// #define PIN_QSPI_IO2 (-1u)
+// #define PIN_QSPI_IO3 (-1u)
+
+// PCC Pins
+// #define PIN_PCC_DEN1 (PIN_SPI_MOSI)
+// #define PIN_PCC_DEN2 (PIN_SPI_SCK)
+// #define PIN_PCC_CLK (PIN_SPI_MISO)
+// #define PIN_PCC_D0 (-1u)
+// #define PIN_PCC_D1 (-1u)
+// #define PIN_PCC_D2 (-1u)
+// #define PIN_PCC_D3 (-1u)
+// #define PIN_PCC_D4 (-1u)
+// #define PIN_PCC_D5 (-1u)
+// #define PIN_PCC_D6 (-1u)
+// #define PIN_PCC_D7 (-1u)
+// #define PIN_PCC_D8 (-1u)
+// #define PIN_PCC_D9 (-1u)
+
+// TODO: meaningful value for this
+// #define VARIANT_QSPI_BAUD_DEFAULT 5000000
 
 #ifdef __cplusplus
 }
@@ -179,30 +232,37 @@ static const uint8_t MOSI = PIN_SPI_MOSI;
 /*	=========================
  *	===== SERCOM DEFINITION
  *	=========================
-*/
+ */
 extern SERCOM sercom0;
 extern SERCOM sercom1;
 extern SERCOM sercom2;
 extern SERCOM sercom3;
+extern SERCOM sercom4;
+extern SERCOM sercom5;
 
 extern Uart Serial;
+extern Uart Serial1;
 
 #endif
 
-// These serial port names are intended to allow libraries and architecture-neutral
-// sketches to automatically default to the correct port name for a particular type
-// of use.  For example, a GPS module would normally connect to SERIAL_PORT_HARDWARE_OPEN,
-// the first hardware serial port whose RX/TX pins are not dedicated to another use.
+// These serial port names are intended to allow libraries and
+// architecture-neutral sketches to automatically default to the correct port
+// name for a particular type of use.  For example, a GPS module would normally
+// connect to SERIAL_PORT_HARDWARE_OPEN, the first hardware serial port whose
+// RX/TX pins are not dedicated to another use.
 //
-// SERIAL_PORT_MONITOR        Port which normally prints to the Arduino Serial Monitor
+// SERIAL_PORT_MONITOR        Port which normally prints to the Arduino Serial
+// Monitor
 //
 // SERIAL_PORT_USBVIRTUAL     Port which is USB virtual serial
 //
-// SERIAL_PORT_LINUXBRIDGE    Port which connects to a Linux system via Bridge library
+// SERIAL_PORT_LINUXBRIDGE    Port which connects to a Linux system via Bridge
+// library
 //
 // SERIAL_PORT_HARDWARE       Hardware serial port, physical RX & TX pins.
 //
-// SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
+// SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.
+// Their RX & TX
 //                            pins are NOT connected to anything by default.
 
 #define SERIAL_PORT_USBVIRTUAL SerialUSB

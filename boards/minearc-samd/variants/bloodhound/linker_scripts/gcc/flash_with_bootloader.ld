@@ -25,8 +25,8 @@
  */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000+0x2000, LENGTH = 0x0001FF00-0x2000 /* First 8KB used by bootloader */
-  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00008000
+  FLASH (rx) : ORIGIN = 0x00000000+0x4000, LENGTH = 0x3FF00-0x4000 /* First 16KB used by bootloader */
+  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x20000
 }
 
 /* Linker script to place sections and symbol values. Should be used together
@@ -69,7 +69,7 @@ SECTIONS
 
 		KEEP(*(.sketch_boot))
 
-		. = ALIGN(0x2000);
+		. = ALIGN(0x4000);
 		KEEP(*(.isr_vector))
 		*(.text*)
 

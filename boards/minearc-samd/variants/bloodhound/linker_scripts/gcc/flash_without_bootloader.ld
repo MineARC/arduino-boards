@@ -25,8 +25,8 @@
  */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x0001FF00
-  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x00008000
+  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 0x3FF00
+  RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x20000
 }
 
 /* Linker script to place sections and symbol values. Should be used together
@@ -67,9 +67,7 @@ SECTIONS
 	{
 		__text_start__ = .;
 
-		KEEP(*(.sketch_boot))
-
-		. = ALIGN(0x0000);
+		. = ALIGN(4);
 		KEEP(*(.isr_vector))
 		*(.text*)
 
