@@ -153,7 +153,7 @@ extern SERCOM sercom1;
 extern SERCOM sercom2;
 extern SERCOM sercom3;
 
-extern Uart Serial;
+extern Uart Serial1;
 
 #endif
 
@@ -173,8 +173,8 @@ extern Uart Serial;
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
 
-#define SERIAL_PORT_USBVIRTUAL SerialUSB
-#define SERIAL_PORT_MONITOR SerialUSB
-#define SERIAL_PORT_HARDWARE Serial
+#define SERIAL_PORT_USBVIRTUAL Serial
+#define SERIAL_PORT_MONITOR Serial
+#define SERIAL_PORT_HARDWARE Serial1
 
 #endif // _VARIANT_VOLTRON_

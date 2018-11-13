@@ -240,8 +240,8 @@ extern SERCOM sercom3;
 extern SERCOM sercom4;
 extern SERCOM sercom5;
 
-extern Uart Serial;
 extern Uart Serial1;
+extern Uart Serial2;
 
 #endif
 
@@ -265,8 +265,8 @@ extern Uart Serial1;
 // Their RX & TX
 //                            pins are NOT connected to anything by default.
 
-#define SERIAL_PORT_USBVIRTUAL SerialUSB
-#define SERIAL_PORT_MONITOR SerialUSB
-#define SERIAL_PORT_HARDWARE Serial
+#define SERIAL_PORT_USBVIRTUAL Serial
+#define SERIAL_PORT_MONITOR Serial
+#define SERIAL_PORT_HARDWARE Serial1
 
 #endif // _VARIANT_BLOODHOUND_

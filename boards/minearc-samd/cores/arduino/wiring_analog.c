@@ -636,6 +636,7 @@ void analogWrite(uint32_t pin, uint32_t value)
   }
 }
 
+#if defined(__SAMD21__)
 // Reads temperature using internal ADC channel
 // Datasheet chapter 37.10.8 - Temperature Sensor Characteristics
 float readInternalTemperature()
@@ -719,6 +720,7 @@ float readInternalTemperature()
   int32_t temperature = roomTemperature + ((hotTemperature - roomTemperature) * (adcReading - roomReading)) / (hotReading - roomReading);
   return temperature / 1000.0f;
 }
+#endif
 
 #ifdef __cplusplus
 }
