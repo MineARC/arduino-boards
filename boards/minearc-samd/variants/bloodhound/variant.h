@@ -30,11 +30,11 @@
 #define VARIANT_MAINOSC (32768ul)
 
 /** Master clock frequency */
-#define VARIANT_MCK (24000000ul)
+#define VARIANT_MCK (120000000ul)
 
-#define VARIANT_GCLK0_FREQ (24000000UL)
-#define VARIANT_GCLK1_FREQ (9600000UL)
-#define VARIANT_GCLK2_FREQ (20000000UL)
+#define VARIANT_GCLK0_FREQ (120000000UL)
+#define VARIANT_GCLK1_FREQ (48000000UL)
+#define VARIANT_GCLK2_FREQ (100000000UL)
 
 /*----------------------------------------------------------------------------
  *        Headers
