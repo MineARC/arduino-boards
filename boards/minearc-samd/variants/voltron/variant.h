@@ -100,7 +100,7 @@ static const uint8_t DAC0 = PIN_DAC0;
  * Serial interfaces
  */
 
-// Serial2
+// Serial
 #define PIN_SERIAL_TX (29ul)
 #define PIN_SERIAL_RX (29ul)
 #define PAD_SERIAL_TX (UART_TX_PAD_0)
@@ -153,7 +153,7 @@ extern SERCOM sercom1;
 extern SERCOM sercom2;
 extern SERCOM sercom3;
 
-extern Uart Serial1;
+extern Uart Serial;
 
 #endif
 
@@ -173,8 +173,8 @@ extern Uart Serial1;
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
 
-#define SERIAL_PORT_USBVIRTUAL Serial
-#define SERIAL_PORT_MONITOR Serial
-#define SERIAL_PORT_HARDWARE Serial1
+#define SERIAL_PORT_USBVIRTUAL SerialUSB
+#define SERIAL_PORT_MONITOR SerialUSB
+#define SERIAL_PORT_HARDWARE Serial
 
 #endif // _VARIANT_VOLTRON_
