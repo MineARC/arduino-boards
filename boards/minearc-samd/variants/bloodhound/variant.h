@@ -158,10 +158,10 @@ static const uint8_t SCL1 = PIN_WIRE1_SCL;
 #define SPI_INTERFACES_COUNT 1
 
 // SPI
-#define PIN_SPI_SS (40ul)
-#define PIN_SPI_SCK (41ul)
-#define PIN_SPI_MISO (42ul)
-#define PIN_SPI_MOSI (43ul)
+#define PIN_SPI_SS (41ul)
+#define PIN_SPI_SCK (42ul)
+#define PIN_SPI_MISO (43ul)
+#define PIN_SPI_MOSI (44ul)
 #define PERIPH_SPI sercom2
 
 #define PAD_SPI_TX SPI_PAD_3_SCK_1

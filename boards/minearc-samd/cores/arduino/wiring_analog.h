@@ -79,15 +79,6 @@ extern void analogWriteResolution(int res);
 
 extern void analogOutputInit( void ) ;
 
-#if defined(__SAMD21__)
-/*
- * \brief Read the internal temperature using the temperature ADC channel.
- *
- * \return Temperature (°C)
- */
-extern float readInternalTemperature();
-#endif
-
 #ifdef __cplusplus
 }
 #endif
