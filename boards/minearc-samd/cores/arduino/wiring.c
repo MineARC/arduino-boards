@@ -26,7 +26,7 @@ extern "C" {
 
 #if defined(__SAMD51__)
 //CHANGE THIS IF YOU CHANGE THE CLOCK SPEED
-uint32_t SystemCoreClock=120000000ul ;
+uint32_t SystemCoreClock=1000000ul ;
 #else
 /*
  * System Core Clock is at 1MHz (8MHz/8) at Reset.
@@ -112,8 +112,8 @@ void init( void )
   // Setting clock
 #if defined(__SAMD51__)
   //set to 1/(1/(48000000/32) * 6) = 250000 SPS
-	GCLK->PCHCTRL[ADC0_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK1_Val | (1 << GCLK_PCHCTRL_CHEN_Pos); //use clock generator 1 (48Mhz)
-	GCLK->PCHCTRL[ADC1_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK1_Val | (1 << GCLK_PCHCTRL_CHEN_Pos); //use clock generator 1 (48Mhz)
+	GCLK->PCHCTRL[ADC0_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0_Val | (1 << GCLK_PCHCTRL_CHEN_Pos); //use clock generator 1 (48Mhz)
+	GCLK->PCHCTRL[ADC1_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0_Val | (1 << GCLK_PCHCTRL_CHEN_Pos); //use clock generator 1 (48Mhz)
 	Adc *adcs[] = {ADC0, ADC1};
 		for(int i=0; i<2; i++){
 
@@ -139,7 +139,7 @@ void init( void )
 
 	analogReference( AR_DEFAULT ) ; // Analog Reference is AREF pin (3.3v)
 	
-	GCLK->PCHCTRL[DAC_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK4_Val | (1 << GCLK_PCHCTRL_CHEN_Pos); //use clock generator 4 (12mhz)
+	GCLK->PCHCTRL[DAC_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0_Val | (1 << GCLK_PCHCTRL_CHEN_Pos); //use clock generator 4 (12mhz)
 	while (GCLK->PCHCTRL[DAC_GCLK_ID].bit.CHEN == 0);
 	
 	while ( DAC->SYNCBUSY.bit.SWRST == 1 ); // Wait for synchronization of registers between the clock domains

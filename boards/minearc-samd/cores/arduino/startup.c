@@ -27,18 +27,9 @@
 
 #if defined(__SAMD51__)
 #define GENERIC_CLOCK_GENERATOR_XOSC32K   (3u)
-#define GENERIC_CLOCK_GENERATOR_48M		  (1u)
-#define GENERIC_CLOCK_GENERATOR_48M_SYNC	GCLK_SYNCBUSY_GENCTRL1
-#define GENERIC_CLOCK_GENERATOR_100M	  (2u)
-#define GENERIC_CLOCK_GENERATOR_100M_SYNC	GCLK_SYNCBUSY_GENCTRL2
-#define GENERIC_CLOCK_GENERATOR_12M       (4u)
-#define GENERIC_CLOCK_GENERATOR_12M_SYNC   GCLK_SYNCBUSY_GENCTRL4
 
-//USE DPLL0 for 120MHZ
-#define MAIN_CLOCK_SOURCE				  GCLK_GENCTRL_SRC_DPLL0
-
-#define GENERIC_CLOCK_GENERATOR_1M		  (7u)
-//#define CRYSTALLESS
+//USE DFLL for 12MHZ
+#define MAIN_CLOCK_SOURCE				  GCLK_GENCTRL_SRC_DFLL_Val
 
 #else
 
@@ -145,92 +136,14 @@ void SystemInit( void )
     {
       /* Wait for synchronization */
     }
-  
-  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_1M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DFLL_Val) | GCLK_GENCTRL_GENEN | GCLK_GENCTRL_DIV(24u);
-  
-  while ( GCLK->SYNCBUSY.bit.GENCTRL5 ){
-    /* Wait for synchronization */
-  }
-  
-	  
-  /* ------------------------------------------------------------------------
-  * Set up the PLLs
-  */
-	
-  //PLL0 is 120MHz
-  GCLK->PCHCTRL[OSCCTRL_GCLK_ID_FDPLL0].reg = (1 << GCLK_PCHCTRL_CHEN_Pos) | GCLK_PCHCTRL_GEN(GCLK_PCHCTRL_GEN_GCLK7_Val);
-  
-  OSCCTRL->Dpll[0].DPLLRATIO.reg = OSCCTRL_DPLLRATIO_LDRFRAC(0x00) | OSCCTRL_DPLLRATIO_LDR(59); //120 Mhz
-  
-  while(OSCCTRL->Dpll[0].DPLLSYNCBUSY.bit.DPLLRATIO);
-  
-  //MUST USE LBYPASS DUE TO BUG IN REV A OF SAMD51
-  OSCCTRL->Dpll[0].DPLLCTRLB.reg = OSCCTRL_DPLLCTRLB_REFCLK_GCLK | OSCCTRL_DPLLCTRLB_LBYPASS;
-  
-  OSCCTRL->Dpll[0].DPLLCTRLA.reg = OSCCTRL_DPLLCTRLA_ENABLE;
-  
-  while( OSCCTRL->Dpll[0].DPLLSTATUS.bit.CLKRDY == 0 || OSCCTRL->Dpll[0].DPLLSTATUS.bit.LOCK == 0 );
-  
-  //PLL1 is 100MHz
-  GCLK->PCHCTRL[OSCCTRL_GCLK_ID_FDPLL1].reg = (1 << GCLK_PCHCTRL_CHEN_Pos) | GCLK_PCHCTRL_GEN(GCLK_PCHCTRL_GEN_GCLK7_Val);
-  
-  OSCCTRL->Dpll[1].DPLLRATIO.reg = OSCCTRL_DPLLRATIO_LDRFRAC(0x00) | OSCCTRL_DPLLRATIO_LDR(49); //100 Mhz
-  
-  while(OSCCTRL->Dpll[1].DPLLSYNCBUSY.bit.DPLLRATIO);
-  
-  //MUST USE LBYPASS DUE TO BUG IN REV A OF SAMD51
-  OSCCTRL->Dpll[1].DPLLCTRLB.reg = OSCCTRL_DPLLCTRLB_REFCLK_GCLK | OSCCTRL_DPLLCTRLB_LBYPASS;
-  
-  OSCCTRL->Dpll[1].DPLLCTRLA.reg = OSCCTRL_DPLLCTRLA_ENABLE;
-  
-  while( OSCCTRL->Dpll[1].DPLLSTATUS.bit.CLKRDY == 0 || OSCCTRL->Dpll[1].DPLLSTATUS.bit.LOCK == 0 );
-  
-  
-  /* ------------------------------------------------------------------------
-  * Set up the peripheral clocks
-  */
-  
-  //48MHZ CLOCK FOR USB AND STUFF
-  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_48M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DFLL_Val) |
-    GCLK_GENCTRL_IDC |
-    //GCLK_GENCTRL_OE |
-    GCLK_GENCTRL_GENEN;
-  
-  while ( GCLK->SYNCBUSY.reg & GENERIC_CLOCK_GENERATOR_48M_SYNC)
-    {
-      /* Wait for synchronization */
-    }
-  
-  //100MHZ CLOCK FOR OTHER PERIPHERALS
-  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_100M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DPLL1_Val) |
-    GCLK_GENCTRL_IDC |
-    //GCLK_GENCTRL_OE |
-    GCLK_GENCTRL_GENEN;
-  
-  while ( GCLK->SYNCBUSY.reg & GENERIC_CLOCK_GENERATOR_100M_SYNC)
-    {
-      /* Wait for synchronization */
-    }
-  
-  //12MHZ CLOCK FOR DAC
-  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_12M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DFLL_Val) |
-    GCLK_GENCTRL_IDC |
-    GCLK_GENCTRL_DIV(4) |
-    GCLK_GENCTRL_DIVSEL |
-    //GCLK_GENCTRL_OE |
-    GCLK_GENCTRL_GENEN;
-  
-  while ( GCLK->SYNCBUSY.reg & GENERIC_CLOCK_GENERATOR_12M_SYNC)
-    {
-      /* Wait for synchronization */
-    }
-  
+    
   /*---------------------------------------------------------------------
    * Set up main clock
    */
   
   GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_MAIN].reg = GCLK_GENCTRL_SRC(MAIN_CLOCK_SOURCE) |
     GCLK_GENCTRL_IDC |
+    GCLK_GENCTRL_DIV(4) |
     //GCLK_GENCTRL_OE |
     GCLK_GENCTRL_GENEN;
   
@@ -241,9 +154,11 @@ void SystemInit( void )
     }
   
   MCLK->CPUDIV.reg = MCLK_CPUDIV_DIV_DIV1;
+
+  SystemCoreClock=VARIANT_MCK ;
   
   /* Use the LDO regulator by default */
-  SUPC->VREG.bit.SEL = 0; 
+  SUPC->VREG.bit.SEL = SUPC_VREG_SEL_BUCK_Val; 
   
   
   /* If desired, enable cache! */
