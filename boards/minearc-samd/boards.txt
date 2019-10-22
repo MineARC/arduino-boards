@@ -55,6 +55,10 @@ voltron.build.variant=voltron
 voltron.build.variant_system_lib=
 
 bloodhound.name=Bloodhound
+bloodhound.vid.0=0x239A
+bloodhound.pid.0=0x8020
+bloodhound.vid.1=0x239A
+bloodhound.pid.1=0x0020
 bloodhound.upload.tool=bossac18
 bloodhound.upload.protocol=sam-ba
 bloodhound.upload.maximum_size=507904
@@ -68,7 +72,11 @@ bloodhound.build.usb_product="Bloodhound"
 bloodhound.build.usb_manufacturer="MineARC"
 bloodhound.build.board=Bloodhound
 bloodhound.build.core=arduino
+<<<<<<< Updated upstream
 bloodhound.build.extra_flags=-D__SAMD51G19A__ -D__SAMD51__ -D__FPU_PRESENT -DARM_MATH_CM4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+=======
+bloodhound.build.extra_flags=-D__SAMD51J19A__ -D__SAMD51__ {build.usb_flags} -D__FPU_PRESENT -DARM_MATH_CM4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+>>>>>>> Stashed changes
 bloodhound.build.ldscript=linker_scripts/gcc/flash_without_bootloader.ld
 bloodhound.build.openocdscript=openocd_scripts/bloodhound.cfg
 bloodhound.build.variant=bloodhound
@@ -78,4 +86,5 @@ bloodhound.menu.cache.on=Enabled
 bloodhound.menu.cache.on.build.cache_flags=-DENABLE_CACHE
 bloodhound.menu.cache.off=Disabled
 bloodhound.menu.cache.off.build.cache_flags=
-
+bloodhound.build.vid=0x239A
+bloodhound.build.pid=0x8020

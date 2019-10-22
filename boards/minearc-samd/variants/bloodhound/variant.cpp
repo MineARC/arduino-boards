@@ -1,16 +1,13 @@
 /*
   Copyright (c) 2014-2015 Arduino LLC.  All right reserved.
-
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
-
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU Lesser General Public License for more details.
-
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -21,52 +18,39 @@
 /*
 // PA00 - N/A, 1/0
 // PA01 - N/A, 1/1
-
 PA02 - N/A, N/A
 PA03 - N/A, N/A
-
 PA04 - N/A, 0/0
 PA05 - N/A, 0/1
 PA06 - N/A, 0/2
 PA07 - N/A, 0/3
-
 ~PA08 - 0/0, 2/1
 ~PA09 - 0/1, 2/0
 ~PA10 - 0/2, 2/2
 ~PA11 - 0/3, 2/3
-
 ~PA12 - 2/0, 4/1
 ~PA13 - 2/1, 4/0 // spi
 PA14 - 2/2, 4/2  // spi
 PA15 - 2/3, 4/3  // spi
-
 ~PA16 - 1/0, 3/1 // i2c
 ~PA17 - 1/1, 3/0 // i2c
 ~PA18 - 1/2, 3/2
 ~PA19 - 1/3, 3/3
-
 ~PA20 - 5/2, 3/2
 ~PA21 - 5/3, 3/3
-
 ~PA22 - 3/0, 5/1 // i2c
 ~PA23 - 3/1, 5/0 // i2c
-
 PA24 - 3/2, 5/2
 PA25 - 3/3, 5/3
-
 PA27 - N/A, N/A
-
 // PA30 - 7/2, 1/2
 // PA31 - 7/3, 1/3
-
 PB02 - N/A, 5/0 // uart
 PB03 - N/A, 5/1 // uart
-
 PB08 - N/A, 4/0 // uart
 PB09 - N/A, 4/1 // uart
 ~PB10 - N/A, 4/2
 ~PB11 - N/A, 4/3
-
 PB22 - 1/2, 5/2
 PB23 - 1/3, 5/3
 */
@@ -178,12 +162,38 @@ SERCOM sercom5( SERCOM5 ) ;
 Uart Serial(&sercom5, PIN_SERIAL_RX, PIN_SERIAL_TX, PAD_SERIAL_RX, PAD_SERIAL_TX);
 Uart Serial1(&sercom4, PIN_SERIAL1_RX, PIN_SERIAL1_TX, PAD_SERIAL1_RX, PAD_SERIAL1_TX);
 
-void SERCOM5_Handler()
+
+void SERCOM5_0_Handler()
+{
+  Serial.IrqHandler();
+}
+void SERCOM5_1_Handler()
+{
+  Serial.IrqHandler();
+}
+void SERCOM5_2_Handler()
+{
+  Serial.IrqHandler();
+}
+void SERCOM5_3_Handler()
 {
   Serial.IrqHandler();
 }
 
-void SERCOM4_Handler()
+
+void SERCOM4_0_Handler()
+{
+  Serial1.IrqHandler();
+}
+void SERCOM4_1_Handler()
+{
+  Serial1.IrqHandler();
+}
+void SERCOM4_2_Handler()
+{
+  Serial1.IrqHandler();
+}
+void SERCOM4_3_Handler()
 {
   Serial1.IrqHandler();
 }
