@@ -50,7 +50,6 @@ public:
   boolean isDirectory(void);
   File openNextFile(uint8_t mode = O_RDONLY);
   void rewindDirectory(void);
-  
   using Print::write;
 };
 
@@ -67,6 +66,7 @@ private:
 public:
   // This needs to be called to set up the connection to the SD card
   // before other methods are used.
+  void setupPins();
   boolean begin(uint8_t csPin = SD_CHIP_SELECT_PIN);
   boolean begin(uint32_t clock, uint8_t csPin);
   

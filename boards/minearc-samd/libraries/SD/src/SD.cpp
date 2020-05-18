@@ -572,6 +572,20 @@ boolean SDClass::remove(const char *filepath) {
   return walkPath(filepath, root, callback_remove);
 }
 
+void SDClass::setupPins(){
+	pinMode(26, OUTPUT);
+	pinMode(A2, OUTPUT);
+	pinMode(A5, OUTPUT);
+	pinMode(A3, OUTPUT);
+	pinMode(A4, OUTPUT);
+	
+	digitalWrite(24, HIGH);
+	digitalWrite(A2, HIGH);
+	digitalWrite(A5, HIGH);
+	digitalWrite(A3, LOW);
+	digitalWrite(26, HIGH);
+	digitalWrite(A4, HIGH);
+}
 
 // allows you to recurse into a directory
 File File::openNextFile(uint8_t mode) {

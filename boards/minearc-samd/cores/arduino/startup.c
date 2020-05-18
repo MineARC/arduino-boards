@@ -27,9 +27,18 @@
 
 #if defined(__SAMD51__)
 #define GENERIC_CLOCK_GENERATOR_XOSC32K   (3u)
+#define GENERIC_CLOCK_GENERATOR_48M		  (1u)
+#define GENERIC_CLOCK_GENERATOR_48M_SYNC	GCLK_SYNCBUSY_GENCTRL1
+#define GENERIC_CLOCK_GENERATOR_100M	  (2u)
+#define GENERIC_CLOCK_GENERATOR_100M_SYNC	GCLK_SYNCBUSY_GENCTRL2
+#define GENERIC_CLOCK_GENERATOR_12M       (4u)
+#define GENERIC_CLOCK_GENERATOR_12M_SYNC   GCLK_SYNCBUSY_GENCTRL4
 
-//USE DFLL for 12MHZ
-#define MAIN_CLOCK_SOURCE				  GCLK_GENCTRL_SRC_DFLL_Val
+//USE DPLL0 for 120MHZ
+#define MAIN_CLOCK_SOURCE				  GCLK_GENCTRL_SRC_DPLL0
+
+#define GENERIC_CLOCK_GENERATOR_1M		  (5u)
+//#define CRYSTALLESS
 
 #else
 
@@ -88,7 +97,7 @@ void SystemInit( void )
   }
   
   /* ----------------------------------------------------------------------------------------------
-   * 3) Put Generic Clock Generator 3 as source for Generic Clock Gen 0 (DFLL48M reference)
+   * 3) Put OSCULP32K as source for Generic Clock Generator 0
    */
   GCLK->GENCTRL[0].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_OSCULP32K) | GCLK_GENCTRL_GENEN;
   
@@ -136,14 +145,93 @@ void SystemInit( void )
     {
       /* Wait for synchronization */
     }
-    
+  
+  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_1M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DFLL_Val) | GCLK_GENCTRL_GENEN | GCLK_GENCTRL_DIV(48u);
+  
+  while ( GCLK->SYNCBUSY.bit.GENCTRL5 ){
+    /* Wait for synchronization */
+  }
+  
+	  
+  /* ------------------------------------------------------------------------
+  * Set up the PLLs
+  */
+	
+  //PLL0 is 120MHz
+  GCLK->PCHCTRL[OSCCTRL_GCLK_ID_FDPLL0].reg = (1 << GCLK_PCHCTRL_CHEN_Pos) | GCLK_PCHCTRL_GEN(GCLK_PCHCTRL_GEN_GCLK5_Val);
+  
+  // This rounds to nearest full-MHz increment; not currently using frac
+  OSCCTRL->Dpll[0].DPLLRATIO.reg = OSCCTRL_DPLLRATIO_LDRFRAC(0x00) | OSCCTRL_DPLLRATIO_LDR((F_CPU - 500000) / 1000000);
+  
+  while(OSCCTRL->Dpll[0].DPLLSYNCBUSY.bit.DPLLRATIO);
+  
+  //MUST USE LBYPASS DUE TO BUG IN REV A OF SAMD51
+  OSCCTRL->Dpll[0].DPLLCTRLB.reg = OSCCTRL_DPLLCTRLB_REFCLK_GCLK | OSCCTRL_DPLLCTRLB_LBYPASS;
+  
+  OSCCTRL->Dpll[0].DPLLCTRLA.reg = OSCCTRL_DPLLCTRLA_ENABLE;
+  
+  while( OSCCTRL->Dpll[0].DPLLSTATUS.bit.CLKRDY == 0 || OSCCTRL->Dpll[0].DPLLSTATUS.bit.LOCK == 0 );
+  
+  //PLL1 is 100MHz
+  GCLK->PCHCTRL[OSCCTRL_GCLK_ID_FDPLL1].reg = (1 << GCLK_PCHCTRL_CHEN_Pos) | GCLK_PCHCTRL_GEN(GCLK_PCHCTRL_GEN_GCLK5_Val);
+  
+  OSCCTRL->Dpll[1].DPLLRATIO.reg = OSCCTRL_DPLLRATIO_LDRFRAC(0x00) | OSCCTRL_DPLLRATIO_LDR(99); //100 Mhz
+  
+  while(OSCCTRL->Dpll[1].DPLLSYNCBUSY.bit.DPLLRATIO);
+  
+  //MUST USE LBYPASS DUE TO BUG IN REV A OF SAMD51
+  OSCCTRL->Dpll[1].DPLLCTRLB.reg = OSCCTRL_DPLLCTRLB_REFCLK_GCLK | OSCCTRL_DPLLCTRLB_LBYPASS;
+  
+  OSCCTRL->Dpll[1].DPLLCTRLA.reg = OSCCTRL_DPLLCTRLA_ENABLE;
+  
+  while( OSCCTRL->Dpll[1].DPLLSTATUS.bit.CLKRDY == 0 || OSCCTRL->Dpll[1].DPLLSTATUS.bit.LOCK == 0 );
+  
+  
+  /* ------------------------------------------------------------------------
+  * Set up the peripheral clocks
+  */
+  
+  //48MHZ CLOCK FOR USB AND STUFF
+  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_48M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DFLL_Val) |
+    GCLK_GENCTRL_IDC |
+    //GCLK_GENCTRL_OE |
+    GCLK_GENCTRL_GENEN;
+  
+  while ( GCLK->SYNCBUSY.reg & GENERIC_CLOCK_GENERATOR_48M_SYNC)
+    {
+      /* Wait for synchronization */
+    }
+  
+  //100MHZ CLOCK FOR OTHER PERIPHERALS
+  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_100M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DPLL1_Val) |
+    GCLK_GENCTRL_IDC |
+    //GCLK_GENCTRL_OE |
+    GCLK_GENCTRL_GENEN;
+  
+  while ( GCLK->SYNCBUSY.reg & GENERIC_CLOCK_GENERATOR_100M_SYNC)
+    {
+      /* Wait for synchronization */
+    }
+  
+  //12MHZ CLOCK FOR DAC
+  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_12M].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_DFLL_Val) |
+    GCLK_GENCTRL_IDC |
+    GCLK_GENCTRL_DIV(4) |
+    //GCLK_GENCTRL_DIVSEL |
+    //GCLK_GENCTRL_OE |
+    GCLK_GENCTRL_GENEN;
+  
+  while ( GCLK->SYNCBUSY.reg & GENERIC_CLOCK_GENERATOR_12M_SYNC)
+    {
+      /* Wait for synchronization */
+    }
+  
   /*---------------------------------------------------------------------
    * Set up main clock
    */
   
   GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_MAIN].reg = GCLK_GENCTRL_SRC(MAIN_CLOCK_SOURCE) |
     GCLK_GENCTRL_IDC |
-    GCLK_GENCTRL_DIV(1) |
     //GCLK_GENCTRL_OE |
     GCLK_GENCTRL_GENEN;
   
@@ -154,11 +242,9 @@ void SystemInit( void )
     }
   
   MCLK->CPUDIV.reg = MCLK_CPUDIV_DIV_DIV1;
-
-  SystemCoreClock=VARIANT_MCK ;
   
   /* Use the LDO regulator by default */
-  SUPC->VREG.bit.SEL = SUPC_VREG_SEL_BUCK_Val; 
+  SUPC->VREG.bit.SEL = 0; 
   
   
   /* If desired, enable cache! */
@@ -167,7 +253,55 @@ void SystemInit( void )
   CMCC->CTRL.reg = 1;
   __enable_irq();
 #endif
-  
+
+  /*---------------------------------------------------------------------
+   * Start up the "Debug Watchpoint and Trace" unit, so that we can use
+   * it's 32bit cycle counter for timing.
+   */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+
+  /* ----------------------------------------------------------------------------------------------
+   * 5) Load AC factory calibration values
+   */
+
+  uint32_t bias0 = (*((uint32_t *)AC_FUSES_BIAS0_ADDR) & AC_FUSES_BIAS0_Msk) >> AC_FUSES_BIAS0_Pos;
+  AC->CALIB.reg = AC_CALIB_BIAS0(bias0);
+
+  /* ----------------------------------------------------------------------------------------------
+   * 6) Load ADC factory calibration values
+   */
+
+  // ADC0 Bias Calibration
+  uint32_t biascomp = (*((uint32_t *)ADC0_FUSES_BIASCOMP_ADDR) & ADC0_FUSES_BIASCOMP_Msk) >> ADC0_FUSES_BIASCOMP_Pos;
+  uint32_t biasr2r = (*((uint32_t *)ADC0_FUSES_BIASR2R_ADDR) & ADC0_FUSES_BIASR2R_Msk) >> ADC0_FUSES_BIASR2R_Pos;
+  uint32_t biasref = (*((uint32_t *)ADC0_FUSES_BIASREFBUF_ADDR) & ADC0_FUSES_BIASREFBUF_Msk) >> ADC0_FUSES_BIASREFBUF_Pos;
+
+  ADC0->CALIB.reg = ADC_CALIB_BIASREFBUF(biasref)
+                    | ADC_CALIB_BIASR2R(biasr2r)
+                    | ADC_CALIB_BIASCOMP(biascomp);
+
+  // ADC1 Bias Calibration
+  biascomp = (*((uint32_t *)ADC1_FUSES_BIASCOMP_ADDR) & ADC1_FUSES_BIASCOMP_Msk) >> ADC1_FUSES_BIASCOMP_Pos;
+  biasr2r = (*((uint32_t *)ADC1_FUSES_BIASR2R_ADDR) & ADC1_FUSES_BIASR2R_Msk) >> ADC1_FUSES_BIASR2R_Pos;
+  biasref = (*((uint32_t *)ADC1_FUSES_BIASREFBUF_ADDR) & ADC1_FUSES_BIASREFBUF_Msk) >> ADC1_FUSES_BIASREFBUF_Pos;
+
+  ADC1->CALIB.reg = ADC_CALIB_BIASREFBUF(biasref)
+                    | ADC_CALIB_BIASR2R(biasr2r)
+                    | ADC_CALIB_BIASCOMP(biascomp);
+
+  /* ----------------------------------------------------------------------------------------------
+   * 7) Load USB factory calibration values
+   */
+
+  //USB Calibration
+  uint32_t usbtransn = (*((uint32_t *)USB_FUSES_TRANSN_ADDR) & USB_FUSES_TRANSN_Msk) >> USB_FUSES_TRANSN_Pos;
+  uint32_t usbtransp = (*((uint32_t *)USB_FUSES_TRANSP_ADDR) & USB_FUSES_TRANSP_Msk) >> USB_FUSES_TRANSP_Pos;
+  uint32_t usbtrim = (*((uint32_t *)USB_FUSES_TRIM_ADDR) & USB_FUSES_TRIM_Msk) >> USB_FUSES_TRIM_Pos;
+  USB->DEVICE.PADCAL.reg = USB_PADCAL_TRIM(usbtrim)
+                           | USB_PADCAL_TRANSN(usbtransn)
+                           | USB_PADCAL_TRANSP(usbtransp);
+
 //*************** END SAMD51 *************************//
   
 #else
@@ -370,9 +504,7 @@ void SystemInit( void )
     /* ----------------------------------------------------------------------------------------------
      * 5) Switch Generic Clock Generator 0 to DFLL48M. CPU will run at 48MHz.
      */
-#define MCK_DIV (GCLK_GENDIV_DIV_Msk & ((48000000ul / VARIANT_MCK) << GCLK_GENDIV_DIV_Pos))
-
-    GCLK->GENDIV.reg = GCLK_GENDIV_ID( GENERIC_CLOCK_GENERATOR_MAIN ) | MCK_DIV ; // Generic Clock Generator 0
+    GCLK->GENDIV.reg = GCLK_GENDIV_ID( GENERIC_CLOCK_GENERATOR_MAIN ) ; // Generic Clock Generator 0
 
     while ( GCLK->STATUS.reg & GCLK_STATUS_SYNCBUSY )
     {
@@ -445,4 +577,3 @@ void SystemInit( void )
     NVMCTRL->CTRLB.bit.MANW = 1;
   #endif
 }
-

@@ -198,7 +198,7 @@ void SPIClass::setDataMode(uint8_t mode)
 
 void SPIClass::setClockDivider(uint8_t div)
 {
-  if (div < SPI_MIN_CLOCK_DIVIDER) {
+  if(div < SPI_MIN_CLOCK_DIVIDER) {
     _p_sercom->setBaudrateSPI(SPI_MIN_CLOCK_DIVIDER);
   } else {
     _p_sercom->setBaudrateSPI(div);
@@ -235,6 +235,11 @@ void SPIClass::transfer(void *buf, size_t count)
   }
 }
 
+// Pointer to SPIClass object, one per DMA channel.
+static SPIClass *spiPtr[DMAC_CH_NUM] = { 0 }; // Legit inits list to NULL
+
+// Waits for a prior in-background DMA transfer to complete.
+
 void SPIClass::attachInterrupt() {
   // Should be enableInterrupt()
 }
@@ -242,6 +247,61 @@ void SPIClass::attachInterrupt() {
 void SPIClass::detachInterrupt() {
   // Should be disableInterrupt()
 }
+
+// SPI DMA lookup works on both SAMD21 and SAMD51
+
+static const struct {
+  volatile uint32_t *data_reg;
+  int                dmac_id_tx;
+  int                dmac_id_rx;
+} sercomData[] = {
+  { &SERCOM0->SPI.DATA.reg, SERCOM0_DMAC_ID_TX, SERCOM0_DMAC_ID_RX },
+  { &SERCOM1->SPI.DATA.reg, SERCOM1_DMAC_ID_TX, SERCOM1_DMAC_ID_RX },
+  { &SERCOM2->SPI.DATA.reg, SERCOM2_DMAC_ID_TX, SERCOM2_DMAC_ID_RX },
+  { &SERCOM3->SPI.DATA.reg, SERCOM3_DMAC_ID_TX, SERCOM3_DMAC_ID_RX },
+#if defined(SERCOM4)
+  { &SERCOM4->SPI.DATA.reg, SERCOM4_DMAC_ID_TX, SERCOM4_DMAC_ID_RX },
+#endif
+#if defined(SERCOM5)
+  { &SERCOM5->SPI.DATA.reg, SERCOM5_DMAC_ID_TX, SERCOM5_DMAC_ID_RX },
+#endif
+#if defined(SERCOM6)
+  { &SERCOM6->SPI.DATA.reg, SERCOM6_DMAC_ID_TX, SERCOM6_DMAC_ID_RX },
+#endif
+#if defined(SERCOM7)
+  { &SERCOM7->SPI.DATA.reg, SERCOM7_DMAC_ID_TX, SERCOM7_DMAC_ID_RX },
+#endif
+};
+
+volatile uint32_t *SPIClass::getDataRegister(void) {
+  int8_t idx = _p_sercom->getSercomIndex();
+  return (idx >= 0) ? sercomData[idx].data_reg: NULL;
+}
+
+int SPIClass::getDMAC_ID_TX(void) {
+  int8_t idx = _p_sercom->getSercomIndex();
+  return (idx >= 0) ? sercomData[idx].dmac_id_tx : -1;
+}
+
+int SPIClass::getDMAC_ID_RX(void) {
+  int8_t idx = _p_sercom->getSercomIndex();
+  return (idx >= 0) ? sercomData[idx].dmac_id_rx : -1;
+}
+
+#if defined(__SAMD51__)
+
+// Set the SPI device's SERCOM clock CORE and SLOW clock sources.
+// SercomClockSource values are an enumeration in SERCOM.h.
+// This works on SAMD51 only.  On SAMD21, a dummy function is declared
+// in SPI.h which compiles to nothing, so user code doesn't need to check
+// and conditionally compile lines for different architectures.
+void SPIClass::setClockSource(SercomClockSource clk) {
+  int8_t idx = _p_sercom->getSercomIndex();
+  _p_sercom->setClockSource(idx, clk, true);  // true  = set core clock
+  _p_sercom->setClockSource(idx, clk, false); // false = set slow clock
+}
+
+#endif // end __SAMD51__
 
 #if SPI_INTERFACES_COUNT > 0
   /* In case new variant doesn't define these macros,

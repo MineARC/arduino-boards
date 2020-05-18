@@ -1,13 +1,16 @@
 /*
   Copyright (c) 2014-2015 Arduino LLC.  All right reserved.
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
+
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU Lesser General Public License for more details.
+
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -27,16 +30,15 @@
 #define VARIANT_MAINOSC (32768ul)
 
 /** Master clock frequency */
-#define VARIANT_MCK (48000000ul)
+#define VARIANT_MCK	(F_CPU)
 
-#define VARIANT_GCLK0_FREQ (48000000UL)
+#define VARIANT_GCLK0_FREQ (F_CPU)
 #define VARIANT_GCLK1_FREQ (48000000UL)
-#define VARIANT_GCLK2_FREQ (48000000UL)
+#define VARIANT_GCLK2_FREQ (100000000UL)
 
 /*----------------------------------------------------------------------------
  *        Headers
  *----------------------------------------------------------------------------*/
-
 #include "WVariant.h"
 
 #ifdef __cplusplus
@@ -53,8 +55,8 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 // Number of pins defined in PinDescription array
-#define PINS_COUNT (33ul)
-#define NUM_DIGITAL_PINS (25ul)
+#define PINS_COUNT (46ul)
+#define NUM_DIGITAL_PINS (38ul)
 #define NUM_ANALOG_INPUTS (8ul)
 #define NUM_ANALOG_OUTPUTS (1ul)
 #define analogInputToDigitalPin(p) ((p < NUM_ANALOG_INPUTS) ? (p) + PIN_A0 : -1)
@@ -81,16 +83,16 @@ extern "C" {
 /*
  * Analog pins
  */
-#define PIN_A0 (25ul)
-#define PIN_A1 (26ul)
-#define PIN_A2 (27ul)
-#define PIN_A3 (28ul)
-#define PIN_A4 (29ul)
-#define PIN_A5 (30ul)
-#define PIN_A6 (31ul)
-#define PIN_A7 (32ul)
-#define PIN_DAC0 (35ul)
-#define PIN_DAC1 (36ul)
+#define PIN_A0 (38ul)
+#define PIN_A1 (39ul)
+#define PIN_A2 (40ul)
+#define PIN_A3 (41ul)
+#define PIN_A4 (42ul)
+#define PIN_A5 (43ul)
+#define PIN_A6 (44ul)
+#define PIN_A7 (45ul)
+#define PIN_DAC0 (48ul)
+#define PIN_DAC1 (49ul)
 
 static const uint8_t A0 = PIN_A0;
 static const uint8_t A1 = PIN_A1;
@@ -109,8 +111,8 @@ static const uint8_t DAC1 = PIN_DAC1;
  */
 
 // Serial
-#define PIN_SERIAL_TX (45ul)
-#define PIN_SERIAL_RX (46ul)
+#define PIN_SERIAL_TX (58ul)
+#define PIN_SERIAL_RX (59ul)
 #define PAD_SERIAL_TX (UART_TX_PAD_0)
 #define PAD_SERIAL_RX (SERCOM_RX_PAD_1)
 
@@ -118,8 +120,8 @@ static const uint8_t TX = PIN_SERIAL_TX;
 static const uint8_t RX = PIN_SERIAL_RX;
 
 // Serial1
-#define PIN_SERIAL1_TX (47ul)
-#define PIN_SERIAL1_RX (48ul)
+#define PIN_SERIAL1_TX (60ul)
+#define PIN_SERIAL1_RX (61ul)
 #define PAD_SERIAL1_TX (UART_TX_PAD_0)
 #define PAD_SERIAL1_RX (SERCOM_RX_PAD_1)
 
@@ -132,8 +134,8 @@ static const uint8_t RX1 = PIN_SERIAL1_RX;
 #define WIRE_INTERFACES_COUNT 2
 
 // Wire
-#define PIN_WIRE_SDA (37ul)
-#define PIN_WIRE_SCL (38ul)
+#define PIN_WIRE_SDA (50ul)
+#define PIN_WIRE_SCL (51ul)
 #define PERIPH_WIRE sercom1
 #define WIRE_IT_HANDLER SERCOM1_Handler
 
@@ -141,8 +143,8 @@ static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
 // Wire1
-#define PIN_WIRE1_SDA (39ul)
-#define PIN_WIRE1_SCL (40ul)
+#define PIN_WIRE1_SDA (52ul)
+#define PIN_WIRE1_SCL (53ul)
 #define PERIPH_WIRE1 sercom3
 #define WIRE1_IT_HANDLER SERCOM3_Handler
 
@@ -155,10 +157,10 @@ static const uint8_t SCL1 = PIN_WIRE1_SCL;
 #define SPI_INTERFACES_COUNT 1
 
 // SPI
-#define PIN_SPI_SS (41ul)
-#define PIN_SPI_SCK (42ul)
-#define PIN_SPI_MISO (43ul)
-#define PIN_SPI_MOSI (44ul)
+#define PIN_SPI_SS (54ul)
+#define PIN_SPI_SCK (55ul)
+#define PIN_SPI_MISO (56ul)
+#define PIN_SPI_MOSI (57ul)
 #define PERIPH_SPI sercom2
 
 #define PAD_SPI_TX SPI_PAD_3_SCK_1
@@ -173,8 +175,8 @@ static const uint8_t MOSI = PIN_SPI_MOSI;
  * USB
  */
 // #define PIN_USB_HOST_ENABLE (-1ul)
-#define PIN_USB_DM (33ul)
-#define PIN_USB_DP (34ul)
+#define PIN_USB_DM (46ul)
+#define PIN_USB_DP (47ul)
 
 /*
  * I2S Interfaces

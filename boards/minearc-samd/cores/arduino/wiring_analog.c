@@ -140,38 +140,87 @@ void analogReference(eAnalogReference mode)
 	//TODO: fix gains
 	switch (mode)
 	{
-		case AR_INTERNAL:
-		case AR_INTERNAL2V23:
+		case AR_INTERNAL1V0:
 		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
-		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC0_Val; // 1/1.48 VDDANA = 1/1.48* 3V3 = 2.2297
-		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC0_Val; // 1/1.48 VDDANA = 1/1.48* 3V3 = 2.2297
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_1V0_Val;		// select 1.0V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
+		case AR_INTERNAL1V1:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_1V1_Val;		// select 1.1V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
+		case AR_INTERNAL1V2:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_1V2_Val;		// select 1V2
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
 		break;
 
+		case AR_INTERNAL1V25:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_1V25_Val;		// select 1.25V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
+		case AR_INTERNAL2V0:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_2V0_Val;		// select 2.0V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
+		case AR_INTERNAL2V2:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_2V2_Val;		// select 2.2V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
+		case AR_INTERNAL2V4:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_2V4_Val;		// select 2.4V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
+		case AR_INTERNAL2V5:
+		//ADC0->GAINCORR.reg = ADC_GAINCORR_GAINCORR();      // Gain Factor Selection
+		SUPC->VREF.bit.SEL = SUPC_VREF_SEL_2V5_Val;		// select 2.5V
+		SUPC->VREF.bit.VREFOE = 1;	//	Turn on for use with ADC
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // Use SUPC.VREF
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTREF_Val; // 
+		break;
+		
 		case AR_EXTERNAL:
 		//ADC0->INPUTCTRL.bit.GAIN = ADC_INPUTCTRL_GAIN_1X_Val;      // Gain Factor Selection
-		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_AREFA_Val;
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_AREFA_Val;	// AREF is jumpered to VCC, so 3.3V
 		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_AREFA_Val;
 		break;
 
-/*		Don't think this works on SAMD51
-		case AR_INTERNAL1V0:
-		//ADC0->INPUTCTRL.bit.GAIN = ADC_INPUTCTRL_GAIN_1X_Val;      // Gain Factor Selection
-		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INT1V_Val;   // 1.0V voltage reference
-		break;
-*/
-
 		case AR_INTERNAL1V65:
-		//ADC0->INPUTCTRL.bit.GAIN = ADC_INPUTCTRL_GAIN_1X_Val;      // Gain Factor Selection
-		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val; // 1/2 VDDANA = 0.5* 3V3 = 1.65V
-		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val; // 1/2 VDDANA = 0.5* 3V3 = 1.65V
+		//ADC0->INPUTCTRL.bit.GAIN = ADC_INPUTCTRL_GAIN_DIV2_Val;
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC0_Val; // 1/2 VDDANA = 1.65
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC0_Val; // 
 		break;
-
+		
 		case AR_DEFAULT:
 		default:
 		//ADC0->INPUTCTRL.bit.GAIN = ADC_INPUTCTRL_GAIN_DIV2_Val;
-		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val; // 1/2 VDDANA = 0.5* 3V3 = 1.65V
-		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val; // 1/2 VDDANA = 0.5* 3V3 = 1.65V
-		
+		ADC0->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val; // VDDANA = 3V3
+		ADC1->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC1_Val; // 
 		break;
 	}
 	
@@ -179,7 +228,6 @@ void analogReference(eAnalogReference mode)
   syncADC();
   switch (mode)
   {
-    case AR_INTERNAL:
     case AR_INTERNAL2V23:
       ADC->INPUTCTRL.bit.GAIN = ADC_INPUTCTRL_GAIN_1X_Val;      // Gain Factor Selection
       ADC->REFCTRL.bit.REFSEL = ADC_REFCTRL_REFSEL_INTVCC0_Val; // 1/1.48 VDDANA = 1/1.48* 3V3 = 2.2297
@@ -358,7 +406,6 @@ void analogWrite(uint32_t pin, uint32_t value)
 
  // ATSAMR, for example, doesn't have a DAC
 #ifdef DAC
-
 	  if ((attr & PIN_ATTR_ANALOG) == PIN_ATTR_ANALOG)
 	  {
 	    // DAC handling code
@@ -439,8 +486,6 @@ void analogWrite(uint32_t pin, uint32_t value)
 #if defined(__SAMD51__)
 	if(attr & (PIN_ATTR_PWM_E|PIN_ATTR_PWM_F|PIN_ATTR_PWM_G)){
 
-		value = mapResolution(value, _writeResolution, 16);
-
 		uint32_t tcNum = GetTCNumber(pinDesc.ulPWMChannel);
 		uint8_t tcChannel = GetTCChannelNumber(pinDesc.ulPWMChannel);
 		static bool tcEnabled[TCC_INST_NUM+TC_INST_NUM];
@@ -462,23 +507,26 @@ void analogWrite(uint32_t pin, uint32_t value)
 				Tc* TCx = (Tc*) GetTC(pinDesc.ulPWMChannel);
 
 				//reset
-				TCx->COUNT16.CTRLA.bit.SWRST = 1;
-				while (TCx->COUNT16.SYNCBUSY.bit.SWRST);
+				TCx->COUNT8.CTRLA.bit.SWRST = 1;
+				while (TCx->COUNT8.SYNCBUSY.bit.SWRST);
 
 				// Disable TCx
-				TCx->COUNT16.CTRLA.bit.ENABLE = 0;
-				while (TCx->COUNT16.SYNCBUSY.bit.ENABLE);
-				// Set Timer counter Mode to 8 bits, normal PWM
-				TCx->COUNT16.CTRLA.reg = TC_CTRLA_MODE_COUNT16;
-				TCx->COUNT16.WAVE.reg = TC_WAVE_WAVEGEN_NPWM;
+				TCx->COUNT8.CTRLA.bit.ENABLE = 0;
+				while (TCx->COUNT8.SYNCBUSY.bit.ENABLE);
+				// Set Timer counter Mode to 8 bits, normal PWM, prescaler 1/256
+				TCx->COUNT8.CTRLA.reg = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER_DIV256;
+				TCx->COUNT8.WAVE.reg = TC_WAVE_WAVEGEN_NPWM;
 
-				while (TCx->COUNT16.SYNCBUSY.bit.CC0);
+				while (TCx->COUNT8.SYNCBUSY.bit.CC0);
 				// Set the initial value
-				TCx->COUNT16.CC[tcChannel].reg = (uint8_t) value;
-				while (TCx->COUNT16.SYNCBUSY.bit.CC0);
+				TCx->COUNT8.CC[tcChannel].reg = (uint8_t) value;
+				while (TCx->COUNT8.SYNCBUSY.bit.CC0);
+				// Set PER to maximum counter value (resolution : 0xFF)
+				TCx->COUNT8.PER.reg = 0xFF;
+				while (TCx->COUNT8.SYNCBUSY.bit.PER);
 				// Enable TCx
-				TCx->COUNT16.CTRLA.bit.ENABLE = 1;
-				while (TCx->COUNT16.SYNCBUSY.bit.ENABLE);
+				TCx->COUNT8.CTRLA.bit.ENABLE = 1;
+				while (TCx->COUNT8.SYNCBUSY.bit.ENABLE);
 			} else {
 				// -- Configure TCC
 				Tcc* TCCx = (Tcc*) GetTC(pinDesc.ulPWMChannel);
@@ -489,6 +537,8 @@ void analogWrite(uint32_t pin, uint32_t value)
 				// Disable TCCx
 				TCCx->CTRLA.bit.ENABLE = 0;
 				while (TCCx->SYNCBUSY.bit.ENABLE);
+				// Set prescaler to 1/256
+				TCCx->CTRLA.reg = TCC_CTRLA_PRESCALER_DIV256 | TCC_CTRLA_PRESCSYNC_GCLK;
 
 				// Set TCx as normal PWM
 				TCCx->WAVE.reg = TCC_WAVE_WAVEGEN_NPWM;
@@ -499,7 +549,7 @@ void analogWrite(uint32_t pin, uint32_t value)
 				TCCx->CC[tcChannel].reg = (uint32_t) value;
 				while (TCCx->SYNCBUSY.bit.CC0 || TCCx->SYNCBUSY.bit.CC1);
 				// Set PER to maximum counter value (resolution : 0xFF)
-				TCCx->PER.reg = 0xFFFF;
+				TCCx->PER.reg = 0xFF;
 				while (TCCx->SYNCBUSY.bit.PER);
 				// Enable TCCx
 				TCCx->CTRLA.bit.ENABLE = 1;
@@ -509,8 +559,8 @@ void analogWrite(uint32_t pin, uint32_t value)
 		else {
 			if (tcNum >= TCC_INST_NUM) {
 				Tc* TCx = (Tc*) GetTC(pinDesc.ulPWMChannel);
-				TCx->COUNT16.CC[tcChannel].reg = (uint8_t) value;
-				while (TCx->COUNT16.SYNCBUSY.bit.CC0 || TCx->COUNT16.SYNCBUSY.bit.CC1);
+				TCx->COUNT8.CC[tcChannel].reg = (uint8_t) value;
+				while (TCx->COUNT8.SYNCBUSY.bit.CC0 || TCx->COUNT8.SYNCBUSY.bit.CC1);
 				} else {
 				Tcc* TCCx = (Tcc*) GetTC(pinDesc.ulPWMChannel);
 				while (TCCx->SYNCBUSY.bit.CTRLB);
