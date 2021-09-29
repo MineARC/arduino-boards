@@ -22,8 +22,24 @@
 
 __attribute__ ((section(".sketch_boot")))
 unsigned char sduBoot[0x4000] = {
-#if defined(ARDUINO_Pathfinder)
-  #include "boot/pathfinder.h"
+#if defined(ARDUINO_SAMD_ZERO)
+  #include "boot/zero.h"
+#elif defined(ARDUINO_SAMD_MKR1000)
+  #include "boot/mkr1000.h"
+#elif defined(ARDUINO_SAMD_MKRZERO)
+  #include "boot/mkrzero.h"
+#elif defined(ARDUINO_SAMD_MKRFox1200)
+  #include "boot/mkrfox1200.h"
+#elif defined(ARDUINO_SAMD_MKRGSM1400)
+  #include "boot/mkrgsm1400.h"
+#elif defined(ARDUINO_SAMD_MKRWAN1300)
+  #include "boot/mkrwan1300.h"
+#elif defined(ARDUINO_SAMD_MKRWIFI1010)
+  #include "boot/mkrwifi1010.h"
+#elif defined(ARDUINO_SAMD_MKRNB1500)
+  #include "boot/mkrnb1500.h"
+#elif defined(ARDUINO_SAM_ZERO)
+  #include "boot/mzero.h"
 #else
   #error "Unsupported board!"
 #endif

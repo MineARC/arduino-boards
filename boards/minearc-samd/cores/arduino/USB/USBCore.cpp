@@ -16,7 +16,7 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
+#ifndef USE_TINYUSB
 #if defined(USBCON)
 
 #include <Arduino.h>
@@ -244,26 +244,25 @@ bool USBDeviceClass::sendDescriptor(USBSetup &setup)
 		}
 		else if (setup.wValueL == ISERIAL) {
 #ifdef PLUGGABLE_USB_ENABLED
-#if defined(__SAMD51__)
-			char name[ISERIAL_MAX_LEN];
-			PluggableUSB().getShortName(name);
-			return sendStringDescriptor((uint8_t*)name, setup.wLength);
-#else
+#ifdef __SAMD51__
+			#define SERIAL_NUMBER_WORD_0	*(volatile uint32_t*)(0x008061FC)
+			#define SERIAL_NUMBER_WORD_1	*(volatile uint32_t*)(0x00806010)
+			#define SERIAL_NUMBER_WORD_2	*(volatile uint32_t*)(0x00806014)
+			#define SERIAL_NUMBER_WORD_3	*(volatile uint32_t*)(0x00806018)
+#else // samd21
 			// from section 9.3.3 of the datasheet
 			#define SERIAL_NUMBER_WORD_0	*(volatile uint32_t*)(0x0080A00C)
 			#define SERIAL_NUMBER_WORD_1	*(volatile uint32_t*)(0x0080A040)
 			#define SERIAL_NUMBER_WORD_2	*(volatile uint32_t*)(0x0080A044)
 			#define SERIAL_NUMBER_WORD_3	*(volatile uint32_t*)(0x0080A048)
-
+#endif
 			char name[ISERIAL_MAX_LEN];
 			utox8(SERIAL_NUMBER_WORD_0, &name[0]);
 			utox8(SERIAL_NUMBER_WORD_1, &name[8]);
 			utox8(SERIAL_NUMBER_WORD_2, &name[16]);
 			utox8(SERIAL_NUMBER_WORD_3, &name[24]);
-
-			PluggableUSB().getShortName(&name[32]);
+			name[32] = '\0';
 			return sendStringDescriptor((uint8_t*)name, setup.wLength);
-#endif
 #endif
 		}
 		else {
@@ -345,7 +344,7 @@ void USBDeviceClass::init()
 	PORT->Group[0].PMUX[PIN_PA25H_USB_DP/2].reg |= MUX_PA25H_USB_DP << (4 * (PIN_PA25H_USB_DP & 0x01u));
 	
 	
-	GCLK->PCHCTRL[USB_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0_Val | (1 << GCLK_PCHCTRL_CHEN_Pos);
+	GCLK->PCHCTRL[USB_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK1_Val | (1 << GCLK_PCHCTRL_CHEN_Pos);
 #else
 	PM->APBBMASK.reg |= PM_APBBMASK_USB;
 	
@@ -431,6 +430,13 @@ bool USBDeviceClass::detach()
 	if (!initialized)
 		return false;
 	usbd.detach();
+	return true;
+}
+
+bool USBDeviceClass::end() {
+	if (!initialized)
+		return false;
+	usbd.disable();
 	return true;
 }
 
@@ -871,6 +877,7 @@ bool USBDeviceClass::handleStandardSetup(USBSetup &setup)
 			sendZlp(0);
 			return true;
 		}
+		return false;
 
 	case SET_ADDRESS:
 		setAddress(setup.wValueL);
@@ -1032,3 +1039,4 @@ void USBDeviceClass::ISRHandler()
 USBDeviceClass USBDevice;
 
 #endif
+#endif // USE_TINYUSB

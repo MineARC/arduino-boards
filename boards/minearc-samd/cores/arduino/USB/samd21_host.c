@@ -17,6 +17,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#ifndef USE_TINYUSB
 
 #include <stdio.h>
 #include <stdint.h>
@@ -63,7 +64,6 @@ void UHD_Init(void)
 	uint32_t pad_transn;
 	uint32_t pad_transp;
 	uint32_t pad_trim;
-	uint32_t i;
 
 	USB_SetHandler(&UHD_Handler);
 
@@ -90,7 +90,7 @@ void UHD_Init(void)
 	*/
 	
 #if defined(__SAMD51__)
-	GCLK->PCHCTRL[USB_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK0_Val | (1 << GCLK_PCHCTRL_CHEN_Pos);
+	GCLK->PCHCTRL[USB_GCLK_ID].reg = GCLK_PCHCTRL_GEN_GCLK1_Val | (1 << GCLK_PCHCTRL_CHEN_Pos);
 #else
 	GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID(6) |        // Generic Clock Multiplexer 6
 						GCLK_CLKCTRL_GEN_GCLK0 |    // Generic Clock Generator 0 is source
@@ -172,18 +172,13 @@ void UHD_Init(void)
 	USB->HOST.DESCADD.reg = (uint32_t)(&usb_pipe_table[0]);
 	// For USB_SPEED_FULL
 	uhd_force_full_speed();
-	for (i = 0; i < sizeof(usb_pipe_table); i++)
-	{
-		(*(uint32_t *)(&usb_pipe_table[0] + i)) = 0;
-	}
+	memset((void *)usb_pipe_table, 0, sizeof(usb_pipe_table));
 
 	uhd_state = UHD_STATE_NO_VBUS;
 
-#if defined(PIN_USB_HOST_ENABLE)
 	// Put VBUS on USB port
 	pinMode( PIN_USB_HOST_ENABLE, OUTPUT );
 	digitalWrite( PIN_USB_HOST_ENABLE, HIGH );
-#endif // PIN_USB_HOST_ENABLE
 
 	uhd_enable_connection_int();
 
@@ -559,3 +554,5 @@ uint32_t UHD_Pipe_Is_Transfer_Complete(uint32_t ul_pipe, uint32_t ul_token_type)
 // }
 
 #endif //  HOST_DEFINED
+
+#endif // USE_TINYUSB

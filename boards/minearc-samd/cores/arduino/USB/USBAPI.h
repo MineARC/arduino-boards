@@ -65,6 +65,7 @@ public:
 
 	// USB Device API
 	void init();
+	bool end();
 	bool attach();
 	bool detach();
 	void setAddress(uint32_t addr);
@@ -185,7 +186,7 @@ private:
 	RingBuffer *_cdc_rx_buffer;
 	bool stalled;
 };
-extern Serial_ SerialUSB;
+extern Serial_ Serial;
 
 //================================================================================
 //================================================================================
