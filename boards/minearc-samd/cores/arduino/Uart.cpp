@@ -88,6 +88,11 @@ void Uart::flush()
   sercom->flushUART();
 }
 
+void Uart::setTransmitter(bool enable)
+{
+  sercom->setTransmitterUART(enable);
+}
+
 void Uart::IrqHandler()
 {
   if (sercom->isFrameErrorUART()) {

@@ -36,6 +36,7 @@ class Uart : public HardwareSerial
     int availableForWrite();
     int peek();
     int read();
+    void setTransmitter(bool);
     void flush();
     size_t write(const uint8_t data);
     using Print::write; // pull in write(str) and write(buf, size) from Print

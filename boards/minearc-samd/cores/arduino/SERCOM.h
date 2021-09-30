@@ -174,7 +174,8 @@ class SERCOM
 		void initUART(SercomUartMode mode, SercomUartSampleRate sampleRate, uint32_t baudrate=0) ;
 		void initFrame(SercomUartCharSize charSize, SercomDataOrder dataOrder, SercomParityMode parityMode, SercomNumberStopBit nbStopBits) ;
 		void initPads(SercomUartTXPad txPad, SercomRXPad rxPad) ;
-
+		void setTransmitterUART(bool);
+		
 		void resetUART( void ) ;
 		void enableUART( void ) ;
 		void flushUART( void ) ;

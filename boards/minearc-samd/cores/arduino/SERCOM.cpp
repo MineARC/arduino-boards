@@ -144,6 +144,12 @@ void SERCOM::flushUART()
   while(!sercom->USART.INTFLAG.bit.TXC);
 }
 
+void SERCOM::setTransmitterUART(bool enable)
+{
+  sercom->USART.CTRLB.bit.TXEN = enable;
+  while(sercom->USART.SYNCBUSY.bit.CTRLB);
+}
+
 void SERCOM::clearStatusUART()
 {
   //Reset (with 0) the STATUS register
