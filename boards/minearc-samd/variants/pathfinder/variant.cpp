@@ -21,8 +21,6 @@
  * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
  * |     | Digital    |         |              |                |                 |         |        |                |                |              |                |                |
  * +-----+------------+---------+--------------+----------------+-----------------+---------+--------+----------------+----------------+--------------+----------------+----------------+
- * | 0   |            | PA00    | ~D0/XIN32    | EIC/EXTINT[0]  |                 |         |        | SERCOM1/PAD[0] |                | TCC2/WO[0]   |                |                |
- * | 1   |            | PA01    | ~D1/XOUT32   | EIC/EXTINT[1]  |                 |         |        | SERCOM1/PAD[1] |                | TCC2/WO[1]   |                |                |
  * | 2   | ~4         | PA08    | ~D2/SDA1     | EIC/NMI        |                 | AIN[16] |        | SERCOM0/PAD[0] | SERCOM2/PAD[0] | TCC0/WO[0]   | TCC1/WO[2]     | I2S/SD[1]      |
  * | 3   | ~3         | PA09    | ~D3/SCL1     | EIC/EXTINT[9]  |                 | AIN[17] |        | SERCOM0/PAD[1] | SERCOM2/PAD[1] | TCC0/WO[1]   | TCC1/WO[3]     | I2S/MCK[0]     |
  * | 4   | 1 <- TX    | PA10    | ~D4          | EIC/EXTINT[10] |                 | AIN[18] |        | SERCOM0/PAD[2] | SERCOM2/PAD[2] | TCC1/WO[0]   | TCC0/WO[2]     | I2S/SCK[0]     |
@@ -64,10 +62,8 @@
  */
 const PinDescription g_APinDescription[]=
 {
-  // 0..17 - Digital
+  // 0..15 - Digital
   // ----------------------
-  { PORTA,  0, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER), No_ADC_Channel, PWM2_CH0, TCC2_CH0, EXTERNAL_INT_0 },
-  { PORTA,  1, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER), No_ADC_Channel, PWM2_CH1, TCC2_CH1, EXTERNAL_INT_1 },
   { PORTA,  8, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER), No_ADC_Channel, PWM1_CH2, TCC1_CH2, EXTERNAL_INT_NMI },
   { PORTA,  9, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER), No_ADC_Channel, PWM1_CH3, TCC1_CH3, EXTERNAL_INT_9 },
   { PORTA, 10, PIO_DIGITAL, (PIN_ATTR_DIGITAL|PIN_ATTR_PWM|PIN_ATTR_TIMER), No_ADC_Channel, PWM1_CH0, TCC1_CH0, EXTERNAL_INT_10 },
@@ -85,7 +81,7 @@ const PinDescription g_APinDescription[]=
   { PORTA, 27, PIO_DIGITAL, PIN_ATTR_DIGITAL, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_15 },
   { PORTA, 28, PIO_DIGITAL, PIN_ATTR_DIGITAL, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_8 },
   
-  // 18..23 - Analog
+  // 16..21 - Analog
   // --------------------
   { PORTA,  2, PIO_ANALOG, PIN_ATTR_NONE, ADC_Channel0, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_2 },
   { PORTA,  3, PIO_ANALOG, PIN_ATTR_NONE, ADC_Channel1, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_3 },     
@@ -94,39 +90,39 @@ const PinDescription g_APinDescription[]=
   { PORTA,  6, PIO_ANALOG, (PIN_ATTR_PWM|PIN_ATTR_TIMER), ADC_Channel6, PWM1_CH0, TCC1_CH0, EXTERNAL_INT_6 },
   { PORTA,  7, PIO_ANALOG, (PIN_ATTR_PWM|PIN_ATTR_TIMER), ADC_Channel7, PWM1_CH1, TCC1_CH1, EXTERNAL_INT_7 },
 
-  // 24..25 - USB
+  // 22..23 - USB
   // --------------------
   { PORTA, 24, PIO_COM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_12 },
   { PORTA, 25, PIO_COM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_13 },
 
-  // 26 - DAC
+  // 24 - DAC
   // ----------------------
   { PORTA,  2, PIO_ANALOG, PIN_ATTR_ANALOG, DAC_Channel0, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_2 },
 
-  // 27..30 - Serial
+  // 25..28 - Serial
   // ----------------------
   { PORTA,  4, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  5, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  6, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  7, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
 
-  // 31..32 - Wire
+  // 29..30 - Wire
   // ----------------------
   { PORTA,  22, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  23, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
 
-  // 33..34 - Wire1
+  // 31..32 - Wire1
   // ----------------------
   { PORTA,  8, PIO_SERCOM_ALT, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  9, PIO_SERCOM_ALT, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
 
-  // 35..37 - SPI
+  // 33..35 - SPI
   // ----------------------
   { PORTA,  17, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  18, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
   { PORTA,  19, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
 
-  // 38 - Serial1
+  // 36 - Serial1
   // ----------------------
   { PORTA,  16, PIO_SERCOM, PIN_ATTR_NONE, No_ADC_Channel, NOT_ON_PWM, NOT_ON_TIMER, EXTERNAL_INT_NONE },
 } ;
