@@ -90,3 +90,30 @@ bloodhound.menu.cache.off.build.cache_flags=
 bloodhound.menu.usbstack.arduino=Arduino
 bloodhound.menu.usbstack.tinyusb=TinyUSB
 bloodhound.menu.usbstack.tinyusb.build.flags.usbstack=-DUSE_TINYUSB
+
+calstation.name=Calstation
+calstation.upload.tool=bossac18
+calstation.upload.protocol=sam-ba
+calstation.upload.maximum_size=507904
+calstation.upload.offset=0x0000
+calstation.upload.use_1200bps_touch=true
+calstation.upload.wait_for_upload_port=true
+calstation.upload.native_usb=true
+calstation.build.mcu=cortex-m4
+calstation.build.f_cpu=120000000L
+calstation.build.usb_product="Calstation"
+calstation.build.usb_manufacturer="MineARC"
+calstation.build.board=Calstation
+calstation.build.core=arduino
+calstation.build.extra_flags=-D__SAMD51J19A__ -D__SAMD51__ -D__FPU_PRESENT -DARM_MATH_CM4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+calstation.build.ldscript=linker_scripts/gcc/flash_without_bootloader.ld
+calstation.build.openocdscript=openocd_scripts/calstation.cfg
+calstation.build.variant=calstation
+calstation.build.variant_system_lib=
+calstation.build.vid=0x239A
+calstation.build.pid=0x8020
+calstation.compiler.arm.cmsis.ldflags="-L{build.variant.path}" -larm_cortexM4lf_math -mfloat-abi=hard -mfpu=fpv4-sp-d16
+calstation.menu.cache.on=Enabled
+calstation.menu.cache.on.build.cache_flags=-DENABLE_CACHE
+calstation.menu.cache.off=Disabled
+calstation.menu.cache.off.build.cache_flags=
