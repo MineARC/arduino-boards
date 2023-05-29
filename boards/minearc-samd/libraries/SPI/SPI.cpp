@@ -24,7 +24,7 @@
 
 #ifdef USE_TINYUSB
 // For Serial when selecting TinyUSB
-#include <Adafruit_TinyUSB.h>
+//#include <Adafruit_TinyUSB.h>
 #endif
 
 #define SPI_IMODE_NONE   0
@@ -58,9 +58,9 @@ void SPIClass::begin()
     initialized = true;
   }
 
-  if(!use_dma) {
+  /*if(!use_dma) {
     dmaAllocate();
-  }
+  }*/
 
   // PIO init
   pinPeripheral(_uc_pinMiso, g_APinDescription[_uc_pinMiso].ulPinType);
@@ -250,7 +250,7 @@ void SPIClass::transfer(void *buf, size_t count)
 // Pointer to SPIClass object, one per DMA channel. This allows the
 // DMA callback (which has to exist outside the class context) to have
 // a reference back to the originating SPIClass object.
-static SPIClass *spiPtr[DMAC_CH_NUM] = { 0 }; // Legit inits list to NULL
+/*static SPIClass *spiPtr[DMAC_CH_NUM] = { 0 }; // Legit inits list to NULL
 
 void SPIClass::dmaCallback(Adafruit_ZeroDMA *dma) {
   // dmaCallback() receives an Adafruit_ZeroDMA object. From this we can get
@@ -361,7 +361,7 @@ void SPIClass::dmaAllocate(void) {
 
   // NOT FATAL if channel or descriptor allocation fails.
   // transfer() function will fall back on a manual byte-by-byte loop.
-}
+}*/
 
 void SPIClass::transfer(const void *txbuf, void *rxbuf, size_t count,
   bool block) {
@@ -375,7 +375,7 @@ void SPIClass::transfer(const void *txbuf, void *rxbuf, size_t count,
   uint8_t *txbuf8 = (uint8_t *)txbuf; // Must cast to byte size
   uint8_t *rxbuf8 = (uint8_t *)rxbuf; // for pointer math
 
-  if(use_dma) { // DMA-BASED TRANSFER YAY ----------------------------------
+  /*if(use_dma) { // DMA-BASED TRANSFER YAY ----------------------------------
 
     static const uint8_t dum = 0xFF; // Dummy byte for read-only xfers
 
@@ -437,9 +437,7 @@ void SPIClass::transfer(const void *txbuf, void *rxbuf, size_t count,
     writeChannel.startJob(); // All xfers, even read-only, need write job.
     if(block) {              // If blocking transfer requested,
       while(dma_busy);       // wait for job to finish
-    }
-
-  } else { // NON-DMA FALLBACK ---------------------------------------------
+    }*/
 
     if(txbuf8) {
       if(rxbuf8) { // Write + read simultaneously
@@ -457,18 +455,17 @@ void SPIClass::transfer(const void *txbuf, void *rxbuf, size_t count,
       }
     }
 
-  } // end non-DMA
 }
 
 // Waits for a prior in-background DMA transfer to complete.
-void SPIClass::waitForTransfer(void) {
+/*void SPIClass::waitForTransfer(void) {
   while(dma_busy);
-}
+}*/
 
 /* returns the current DMA transfer status to allow non-blocking polling */
-bool SPIClass::isBusy(void) {
+/*bool SPIClass::isBusy(void) {
   return dma_busy;
-}
+}*/
 
 
 // End DMA-based SPI transfer() code ---------------------------------------

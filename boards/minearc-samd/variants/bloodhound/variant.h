@@ -30,7 +30,7 @@
 #define VARIANT_MAINOSC (32768ul)
 
 /** Master clock frequency */
-#define VARIANT_MCK	(F_CPU)
+#define VARIANT_MCK (F_CPU)
 
 #define VARIANT_GCLK0_FREQ (F_CPU)
 #define VARIANT_GCLK1_FREQ (48000000UL)
@@ -47,7 +47,8 @@
 #endif // __cplusplus
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif // __cplusplus
 
 /*----------------------------------------------------------------------------
@@ -67,8 +68,8 @@ extern "C" {
 #define portOutputRegister(port) (&(port->OUT.reg))
 #define portInputRegister(port) (&(port->IN.reg))
 #define portModeRegister(port) (&(port->DIR.reg))
-#define digitalPinHasPWM(P)                                                    \
-  (g_APinDescription[P].ulPWMChannel != NOT_ON_PWM ||                          \
+#define digitalPinHasPWM(P)                           \
+  (g_APinDescription[P].ulPWMChannel != NOT_ON_PWM || \
    g_APinDescription[P].ulTCChannel != NOT_ON_TIMER)
 
 /*
@@ -94,16 +95,16 @@ extern "C" {
 #define PIN_DAC0 (48ul)
 #define PIN_DAC1 (49ul)
 
-static const uint8_t A0 = PIN_A0;
-static const uint8_t A1 = PIN_A1;
-static const uint8_t A2 = PIN_A2;
-static const uint8_t A3 = PIN_A3;
-static const uint8_t A4 = PIN_A4;
-static const uint8_t A5 = PIN_A5;
-static const uint8_t A6 = PIN_A6;
-static const uint8_t A7 = PIN_A7;
-static const uint8_t DAC0 = PIN_DAC0;
-static const uint8_t DAC1 = PIN_DAC1;
+  static const uint8_t A0 = PIN_A0;
+  static const uint8_t A1 = PIN_A1;
+  static const uint8_t A2 = PIN_A2;
+  static const uint8_t A3 = PIN_A3;
+  static const uint8_t A4 = PIN_A4;
+  static const uint8_t A5 = PIN_A5;
+  static const uint8_t A6 = PIN_A6;
+  static const uint8_t A7 = PIN_A7;
+  static const uint8_t DAC0 = PIN_DAC0;
+  static const uint8_t DAC1 = PIN_DAC1;
 #define ADC_RESOLUTION 12
 
 /*
@@ -116,8 +117,8 @@ static const uint8_t DAC1 = PIN_DAC1;
 #define PAD_SERIAL_TX (UART_TX_PAD_0)
 #define PAD_SERIAL_RX (SERCOM_RX_PAD_1)
 
-static const uint8_t TX = PIN_SERIAL_TX;
-static const uint8_t RX = PIN_SERIAL_RX;
+  static const uint8_t TX = PIN_SERIAL_TX;
+  static const uint8_t RX = PIN_SERIAL_RX;
 
 // Serial1
 #define PIN_SERIAL1_TX (60ul)
@@ -125,8 +126,8 @@ static const uint8_t RX = PIN_SERIAL_RX;
 #define PAD_SERIAL1_TX (UART_TX_PAD_0)
 #define PAD_SERIAL1_RX (SERCOM_RX_PAD_1)
 
-static const uint8_t TX1 = PIN_SERIAL1_TX;
-static const uint8_t RX1 = PIN_SERIAL1_RX;
+  static const uint8_t TX1 = PIN_SERIAL1_TX;
+  static const uint8_t RX1 = PIN_SERIAL1_RX;
 
 // Serial2
 #define PIN_SERIAL2_TX (50ul)
@@ -134,8 +135,8 @@ static const uint8_t RX1 = PIN_SERIAL1_RX;
 #define PAD_SERIAL2_TX (UART_TX_PAD_0)
 #define PAD_SERIAL2_RX (SERCOM_RX_PAD_1)
 
-static const uint8_t TX2 = PIN_SERIAL2_TX;
-static const uint8_t RX2 = PIN_SERIAL2_RX;
+  static const uint8_t TX2 = PIN_SERIAL2_TX;
+  static const uint8_t RX2 = PIN_SERIAL2_RX;
 
 /*
  * Wire Interfaces
@@ -152,13 +153,13 @@ static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;*/
 
 // Wire1
-#define PIN_WIRE1_SDA (52ul)
-#define PIN_WIRE1_SCL (53ul)
-#define PERIPH_WIRE1 sercom3
-#define WIRE1_IT_HANDLER SERCOM3_Handler
+#define PIN_WIRE_SDA (52ul)
+#define PIN_WIRE_SCL (53ul)
+#define PERIPH_WIRE sercom3
+#define WIRE_IT_HANDLER SERCOM3_Handler
 
-static const uint8_t SDA1 = PIN_WIRE1_SDA;
-static const uint8_t SCL1 = PIN_WIRE1_SCL;
+  static const uint8_t SDA = PIN_WIRE_SDA;
+  static const uint8_t SCL = PIN_WIRE_SCL;
 
 /*
  * SPI Interfaces
@@ -175,10 +176,10 @@ static const uint8_t SCL1 = PIN_WIRE1_SCL;
 #define PAD_SPI_TX SPI_PAD_3_SCK_1
 #define PAD_SPI_RX SERCOM_RX_PAD_2
 
-static const uint8_t SS = PIN_SPI_SS;
-static const uint8_t SCK = PIN_SPI_SCK;
-static const uint8_t MISO = PIN_SPI_MISO;
-static const uint8_t MOSI = PIN_SPI_MOSI;
+  static const uint8_t SS = PIN_SPI_SS;
+  static const uint8_t SCK = PIN_SPI_SCK;
+  static const uint8_t MISO = PIN_SPI_MISO;
+  static const uint8_t MOSI = PIN_SPI_MOSI;
 
 /*
  * USB
@@ -187,45 +188,45 @@ static const uint8_t MOSI = PIN_SPI_MOSI;
 #define PIN_USB_DM (46ul)
 #define PIN_USB_DP (47ul)
 
-/*
+  /*
  * I2S Interfaces
  */
-// #define I2S_INTERFACES_COUNT 1
+  // #define I2S_INTERFACES_COUNT 1
 
-// #define I2S_DEVICE 0
-// #define I2S_CLOCK_GENERATOR 3
+  // #define I2S_DEVICE 0
+  // #define I2S_CLOCK_GENERATOR 3
 
-// #define PIN_I2S_SDO (-1u)
-// #define PIN_I2S_SDI (-1u)
-// #define PIN_I2S_SCK (-1u)
-// #define PIN_I2S_FS (-1u)
-// #define PIN_I2S_MCK (-1u)
+  // #define PIN_I2S_SDO (-1u)
+  // #define PIN_I2S_SDI (-1u)
+  // #define PIN_I2S_SCK (-1u)
+  // #define PIN_I2S_FS (-1u)
+  // #define PIN_I2S_MCK (-1u)
 
-// QSPI Pins
-// #define PIN_QSPI_SCK (-1u)
-// #define PIN_QSPI_CS (-1u)
-// #define PIN_QSPI_IO0 (-1u)
-// #define PIN_QSPI_IO1 (-1u)
-// #define PIN_QSPI_IO2 (-1u)
-// #define PIN_QSPI_IO3 (-1u)
+  // QSPI Pins
+  // #define PIN_QSPI_SCK (-1u)
+  // #define PIN_QSPI_CS (-1u)
+  // #define PIN_QSPI_IO0 (-1u)
+  // #define PIN_QSPI_IO1 (-1u)
+  // #define PIN_QSPI_IO2 (-1u)
+  // #define PIN_QSPI_IO3 (-1u)
 
-// PCC Pins
-// #define PIN_PCC_DEN1 (PIN_SPI_MOSI)
-// #define PIN_PCC_DEN2 (PIN_SPI_SCK)
-// #define PIN_PCC_CLK (PIN_SPI_MISO)
-// #define PIN_PCC_D0 (-1u)
-// #define PIN_PCC_D1 (-1u)
-// #define PIN_PCC_D2 (-1u)
-// #define PIN_PCC_D3 (-1u)
-// #define PIN_PCC_D4 (-1u)
-// #define PIN_PCC_D5 (-1u)
-// #define PIN_PCC_D6 (-1u)
-// #define PIN_PCC_D7 (-1u)
-// #define PIN_PCC_D8 (-1u)
-// #define PIN_PCC_D9 (-1u)
+  // PCC Pins
+  // #define PIN_PCC_DEN1 (PIN_SPI_MOSI)
+  // #define PIN_PCC_DEN2 (PIN_SPI_SCK)
+  // #define PIN_PCC_CLK (PIN_SPI_MISO)
+  // #define PIN_PCC_D0 (-1u)
+  // #define PIN_PCC_D1 (-1u)
+  // #define PIN_PCC_D2 (-1u)
+  // #define PIN_PCC_D3 (-1u)
+  // #define PIN_PCC_D4 (-1u)
+  // #define PIN_PCC_D5 (-1u)
+  // #define PIN_PCC_D6 (-1u)
+  // #define PIN_PCC_D7 (-1u)
+  // #define PIN_PCC_D8 (-1u)
+  // #define PIN_PCC_D9 (-1u)
 
-// TODO: meaningful value for this
-// #define VARIANT_QSPI_BAUD_DEFAULT 5000000
+  // TODO: meaningful value for this
+  // #define VARIANT_QSPI_BAUD_DEFAULT 5000000
 
 #ifdef __cplusplus
 }
@@ -252,7 +253,6 @@ extern Uart Serial;
 extern Uart Serial1;
 extern Uart Serial2;
 
-
 #endif
 
 // These serial port names are intended to allow libraries and
@@ -278,5 +278,7 @@ extern Uart Serial2;
 #define SERIAL_PORT_USBVIRTUAL Serial3
 #define SERIAL_PORT_MONITOR Serial3
 #define SERIAL_PORT_HARDWARE Serial
-
+#define SERIAL_PORT_USBVIRTUAL SerialUSB
+#define SERIAL_PORT_MONITOR SerialUSB
+#define SERIAL_PORT_HARDWARE Serial
 #endif // _VARIANT_BLOODHOUND_

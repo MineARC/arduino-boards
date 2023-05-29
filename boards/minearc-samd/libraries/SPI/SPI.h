@@ -21,7 +21,7 @@
 #define _SPI_H_INCLUDED
 
 #include <Arduino.h>
-#include <Adafruit_ZeroDMA.h>
+//#include <Adafruit_ZeroDMA.h>
 
 // SPI_HAS_TRANSACTION means SPI has
 //   - beginTransaction()
@@ -170,7 +170,7 @@ class SPIClass {
   uint32_t interruptMask;
 
   // transfer(txbuf, rxbuf, count, block) uses DMA when possible
-  Adafruit_ZeroDMA readChannel;
+  /*Adafruit_ZeroDMA readChannel;
   Adafruit_ZeroDMA writeChannel;
   DmacDescriptor  *firstReadDescriptor   = NULL;  // List entry point
   DmacDescriptor  *firstWriteDescriptor  = NULL;
@@ -179,7 +179,7 @@ class SPIClass {
   bool             use_dma               = false; // true on successful alloc
   volatile bool    dma_busy              = false;
   void             dmaAllocate(void);
-  static void      dmaCallback(Adafruit_ZeroDMA *dma);
+  static void      dmaCallback(Adafruit_ZeroDMA *dma);*/
 };
 
 #if SPI_INTERFACES_COUNT > 0

@@ -85,8 +85,8 @@ private:
 // "Serial" is used with TinyUSB CDC
 #if defined(USE_TINYUSB) &&                                                    \
     !(defined(ARDUINO_ARCH_ESP32) && ARDUINO_SERIAL_PORT == 0)
-extern Adafruit_USBD_CDC Serial;
-#define SerialTinyUSB Serial
+extern Adafruit_USBD_CDC SerialUSB;
+#define SerialTinyUSB SerialUSB
 #endif
 
 // Serial is probably used with HW Uart
