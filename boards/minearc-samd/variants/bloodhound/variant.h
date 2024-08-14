@@ -189,8 +189,8 @@ static const uint8_t SCL = PIN_WIRE_SCL;*/
 #define PIN_USB_DP (47ul)
 
   /*
- * I2S Interfaces
- */
+   * I2S Interfaces
+   */
   // #define I2S_INTERFACES_COUNT 1
 
   // #define I2S_DEVICE 0
@@ -249,9 +249,9 @@ extern SERCOM sercom3;
 extern SERCOM sercom4;
 extern SERCOM sercom5;
 
-extern Uart Serial;
 extern Uart Serial1;
 extern Uart Serial2;
+extern Uart Serial3;
 
 #endif
 

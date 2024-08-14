@@ -69,6 +69,14 @@ void pinMode( uint32_t ulPin, uint32_t ulMode )
       PORT->Group[port].DIRSET.reg = pinMask ;
     break ;
 
+    case OUTPUT_STRONG:
+      // enable input, to support reading back values, with pullups disabled
+      PORT->Group[port].PINCFG[pin].reg=(uint8_t)(PORT_PINCFG_INEN | PORT_PINCFG_DRVSTR);
+
+      // Set pin to output mode
+      PORT->Group[port].DIRSET.reg = pinMask ;
+    break ;
+
     default:
       // do nothing
     break ;
