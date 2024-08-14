@@ -12,6 +12,60 @@
         {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
+          "version": "1.4.6",
+          "category": "Contributed",
+          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.4.6.zip",
+          "archiveFileName": "minearc-samd-v1.4.6.zip",
+          "checksum": "SHA-256:19dfffd85c88179e69bd1698e30432373089f76d652776af644a2a72e1a3a1b9",
+          "size": "3141916",
+          "help": {
+            "online": ""
+          },
+          "boards": [
+            {
+              "name": "Pathfinder"
+            },
+            {
+              "name": "Voltron"
+            },
+            {
+              "name": "Bloodhound"
+            },
+            {
+              "name": "Calstation"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "4.8.3-2014q1"
+            },
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.8.0-48-gb176eee"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.9.0-arduino"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS-Atmel",
+              "version": "1.2.0"
+            }
+          ]
+        },
+        {
+          "name": "MineARC SAMD Boards",
+          "architecture": "samd",
           "version": "1.4.5",
           "category": "Contributed",
           "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v1.4.5.zip",
