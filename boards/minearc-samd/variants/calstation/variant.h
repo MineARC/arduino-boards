@@ -116,13 +116,13 @@ static const uint8_t TX1 = PIN_SERIAL1_TX;
 static const uint8_t RX1 = PIN_SERIAL1_RX;
 
 // Serial2
-#define PIN_SERIAL2_TX (40ul)
-#define PIN_SERIAL2_RX (39ul)
-#define PAD_SERIAL2_TX (UART_TX_PAD_0)
-#define PAD_SERIAL2_RX (SERCOM_RX_PAD_1)
+// #define PIN_SERIAL2_TX (40ul)
+// #define PIN_SERIAL2_RX (39ul)
+// #define PAD_SERIAL2_TX (UART_TX_PAD_0)
+// #define PAD_SERIAL2_RX (SERCOM_RX_PAD_1)
 
-static const uint8_t TX2 = PIN_SERIAL2_TX;
-static const uint8_t RX2 = PIN_SERIAL2_RX;
+// static const uint8_t TX2 = PIN_SERIAL2_TX;
+// static const uint8_t RX2 = PIN_SERIAL2_RX;
 
 // Serial3
 #define PIN_SERIAL3_TX (41ul)
@@ -154,12 +154,36 @@ static const uint8_t RX5 = PIN_SERIAL5_RX;
 /*
  * Wire Interfaces
  */
-#define WIRE_INTERFACES_COUNT 0
+#define WIRE_INTERFACES_COUNT 1
+
+// Wire
+#define PIN_WIRE_SDA (40ul)
+#define PIN_WIRE_SCL (39ul)
+#define PERIPH_WIRE sercom2
+#define WIRE_IT_HANDLER SERCOM2_Handler
+
+  static const uint8_t SDA = PIN_WIRE_SDA;
+  static const uint8_t SCL = PIN_WIRE_SCL;
 
 /*
  * SPI Interfaces
  */
-#define SPI_INTERFACES_COUNT 0
+#define SPI_INTERFACES_COUNT 1
+
+// SPI
+#define PIN_SPI_SS (255ul)
+#define PIN_SPI_SCK (255ul)
+#define PIN_SPI_MISO (255ul)
+#define PIN_SPI_MOSI (255ul)
+#define PERIPH_SPI sercom2
+
+#define PAD_SPI_TX SPI_PAD_3_SCK_1
+#define PAD_SPI_RX SERCOM_RX_PAD_2
+
+  static const uint8_t SS = PIN_SPI_SS;
+  static const uint8_t SCK = PIN_SPI_SCK;
+  static const uint8_t MISO = PIN_SPI_MISO;
+  static const uint8_t MOSI = PIN_SPI_MOSI;
 
 /*
  * USB
