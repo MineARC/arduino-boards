@@ -1,0 +1,62 @@
+# Copyright (c) 2014-2017 Arduino LLC.  All right reserved.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+# Pathfinder
+# --------------------------------------
+pathfinder.name=Pathfinder
+pathfinder.vid.0=0x2341
+pathfinder.pid.0=0x804d
+pathfinder.vid.1=0x2341
+pathfinder.pid.1=0x004d
+pathfinder.vid.2=0x2341
+pathfinder.pid.2=0x824d
+pathfinder.vid.3=0x2341
+pathfinder.pid.3=0x024d
+pathfinder.upload_port.0.vid=0x2341
+pathfinder.upload_port.0.pid=0x804d
+pathfinder.upload_port.1.vid=0x2341
+pathfinder.upload_port.1.pid=0x004d
+pathfinder.upload_port.2.vid=0x2341
+pathfinder.upload_port.2.pid=0x824d
+pathfinder.upload_port.3.vid=0x2341
+pathfinder.upload_port.3.pid=0x024d
+pathfinder.upload_port.4.board=pathfinder
+
+pathfinder.upload.tool=bossac
+pathfinder.upload.tool.default=bossac
+pathfinder.upload.tool.network=arduino_ota
+pathfinder.upload.protocol=sam-ba
+pathfinder.upload.maximum_size=262144
+pathfinder.upload.maximum_data_size=32768
+pathfinder.upload.use_1200bps_touch=true
+pathfinder.upload.wait_for_upload_port=true
+pathfinder.upload.native_usb=true
+pathfinder.build.mcu=cortex-m0plus
+pathfinder.build.f_cpu=48000000L
+pathfinder.build.usb_product="Pathfinder"
+pathfinder.build.usb_manufacturer="MineARC"
+pathfinder.build.board=SAMD_ZERO
+pathfinder.build.core=arduino
+pathfinder.build.extra_flags=-D__SAMD21E18A__ {build.usb_flags}
+pathfinder.build.ldscript=linker_scripts/gcc/flash_without_bootloader.ld
+pathfinder.build.openocdscript=openocd_scripts/arduino_zero.cfg
+pathfinder.build.variant=pathfinder
+pathfinder.build.variant_system_lib=
+pathfinder.build.vid=0x2341
+pathfinder.build.pid=0x804d
+pathfinder.bootloader.tool=openocd
+pathfinder.bootloader.tool.default=openocd
+pathfinder.bootloader.file=zero/samd21_sam_ba.bin
