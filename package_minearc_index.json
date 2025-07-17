@@ -29,18 +29,23 @@
           "toolsDependencies": [
             {
               "packager": "arduino",
+              "name": "arduinoOTA",
+              "version": "1.2.1"
+            },
+            {
+              "packager": "arduino",
               "name": "arm-none-eabi-gcc",
-              "version": "4.8.3-2014q1"
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.3.0-arduino9"
             },
             {
               "packager": "arduino",
               "name": "bossac",
-              "version": "1.8.0-48-gb176eee"
-            },
-            {
-              "packager": "arduino",
-              "name": "openocd",
-              "version": "0.9.0-arduino"
+              "version": "1.7.0-arduino3"
             },
             {
               "packager": "arduino",
@@ -51,6 +56,11 @@
               "packager": "arduino",
               "name": "CMSIS-Atmel",
               "version": "1.2.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
             }
           ]
         },
