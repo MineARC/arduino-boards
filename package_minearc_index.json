@@ -9,7 +9,7 @@
         "online": ""
       },
       "platforms": [
-                {
+        {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
           "version": "0.0.2",
