@@ -24,6 +24,9 @@
           "boards": [
             {
               "name": "Pathfinder"
+            },
+            {
+              "name": "Bloodhound"
             }
           ],
           "toolsDependencies": [
