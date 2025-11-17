@@ -9,6 +9,67 @@
         "online": ""
       },
       "platforms": [
+                {
+          "name": "MineARC SAMD Boards",
+          "architecture": "samd",
+          "version": "0.0.2",
+          "category": "Contributed",
+          "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v0.0.3.zip",
+          "archiveFileName": "minearc-samd-v0.0.3.zip",
+          "checksum": "SHA-256:49c8ada01b738aef34cc594a5a348ea798f25ae684ac118179caee9928280dcb",
+          "size": "4264557",
+          "help": {
+            "online": ""
+          },
+          "boards": [
+            {
+              "name": "Pathfinder"
+            },
+            {
+              "name": "Voltron"
+            },
+            {
+              "name": "Bloodhound"
+            }
+          ],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "arduinoOTA",
+              "version": "1.2.1"
+            },
+            {
+              "packager": "arduino",
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.3.0-arduino9"
+            },
+            {
+              "packager": "arduino",
+              "name": "bossac",
+              "version": "1.7.0-arduino3"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS-Atmel",
+              "version": "1.2.0"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": "0.10.0-arduino7"
+            }
+          ]
+        },
         {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
