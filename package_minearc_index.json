@@ -12,7 +12,7 @@
                 {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
-          "version": "0.0.2",
+          "version": "0.0.3",
           "category": "Contributed",
           "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v0.0.3.zip",
           "archiveFileName": "minearc-samd-v0.0.3.zip",
