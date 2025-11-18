@@ -9,15 +9,15 @@
         "online": ""
       },
       "platforms": [
-                {
+        {
           "name": "MineARC SAMD Boards",
           "architecture": "samd",
           "version": "0.0.3",
           "category": "Contributed",
           "url": "https://minearc.github.io/arduino-boards/boards/minearc-samd-v0.0.3.zip",
           "archiveFileName": "minearc-samd-v0.0.3.zip",
-          "checksum": "SHA-256:49c8ada01b738aef34cc594a5a348ea798f25ae684ac118179caee9928280dcb",
-          "size": "4264557",
+          "checksum": "SHA-256:24d214030fccbd40a80fc66bbb4e39af9311a04c66a808693cb8ae2b62b2dabc",
+          "size": "4264576",
           "help": {
             "online": ""
           },
