@@ -67,7 +67,7 @@ void TwoWire::end() {
   sercom->disableWIRE();
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
+size_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
 {
   if(quantity == 0)
   {
@@ -85,22 +85,24 @@ uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
     // Read first data
     rxBuffer.store_char(sercom->readDataWIRE(_timeout, &timeout_occurred));
     if (timeout_occurred) {
-      if (stopBit) {
-        sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
-      }
+      // Timeout on first byte - clean up and return
+      sercom->resetBusWIRE();
       return 0;
     }
 
+    bool busOwner;
     // Connected to slave
-    for (byteRead = 1; byteRead < quantity; ++byteRead)
+    for (byteRead = 1; byteRead < quantity && (busOwner = sercom->isBusOwnerWIRE()); ++byteRead)
     {
       sercom->prepareAckBitWIRE();                          // Prepare Acknowledge
       sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_READ); // Prepare the ACK command for the slave
       uint8_t data = sercom->readDataWIRE(_timeout, &timeout_occurred);
       if (timeout_occurred) {
-        if (stopBit) {
+        // Timeout during multi-byte read - clean up and return partial data
+        if (stopBit && busOwner) {
           sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
         }
+        sercom->resetBusWIRE();
         return byteRead;
       }
       rxBuffer.store_char(data);          // Read data and send the ACK
@@ -108,16 +110,22 @@ uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
     sercom->prepareNackBitWIRE();                           // Prepare NACK to stop slave transmission
     //sercom->readDataWIRE();                               // Clear data register to send NACK
 
-    if (stopBit)
+    if (stopBit && busOwner)
     {
-      sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);   // Send Stop
+      sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);   // Send Stop unless arbitration was lost
+    }
+
+    if (!busOwner)
+    {
+      byteRead--;   // because last read byte was garbage/invalid
+      sercom->resetBusWIRE();
     }
   }
 
   return byteRead;
 }
 
-uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity)
+size_t TwoWire::requestFrom(uint8_t address, size_t quantity)
 {
   return requestFrom(address, quantity, true);
 }
@@ -141,21 +149,23 @@ uint8_t TwoWire::endTransmission(bool stopBit)
 {
   transmissionBegun = false ;
 
-  // Start I2C transmission
+  // Start I2C transmission with timeout
   if ( !sercom->startTransmissionWIRE( txAddress, WIRE_WRITE_FLAG, _timeout ) )
   {
     sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
-    return 2 ;  // Address error (could also be timeout, but we keep existing behavior)
+    sercom->resetBusWIRE();
+    return 2 ;  // Address error (could be NACK or timeout)
   }
 
   // Send all buffer
   while( txBuffer.available() )
   {
-    // Trying to send data
+    // Trying to send data with timeout
     if ( !sercom->sendDataMasterWIRE( txBuffer.read_char(), _timeout ) )
     {
       sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
-      return 3 ;  // Nack or error (could also be timeout, but we keep existing behavior)
+      sercom->resetBusWIRE();
+      return 3 ;  // Nack, error, or timeout
     }
   }
   

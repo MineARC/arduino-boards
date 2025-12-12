@@ -538,6 +538,27 @@ void SERCOM::prepareCommandBitsWire(uint8_t cmd)
   }
 }
 
+void SERCOM::resetBusWIRE( void )
+{
+  if(isMasterWIRE()) {
+    // Send STOP condition to release the bus
+    sercom->I2CM.CTRLB.bit.CMD = 3;
+    
+    // Wait for the bus to be released
+    while(sercom->I2CM.SYNCBUSY.bit.SYSOP)
+    {
+      // Waiting for synchronization
+    }
+    
+    // Small delay to let the bus settle
+    delayMicroseconds(10);
+    
+    // Clear error flags
+    sercom->I2CM.STATUS.reg = SERCOM_I2CM_STATUS_BUSERR | 
+                               SERCOM_I2CM_STATUS_ARBLOST;
+  }
+}
+
 bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag)
 {
   return startTransmissionWIRE(address, flag, 0); // 0 = no timeout (blocking behavior)
@@ -574,6 +595,8 @@ bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag
       // Check timeout
       if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
       {
+        // Send STOP condition on timeout to clean up bus
+        sercom->I2CM.CTRLB.bit.CMD = 3;
         return false;
       }
       // Wait transmission complete
@@ -592,6 +615,8 @@ bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag
       // Check timeout
       if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
       {
+        // Send STOP condition on timeout to clean up bus
+        sercom->I2CM.CTRLB.bit.CMD = 3;
         return false;
       }
       // Wait transmission complete
@@ -634,9 +659,16 @@ bool SERCOM::sendDataMasterWIRE(uint8_t data, unsigned long timeout_ms)
       return false;
     }
     
+    // Check for loss of arbitration (from Arduino version)
+    if (sercom->I2CM.STATUS.bit.ARBLOST) {
+      return false;
+    }
+    
     // Check timeout
     if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
     {
+      // Send STOP condition on timeout to clean up bus
+      sercom->I2CM.CTRLB.bit.CMD = 3;
       return false;
     }
   }
@@ -757,6 +789,8 @@ uint8_t SERCOM::readDataWIRE( unsigned long timeout_ms, bool *timeout_occurred )
         if (timeout_occurred != NULL) {
           *timeout_occurred = true;
         }
+        // Send STOP condition on timeout to clean up bus
+        sercom->I2CM.CTRLB.bit.CMD = 3;
         return 0;
       }
       // Waiting complete receive

@@ -224,6 +224,7 @@ class SERCOM
 		bool sendDataMasterWIRE(uint8_t data) ;
 		bool sendDataMasterWIRE(uint8_t data, unsigned long timeout_ms) ;
 		bool sendDataSlaveWIRE(uint8_t data) ;
+		void resetBusWIRE( void ) ;
 		bool isMasterWIRE( void ) ;
 		bool isSlaveWIRE( void ) ;
 		bool isBusIdleWIRE( void ) ;
