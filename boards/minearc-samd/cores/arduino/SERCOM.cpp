@@ -540,6 +540,11 @@ void SERCOM::prepareCommandBitsWire(uint8_t cmd)
 
 bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag)
 {
+  return startTransmissionWIRE(address, flag, 0); // 0 = no timeout (blocking behavior)
+}
+
+bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag, unsigned long timeout_ms)
+{
   // 7-bits address + 1-bits R/W
   address = (address << 0x1ul) | flag;
 
@@ -559,11 +564,18 @@ bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag
   // Send start and address
   sercom->I2CM.ADDR.bit.ADDR = address;
 
+  unsigned long start_time = millis();
+  
   // Address Transmitted
   if ( flag == WIRE_WRITE_FLAG ) // Write mode
   {
     while( !sercom->I2CM.INTFLAG.bit.MB )
     {
+      // Check timeout
+      if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
+      {
+        return false;
+      }
       // Wait transmission complete
     }
   }
@@ -577,6 +589,11 @@ bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag
             sercom->I2CM.CTRLB.bit.CMD = 3; // Stop condition
             return false;
         }
+      // Check timeout
+      if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
+      {
+        return false;
+      }
       // Wait transmission complete
     }
 
@@ -598,8 +615,15 @@ bool SERCOM::startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag
 
 bool SERCOM::sendDataMasterWIRE(uint8_t data)
 {
+  return sendDataMasterWIRE(data, 0); // 0 = no timeout (blocking behavior)
+}
+
+bool SERCOM::sendDataMasterWIRE(uint8_t data, unsigned long timeout_ms)
+{
   //Send data
   sercom->I2CM.DATA.bit.DATA = data;
+
+  unsigned long start_time = millis();
 
   //Wait transmission successful
   while(!sercom->I2CM.INTFLAG.bit.MB) {
@@ -607,6 +631,12 @@ bool SERCOM::sendDataMasterWIRE(uint8_t data)
     // If a bus error occurs, the MB bit may never be set.
     // Check the bus error bit and bail if it's set.
     if (sercom->I2CM.STATUS.bit.BUSERR) {
+      return false;
+    }
+    
+    // Check timeout
+    if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
+    {
       return false;
     }
   }
@@ -705,10 +735,30 @@ int SERCOM::availableWIRE( void )
 
 uint8_t SERCOM::readDataWIRE( void )
 {
+  bool timeout_occurred = false;
+  return readDataWIRE(0, &timeout_occurred); // 0 = no timeout (blocking behavior)
+}
+
+uint8_t SERCOM::readDataWIRE( unsigned long timeout_ms, bool *timeout_occurred )
+{
+  if (timeout_occurred != NULL) {
+    *timeout_occurred = false;
+  }
+  
   if(isMasterWIRE())
   {
+    unsigned long start_time = millis();
+    
     while( sercom->I2CM.INTFLAG.bit.SB == 0 )
     {
+      // Check timeout
+      if (timeout_ms > 0 && (millis() - start_time) >= timeout_ms)
+      {
+        if (timeout_occurred != NULL) {
+          *timeout_occurred = true;
+        }
+        return 0;
+      }
       // Waiting complete receive
     }
 

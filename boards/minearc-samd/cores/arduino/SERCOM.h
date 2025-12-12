@@ -220,7 +220,9 @@ class SERCOM
     void prepareAckBitWIRE( void ) ;
     void prepareCommandBitsWire(uint8_t cmd);
 		bool startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag) ;
+		bool startTransmissionWIRE(uint8_t address, SercomWireReadWriteFlag flag, unsigned long timeout_ms) ;
 		bool sendDataMasterWIRE(uint8_t data) ;
+		bool sendDataMasterWIRE(uint8_t data, unsigned long timeout_ms) ;
 		bool sendDataSlaveWIRE(uint8_t data) ;
 		bool isMasterWIRE( void ) ;
 		bool isSlaveWIRE( void ) ;
@@ -237,6 +239,7 @@ class SERCOM
     bool isRXNackReceivedWIRE( void ) ;
 		int availableWIRE( void ) ;
 		uint8_t readDataWIRE( void ) ;
+		uint8_t readDataWIRE( unsigned long timeout_ms, bool *timeout_occurred ) ;
 		int8_t getSercomIndex(void);
 #if defined(__SAMD51__)
 		// SERCOM clock source override is only available on

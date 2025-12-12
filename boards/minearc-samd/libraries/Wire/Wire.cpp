@@ -78,17 +78,32 @@ uint8_t TwoWire::requestFrom(uint8_t address, size_t quantity, bool stopBit)
 
   rxBuffer.clear();
 
-  if(sercom->startTransmissionWIRE(address, WIRE_READ_FLAG))
+  if(sercom->startTransmissionWIRE(address, WIRE_READ_FLAG, _timeout))
   {
+    bool timeout_occurred = false;
+    
     // Read first data
-    rxBuffer.store_char(sercom->readDataWIRE());
+    rxBuffer.store_char(sercom->readDataWIRE(_timeout, &timeout_occurred));
+    if (timeout_occurred) {
+      if (stopBit) {
+        sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
+      }
+      return 0;
+    }
 
     // Connected to slave
     for (byteRead = 1; byteRead < quantity; ++byteRead)
     {
       sercom->prepareAckBitWIRE();                          // Prepare Acknowledge
       sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_READ); // Prepare the ACK command for the slave
-      rxBuffer.store_char(sercom->readDataWIRE());          // Read data and send the ACK
+      uint8_t data = sercom->readDataWIRE(_timeout, &timeout_occurred);
+      if (timeout_occurred) {
+        if (stopBit) {
+          sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
+        }
+        return byteRead;
+      }
+      rxBuffer.store_char(data);          // Read data and send the ACK
     }
     sercom->prepareNackBitWIRE();                           // Prepare NACK to stop slave transmission
     //sercom->readDataWIRE();                               // Clear data register to send NACK
@@ -121,25 +136,26 @@ void TwoWire::beginTransmission(uint8_t address) {
 //  2 : NACK on transmit of address
 //  3 : NACK on transmit of data
 //  4 : Other error
+//  5 : Timeout
 uint8_t TwoWire::endTransmission(bool stopBit)
 {
   transmissionBegun = false ;
 
   // Start I2C transmission
-  if ( !sercom->startTransmissionWIRE( txAddress, WIRE_WRITE_FLAG ) )
+  if ( !sercom->startTransmissionWIRE( txAddress, WIRE_WRITE_FLAG, _timeout ) )
   {
     sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
-    return 2 ;  // Address error
+    return 2 ;  // Address error (could also be timeout, but we keep existing behavior)
   }
 
   // Send all buffer
   while( txBuffer.available() )
   {
     // Trying to send data
-    if ( !sercom->sendDataMasterWIRE( txBuffer.read_char() ) )
+    if ( !sercom->sendDataMasterWIRE( txBuffer.read_char(), _timeout ) )
     {
       sercom->prepareCommandBitsWire(WIRE_MASTER_ACT_STOP);
-      return 3 ;  // Nack or error
+      return 3 ;  // Nack or error (could also be timeout, but we keep existing behavior)
     }
   }
   
