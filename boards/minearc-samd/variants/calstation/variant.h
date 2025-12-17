@@ -55,9 +55,9 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 // Number of pins defined in PinDescription array
-#define PINS_COUNT (35ul)
-#define NUM_DIGITAL_PINS (35ul)
-#define NUM_ANALOG_INPUTS (0ul)
+#define PINS_COUNT (48ul)
+#define NUM_DIGITAL_PINS (47ul)
+#define NUM_ANALOG_INPUTS (1ul)
 #define NUM_ANALOG_OUTPUTS (0ul)
 #define analogInputToDigitalPin(p) ((p < NUM_ANALOG_INPUTS) ? (p) + PIN_A0 : -1)
 
@@ -98,8 +98,8 @@ static const uint8_t DAC1 = PIN_DAC1;
  */
 
 // Serial
-#define PIN_SERIAL_TX (35ul)
-#define PIN_SERIAL_RX (36ul)
+#define PIN_SERIAL_TX (48ul)
+#define PIN_SERIAL_RX (49ul)
 #define PAD_SERIAL_TX (UART_TX_PAD_0)
 #define PAD_SERIAL_RX (SERCOM_RX_PAD_1)
 
@@ -107,49 +107,13 @@ static const uint8_t TX = PIN_SERIAL_TX;
 static const uint8_t RX = PIN_SERIAL_RX;
 
 // Serial1
-#define PIN_SERIAL1_TX (37ul)
-#define PIN_SERIAL1_RX (38ul)
+#define PIN_SERIAL1_TX (50ul)
+#define PIN_SERIAL1_RX (51ul)
 #define PAD_SERIAL1_TX (UART_TX_PAD_0)
 #define PAD_SERIAL1_RX (SERCOM_RX_PAD_1)
 
 static const uint8_t TX1 = PIN_SERIAL1_TX;
 static const uint8_t RX1 = PIN_SERIAL1_RX;
-
-// Serial2
-// #define PIN_SERIAL2_TX (40ul)
-// #define PIN_SERIAL2_RX (39ul)
-// #define PAD_SERIAL2_TX (UART_TX_PAD_0)
-// #define PAD_SERIAL2_RX (SERCOM_RX_PAD_1)
-
-// static const uint8_t TX2 = PIN_SERIAL2_TX;
-// static const uint8_t RX2 = PIN_SERIAL2_RX;
-
-// Serial3
-#define PIN_SERIAL3_TX (41ul)
-#define PIN_SERIAL3_RX (42ul)
-#define PAD_SERIAL3_TX (UART_TX_PAD_0)
-#define PAD_SERIAL3_RX (SERCOM_RX_PAD_1)
-
-static const uint8_t TX3 = PIN_SERIAL3_TX;
-static const uint8_t RX3 = PIN_SERIAL3_RX;
-
-// Serial4
-#define PIN_SERIAL4_TX (43ul)
-#define PIN_SERIAL4_RX (44ul)
-#define PAD_SERIAL4_TX (UART_TX_PAD_0)
-#define PAD_SERIAL4_RX (SERCOM_RX_PAD_1)
-
-static const uint8_t TX4 = PIN_SERIAL4_TX;
-static const uint8_t RX4 = PIN_SERIAL4_RX;
-
-// Serial5
-#define PIN_SERIAL5_TX (45ul)
-#define PIN_SERIAL5_RX (46ul)
-#define PAD_SERIAL5_TX (UART_TX_PAD_0)
-#define PAD_SERIAL5_RX (SERCOM_RX_PAD_1)
-
-static const uint8_t TX5 = PIN_SERIAL5_TX;
-static const uint8_t RX5 = PIN_SERIAL5_RX;
 
 /*
  * Wire Interfaces
@@ -157,8 +121,8 @@ static const uint8_t RX5 = PIN_SERIAL5_RX;
 #define WIRE_INTERFACES_COUNT 1
 
 // Wire
-#define PIN_WIRE_SDA (40ul)
-#define PIN_WIRE_SCL (39ul)
+#define PIN_WIRE_SDA (53ul)
+#define PIN_WIRE_SCL (52ul)
 #define PERIPH_WIRE sercom2
 #define WIRE_IT_HANDLER SERCOM2_Handler
 

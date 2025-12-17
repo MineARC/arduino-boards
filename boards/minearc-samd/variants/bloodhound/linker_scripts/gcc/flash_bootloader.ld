@@ -25,7 +25,7 @@
  */
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x00000000+0x4000, LENGTH = 0x80000-0x4000 /* First 16KB used by bootloader */
+  FLASH (rx) : ORIGIN = 0x0000000, LENGTH = 0x04000
   RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x30000
 }
 
@@ -68,9 +68,7 @@ SECTIONS
 	{
 		__text_start__ = .;
 
-		KEEP(*(.sketch_boot))
-
-		. = ALIGN(0x4000);
+		. = ALIGN(4);
 		KEEP(*(.isr_vector))
 		*(.text*)
 
