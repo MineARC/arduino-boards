@@ -35,7 +35,7 @@
 #define GENERIC_CLOCK_GENERATOR_12M_SYNC   GCLK_SYNCBUSY_GENCTRL4
 
 //USE DPLL0 for 120MHZ
-#define MAIN_CLOCK_SOURCE				  GCLK_GENCTRL_SRC_DPLL0
+#define MAIN_CLOCK_SOURCE				  GCLK_GENCTRL_SRC_DPLL0_Val
 
 #define GENERIC_CLOCK_GENERATOR_1M		  (5u)
 //#define CRYSTALLESS
@@ -63,7 +63,7 @@ void SystemInit( void )
    * 1) Enable XOSC32K clock (External on-board 32.768Hz oscillator)
    */
   
-  OSC32KCTRL->XOSC32K.reg = OSC32KCTRL_XOSC32K_ENABLE | OSC32KCTRL_XOSC32K_EN32K | OSC32KCTRL_XOSC32K_EN32K | OSC32KCTRL_XOSC32K_CGM_XT | OSC32KCTRL_XOSC32K_XTALEN;
+  OSC32KCTRL->XOSC32K.reg = OSC32KCTRL_XOSC32K_ENABLE | OSC32KCTRL_XOSC32K_EN1K | OSC32KCTRL_XOSC32K_EN32K | OSC32KCTRL_XOSC32K_CGM_XT | OSC32KCTRL_XOSC32K_XTALEN;
   
   while( (OSC32KCTRL->STATUS.reg & OSC32KCTRL_STATUS_XOSC32KRDY) == 0 ){
     /* Wait for oscillator to be ready */
@@ -82,13 +82,13 @@ void SystemInit( void )
   /* ----------------------------------------------------------------------------------------------
    * 2) Put XOSC32K as source of Generic Clock Generator 3
    */
-  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_XOSC32K].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_XOSC32K) | //generic clock gen 3
+  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_XOSC32K].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_XOSC32K_Val) | //generic clock gen 3
     GCLK_GENCTRL_GENEN;
   #else
   /* ----------------------------------------------------------------------------------------------
    * 2) Put OSCULP32K as source of Generic Clock Generator 3
    */
-  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_XOSC32K].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_OSCULP32K) | GCLK_GENCTRL_GENEN; //generic clock gen 3
+  GCLK->GENCTRL[GENERIC_CLOCK_GENERATOR_XOSC32K].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_OSCULP32K_Val) | GCLK_GENCTRL_GENEN; //generic clock gen 3
   #endif
   
 
@@ -99,7 +99,7 @@ void SystemInit( void )
   /* ----------------------------------------------------------------------------------------------
    * 3) Put OSCULP32K as source for Generic Clock Generator 0
    */
-  GCLK->GENCTRL[0].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_OSCULP32K) | GCLK_GENCTRL_GENEN;
+  GCLK->GENCTRL[0].reg = GCLK_GENCTRL_SRC(GCLK_GENCTRL_SRC_OSCULP32K_Val) | GCLK_GENCTRL_GENEN;
   
   /* ----------------------------------------------------------------------------------------------
    * 4) Enable DFLL48M clock
