@@ -582,7 +582,7 @@ void analogWrite(uint32_t pin, uint32_t value)
 
   if ((attr & PIN_ATTR_PWM) == PIN_ATTR_PWM)
 	  {
-	  value = mapResolution(value, _writeResolution, 16);
+	  value = mapResolution(value, _writeResolution, 11);
 
 	  uint32_t tcNum = GetTCNumber(pinDesc.ulPWMChannel);
 	  uint8_t tcChannel = GetTCChannelNumber(pinDesc.ulPWMChannel);
@@ -623,34 +623,37 @@ void analogWrite(uint32_t pin, uint32_t value)
 
 		  // Set PORT
 		  if (tcNum >= TCC_INST_NUM) {
-			// -- Configure TC
+			// -- Configure TC (16-bit mode for 12-bit values, scaled to 16-bit)
 			Tc* TCx = (Tc*) GetTC(pinDesc.ulPWMChannel);
 			// Disable TCx
 			TCx->COUNT16.CTRLA.bit.ENABLE = 0;
 			syncTC_16(TCx);
-			// Set Timer counter Mode to 16 bits, normal PWM
-			TCx->COUNT16.CTRLA.reg |= TC_CTRLA_MODE_COUNT16 | TC_CTRLA_WAVEGEN_NPWM;
+			// Set Timer counter Mode to 16 bits, normal PWM, no prescaler
+			TCx->COUNT16.CTRLA.reg = TC_CTRLA_MODE_COUNT16 | TC_CTRLA_WAVEGEN_NPWM;
 			syncTC_16(TCx);
-			// Set the initial value
-			TCx->COUNT16.CC[tcChannel].reg = (uint32_t) value;
+			// Set the initial value (scale 12-bit to 16-bit)
+			TCx->COUNT16.CC[tcChannel].reg = (uint16_t)(value << 4);
 			syncTC_16(TCx);
 			// Enable TCx
 			TCx->COUNT16.CTRLA.bit.ENABLE = 1;
 			syncTC_16(TCx);
 		  } else {
-			// -- Configure TCC
+			// -- Configure TCC (12-bit resolution)
 			Tcc* TCCx = (Tcc*) GetTC(pinDesc.ulPWMChannel);
 			// Disable TCCx
 			TCCx->CTRLA.bit.ENABLE = 0;
 			syncTCC(TCCx);
+			// DIV1 for 23.44 kHz with 11-bit
+			TCCx->CTRLA.reg = TCC_CTRLA_PRESCALER_DIV1 | TCC_CTRLA_PRESCSYNC_GCLK;
+			syncTCC(TCCx);
 			// Set TCCx as normal PWM
-			TCCx->WAVE.reg |= TCC_WAVE_WAVEGEN_NPWM;
+			TCCx->WAVE.reg = TCC_WAVE_WAVEGEN_NPWM;
 			syncTCC(TCCx);
 			// Set the initial value
 			TCCx->CC[tcChannel].reg = (uint32_t) value;
 			syncTCC(TCCx);
-			// Set PER to maximum counter value (resolution : 0xFFFF)
-			TCCx->PER.reg = 0xFFFF;
+			// Set PER to 11-bit max (resolution : 0x7FF)
+			TCCx->PER.reg = 0x7FF;
 			syncTCC(TCCx);
 			// Enable TCCx
 			TCCx->CTRLA.bit.ENABLE = 1;
@@ -659,7 +662,7 @@ void analogWrite(uint32_t pin, uint32_t value)
 		} else {
 		  if (tcNum >= TCC_INST_NUM) {
 			Tc* TCx = (Tc*) GetTC(pinDesc.ulPWMChannel);
-			TCx->COUNT16.CC[tcChannel].reg = (uint32_t) value;
+			TCx->COUNT16.CC[tcChannel].reg = (uint16_t)(value << 4);
 			syncTC_16(TCx);
 		  } else {
 			Tcc* TCCx = (Tcc*) GetTC(pinDesc.ulPWMChannel);

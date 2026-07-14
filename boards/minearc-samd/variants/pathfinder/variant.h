@@ -125,25 +125,16 @@ static const uint8_t RX1 = PIN_SERIAL1_RX;
 /*
  * Wire Interfaces
  */
-#define WIRE_INTERFACES_COUNT 2
+#define WIRE_INTERFACES_COUNT 1
 
 // Wire
-#define PIN_WIRE_SDA (29u)
-#define PIN_WIRE_SCL (30u)
-#define PERIPH_WIRE sercom3
-#define WIRE_IT_HANDLER SERCOM3_Handler
+#define PIN_WIRE_SDA (31u)
+#define PIN_WIRE_SCL (32u)
+#define PERIPH_WIRE sercom2
+#define WIRE_IT_HANDLER SERCOM2_Handler
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
-
-// Wire1
-#define PIN_WIRE1_SDA (31u)
-#define PIN_WIRE1_SCL (32u)
-#define PERIPH_WIRE1 sercom2
-#define WIRE1_IT_HANDLER SERCOM2_Handler
-
-static const uint8_t SDA1 = PIN_WIRE1_SDA;
-static const uint8_t SCL1 = PIN_WIRE1_SCL;
 
 /*
  * SPI Interfaces

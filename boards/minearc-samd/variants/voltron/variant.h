@@ -30,7 +30,7 @@
 #define VARIANT_MAINOSC (32768ul)
 
 /** Master clock frequency */
-#define VARIANT_MCK (24000000ul)
+#define VARIANT_MCK (48000000ul)
 
 /*----------------------------------------------------------------------------
  *        Headers
@@ -109,6 +109,16 @@ static const uint8_t DAC0 = PIN_DAC0;
 static const uint8_t TX = PIN_SERIAL_TX;
 static const uint8_t RX = PIN_SERIAL_RX;
 
+// Serial1
+#define PIN_SERIAL1_TX (30ul)
+#define PIN_SERIAL1_RX (30ul)
+#define PAD_SERIAL1_TX (UART_TX_PAD_2)
+#define PAD_SERIAL1_RX (SERCOM_RX_PAD_2)
+
+static const uint8_t TX1 = PIN_SERIAL1_TX;
+static const uint8_t RX1 = PIN_SERIAL1_RX;
+
+
 /*
  * Wire Interfaces
  */
@@ -154,6 +164,7 @@ extern SERCOM sercom2;
 extern SERCOM sercom3;
 
 extern Uart Serial;
+extern Uart Serial1;
 
 #endif
 
